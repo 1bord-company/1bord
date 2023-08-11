@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_11_070049) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_11_070356) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -56,6 +56,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_11_070049) do
     t.index ["person_id"], name: "index_account/users_on_person_id"
     t.index ["reset_password_token"], name: "index_account/users_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_account/users_on_unlock_token", unique: true
+  end
+
+  create_table "communication/webhooks", force: :cascade do |t|
+    t.string "endpoint"
+    t.jsonb "payload"
+    t.jsonb "headers"
+    t.bigint "integration__installation_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["integration__installation_id"], name: "index_communication/webhooks_on_integration__installation_id"
   end
 
   create_table "core/personas", force: :cascade do |t|
@@ -129,6 +139,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_11_070049) do
 
   add_foreign_key "account/people", "account/companies", column: "company_id"
   add_foreign_key "account/users", "account/people", column: "person_id"
+  add_foreign_key "communication/webhooks", "integration/installations", column: "integration__installation_id"
   add_foreign_key "core/personas", "account/people", column: "account__person_id"
   add_foreign_key "core/resources", "account/companies", column: "account__company_id"
   add_foreign_key "core/roles", "core/personas", column: "persona_id"
