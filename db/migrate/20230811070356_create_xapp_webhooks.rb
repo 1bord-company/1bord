@@ -1,10 +1,10 @@
-class CreateSyncWebhooks < ActiveRecord::Migration[7.0]
+class CreateXappWebhooks < ActiveRecord::Migration[7.0]
   def change
-    create_table 'sync/webhooks' do |t|
+    create_table 'xapp/webhooks' do |t|
       t.string :endpoint
       t.jsonb :payload
       t.jsonb :headers
-      t.belongs_to :xapp__installation,
+      t.belongs_to :installation,
                    null: false,
                    foreign_key: { to_table: 'xapp/installations' }
 

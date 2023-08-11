@@ -4,10 +4,10 @@ one:
   endpoint: MyString
   payload: 
   headers: 
-  xapp__installation: one
+  installation: one
 
 two:
   endpoint: MyString
   payload: 
   headers: 
-  xapp__installation: two
+  installation: two
