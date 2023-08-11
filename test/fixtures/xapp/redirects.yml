@@ -3,9 +3,9 @@
 one:
   endpoint: MyString
   params: 
-  installation: one
+  bot: one
 
 two:
   endpoint: MyString
   params: 
-  installation: two
+  bot: two

@@ -4,10 +4,10 @@ one:
   endpoint: MyString
   payload: 
   headers: 
-  installation: one
+  bot: one
 
 two:
   endpoint: MyString
   payload: 
   headers: 
-  installation: two
+  bot: two

@@ -1,4 +1,4 @@
-class Xapp::Installation < ApplicationRecord
+class Xapp::Bot < ApplicationRecord
   belongs_to :account__company,
              class_name: 'Account::Company'
 

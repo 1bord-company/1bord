@@ -1,3 +1,3 @@
 class Xapp::Redirect < ApplicationRecord
-  belongs_to :installation
+  belongs_to :bot
 end

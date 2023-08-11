@@ -1,3 +1,3 @@
 class Xapp::Webhook < ApplicationRecord
-  belongs_to :installation
+  belongs_to :bot
 end

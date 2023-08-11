@@ -124,33 +124,33 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_11_095022) do
     t.index ["account__company_id"], name: "index_sync/tokens_on_account__company_id"
   end
 
-  create_table "xapp/installations", force: :cascade do |t|
+  create_table "xapp/bots", force: :cascade do |t|
     t.string "provider"
     t.string "external_id"
     t.bigint "account__company_id", null: false
     t.jsonb "external_data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["account__company_id"], name: "index_xapp/installations_on_account__company_id"
+    t.index ["account__company_id"], name: "index_xapp/bots_on_account__company_id"
   end
 
   create_table "xapp/redirects", force: :cascade do |t|
     t.string "endpoint"
     t.jsonb "params"
-    t.bigint "installation_id", null: false
+    t.bigint "bot_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["installation_id"], name: "index_xapp/redirects_on_installation_id"
+    t.index ["bot_id"], name: "index_xapp/redirects_on_bot_id"
   end
 
   create_table "xapp/webhooks", force: :cascade do |t|
     t.string "endpoint"
     t.jsonb "payload"
     t.jsonb "headers"
-    t.bigint "installation_id", null: false
+    t.bigint "bot_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["installation_id"], name: "index_xapp/webhooks_on_installation_id"
+    t.index ["bot_id"], name: "index_xapp/webhooks_on_bot_id"
   end
 
   add_foreign_key "account/people", "account/companies", column: "company_id"
@@ -161,7 +161,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_11_095022) do
   add_foreign_key "core/roles", "core/resources", column: "resource_id"
   add_foreign_key "sync/api_calls", "sync/tokens", column: "token_id"
   add_foreign_key "sync/tokens", "account/companies", column: "account__company_id"
-  add_foreign_key "xapp/installations", "account/companies", column: "account__company_id"
-  add_foreign_key "xapp/redirects", "xapp/installations", column: "installation_id"
-  add_foreign_key "xapp/webhooks", "xapp/installations", column: "installation_id"
+  add_foreign_key "xapp/bots", "account/companies", column: "account__company_id"
+  add_foreign_key "xapp/redirects", "xapp/bots", column: "bot_id"
+  add_foreign_key "xapp/webhooks", "xapp/bots", column: "bot_id"
 end
