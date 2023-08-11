@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_11_064621) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_11_065253) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -107,6 +107,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_11_064621) do
     t.index ["account__company_id"], name: "index_integration/installations_on_account__company_id"
   end
 
+  create_table "integration/redirects", force: :cascade do |t|
+    t.string "endpoint"
+    t.jsonb "params"
+    t.bigint "installation_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["installation_id"], name: "index_integration/redirects_on_installation_id"
+  end
+
   add_foreign_key "account/people", "account/companies", column: "company_id"
   add_foreign_key "account/users", "account/people", column: "person_id"
   add_foreign_key "core/personas", "account/people", column: "account__person_id"
@@ -114,4 +123,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_11_064621) do
   add_foreign_key "core/roles", "core/personas", column: "persona_id"
   add_foreign_key "core/roles", "core/resources", column: "resource_id"
   add_foreign_key "integration/installations", "account/companies", column: "account__company_id"
+  add_foreign_key "integration/redirects", "integration/installations", column: "installation_id"
 end
