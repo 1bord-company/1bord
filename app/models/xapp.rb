@@ -1,5 +1,5 @@
-module Integration
+module Xapp
   def self.table_name_prefix
-    'integration/'
+    'xapp/'
   end
 end

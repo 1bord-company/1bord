@@ -4,9 +4,9 @@ class CreateSyncWebhooks < ActiveRecord::Migration[7.0]
       t.string :endpoint
       t.jsonb :payload
       t.jsonb :headers
-      t.belongs_to :integration__installation,
+      t.belongs_to :xapp__installation,
                    null: false,
-                   foreign_key: { to_table: 'integration/installations' }
+                   foreign_key: { to_table: 'xapp/installations' }
 
       t.timestamps
     end

@@ -1,6 +1,6 @@
 require "test_helper"
 
-class Integration::InstallationTest < ActiveSupport::TestCase
+class Xapp::RedirectTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

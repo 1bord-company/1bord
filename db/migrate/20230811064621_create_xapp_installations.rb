@@ -1,6 +1,6 @@
-class CreateIntegrationInstallations < ActiveRecord::Migration[7.0]
+class CreateXappInstallations < ActiveRecord::Migration[7.0]
   def change
-    create_table 'integration/installations' do |t|
+    create_table 'xapp/installations' do |t|
       t.string :provider
       t.string :external_id
       t.belongs_to :account__company,

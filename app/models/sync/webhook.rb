@@ -1,4 +1,4 @@
 class Sync::Webhook < ApplicationRecord
-  belongs_to :integration__installation,
-             class_name: 'Integration::Installation'
+  belongs_to :xapp__installation,
+             class_name: 'Xapp::Installation'
 end
