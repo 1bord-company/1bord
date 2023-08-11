@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_11_060059) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_11_061201) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -82,8 +82,25 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_11_060059) do
     t.index ["account__company_id"], name: "index_core/resources_on_account__company_id"
   end
 
+  create_table "core/roles", force: :cascade do |t|
+    t.string "name"
+    t.string "provider"
+    t.bigint "resource_id", null: false
+    t.bigint "persona_id", null: false
+    t.datetime "onboard_at", precision: nil
+    t.datetime "onboarded_at", precision: nil
+    t.datetime "offboard_at", precision: nil
+    t.datetime "offboarded_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["persona_id"], name: "index_core/roles_on_persona_id"
+    t.index ["resource_id"], name: "index_core/roles_on_resource_id"
+  end
+
   add_foreign_key "account/people", "account/companies", column: "company_id"
   add_foreign_key "account/users", "account/people", column: "person_id"
   add_foreign_key "core/personas", "account/people", column: "account__person_id"
   add_foreign_key "core/resources", "account/companies", column: "account__company_id"
+  add_foreign_key "core/roles", "core/personas", column: "persona_id"
+  add_foreign_key "core/roles", "core/resources", column: "resource_id"
 end
