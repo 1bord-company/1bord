@@ -4,4 +4,6 @@ class Account::User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :confirmable, :lockable, :timeoutable, :trackable
+
+  belongs_to :person, inverse_of: :user
 end

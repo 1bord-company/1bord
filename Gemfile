@@ -72,3 +72,5 @@ group :test do
 end
 
 gem "devise", "~> 4.9"
+
+gem "rails-erd", "~> 1.7", :group => :development
