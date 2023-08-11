@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  provider: MyString
+  external_id: MyString
+  account__company: one
+  external_data: 
+
+two:
+  provider: MyString
+  external_id: MyString
+  account__company: two
+  external_data: 

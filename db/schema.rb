@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_11_061201) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_11_064621) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -97,10 +97,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_11_061201) do
     t.index ["resource_id"], name: "index_core/roles_on_resource_id"
   end
 
+  create_table "integration/installations", force: :cascade do |t|
+    t.string "provider"
+    t.string "external_id"
+    t.bigint "account__company_id", null: false
+    t.jsonb "external_data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account__company_id"], name: "index_integration/installations_on_account__company_id"
+  end
+
   add_foreign_key "account/people", "account/companies", column: "company_id"
   add_foreign_key "account/users", "account/people", column: "person_id"
   add_foreign_key "core/personas", "account/people", column: "account__person_id"
   add_foreign_key "core/resources", "account/companies", column: "account__company_id"
   add_foreign_key "core/roles", "core/personas", column: "persona_id"
   add_foreign_key "core/roles", "core/resources", column: "resource_id"
+  add_foreign_key "integration/installations", "account/companies", column: "account__company_id"
 end
