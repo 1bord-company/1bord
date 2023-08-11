@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  token: MyString
+  type: 
+  provider: MyString
+  scope: MyString
+  authorizer_type: MyString
+  authorizer_id: 
+  account__company: one
+
+two:
+  token: MyString
+  type: 
+  provider: MyString
+  scope: MyString
+  authorizer_type: MyString
+  authorizer_id: 
+  account__company: two

@@ -1,6 +1,6 @@
 require "test_helper"
 
-class Integration::AuthorizationTest < ActiveSupport::TestCase
+class Sync::TokenTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

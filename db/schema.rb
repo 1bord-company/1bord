@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_11_070356) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_11_085223) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -107,17 +107,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_11_070356) do
     t.index ["resource_id"], name: "index_core/roles_on_resource_id"
   end
 
-  create_table "integration/authorizations", force: :cascade do |t|
-    t.string "token"
-    t.string "type"
-    t.bigint "installation_id", null: false
-    t.bigint "redirect_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["installation_id"], name: "index_integration/authorizations_on_installation_id"
-    t.index ["redirect_id"], name: "index_integration/authorizations_on_redirect_id"
-  end
-
   create_table "integration/installations", force: :cascade do |t|
     t.string "provider"
     t.string "external_id"
@@ -137,6 +126,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_11_070356) do
     t.index ["installation_id"], name: "index_integration/redirects_on_installation_id"
   end
 
+  create_table "sync/tokens", force: :cascade do |t|
+    t.string "token"
+    t.string "type"
+    t.string "provider"
+    t.string "scope"
+    t.string "authorizer_type"
+    t.bigint "authorizer_id"
+    t.bigint "account__company_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account__company_id"], name: "index_sync/tokens_on_account__company_id"
+  end
+
   add_foreign_key "account/people", "account/companies", column: "company_id"
   add_foreign_key "account/users", "account/people", column: "person_id"
   add_foreign_key "communication/webhooks", "integration/installations", column: "integration__installation_id"
@@ -144,8 +146,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_11_070356) do
   add_foreign_key "core/resources", "account/companies", column: "account__company_id"
   add_foreign_key "core/roles", "core/personas", column: "persona_id"
   add_foreign_key "core/roles", "core/resources", column: "resource_id"
-  add_foreign_key "integration/authorizations", "integration/installations", column: "installation_id"
-  add_foreign_key "integration/authorizations", "integration/redirects", column: "redirect_id"
   add_foreign_key "integration/installations", "account/companies", column: "account__company_id"
   add_foreign_key "integration/redirects", "integration/installations", column: "installation_id"
+  add_foreign_key "sync/tokens", "account/companies", column: "account__company_id"
 end
