@@ -14,23 +14,23 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_10_195948) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "acct/companies", force: :cascade do |t|
+  create_table "account/companies", force: :cascade do |t|
     t.string "name"
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "acct/people", force: :cascade do |t|
+  create_table "account/people", force: :cascade do |t|
     t.string "name"
     t.string "email"
     t.bigint "company_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["company_id"], name: "index_acct/people_on_company_id"
+    t.index ["company_id"], name: "index_account/people_on_company_id"
   end
 
-  create_table "acct/users", force: :cascade do |t|
+  create_table "account/users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -51,13 +51,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_10_195948) do
     t.bigint "person_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["confirmation_token"], name: "index_acct/users_on_confirmation_token", unique: true
-    t.index ["email"], name: "index_acct/users_on_email", unique: true
-    t.index ["person_id"], name: "index_acct/users_on_person_id"
-    t.index ["reset_password_token"], name: "index_acct/users_on_reset_password_token", unique: true
-    t.index ["unlock_token"], name: "index_acct/users_on_unlock_token", unique: true
+    t.index ["confirmation_token"], name: "index_account/users_on_confirmation_token", unique: true
+    t.index ["email"], name: "index_account/users_on_email", unique: true
+    t.index ["person_id"], name: "index_account/users_on_person_id"
+    t.index ["reset_password_token"], name: "index_account/users_on_reset_password_token", unique: true
+    t.index ["unlock_token"], name: "index_account/users_on_unlock_token", unique: true
   end
 
-  add_foreign_key "acct/people", "acct/companies", column: "company_id"
-  add_foreign_key "acct/users", "acct/people", column: "person_id"
+  add_foreign_key "account/people", "account/companies", column: "company_id"
+  add_foreign_key "account/users", "account/people", column: "person_id"
 end

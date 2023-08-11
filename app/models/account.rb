@@ -1,5 +1,5 @@
-module Acct
+module Account
   def self.table_name_prefix
-    "acct/"
+    "account/"
   end
 end
