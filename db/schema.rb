@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_11_085223) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_11_095022) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -116,6 +116,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_11_085223) do
     t.index ["installation_id"], name: "index_integration/redirects_on_installation_id"
   end
 
+  create_table "sync/api_calls", force: :cascade do |t|
+    t.bigint "token_id", null: false
+    t.string "endpoint"
+    t.string "method"
+    t.jsonb "request_headers"
+    t.jsonb "request_body"
+    t.jsonb "response_headers"
+    t.jsonb "response_body"
+    t.integer "duration_ms"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["token_id"], name: "index_sync/api_calls_on_token_id"
+  end
+
   create_table "sync/tokens", force: :cascade do |t|
     t.string "token"
     t.string "type"
@@ -147,6 +161,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_11_085223) do
   add_foreign_key "core/roles", "core/resources", column: "resource_id"
   add_foreign_key "integration/installations", "account/companies", column: "account__company_id"
   add_foreign_key "integration/redirects", "integration/installations", column: "installation_id"
+  add_foreign_key "sync/api_calls", "sync/tokens", column: "token_id"
   add_foreign_key "sync/tokens", "account/companies", column: "account__company_id"
   add_foreign_key "sync/webhooks", "integration/installations", column: "integration__installation_id"
 end
