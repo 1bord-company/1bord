@@ -132,6 +132,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_11_095022) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account__company_id"], name: "index_xapp/bots_on_account__company_id"
+    t.index ["provider", "external_id"], name: "index_xapp/bots_on_provider_and_external_id", unique: true
   end
 
   create_table "xapp/redirects", force: :cascade do |t|
@@ -141,6 +142,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_11_095022) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["bot_id"], name: "index_xapp/redirects_on_bot_id"
+    t.index ["endpoint", "params", "bot_id"], name: "index_xapp/redirects_on_endpoint_and_params_and_bot_id", unique: true
   end
 
   create_table "xapp/webhooks", force: :cascade do |t|

@@ -10,5 +10,7 @@ class CreateXappBots < ActiveRecord::Migration[7.0]
 
       t.timestamps
     end
+
+    add_index 'xapp/bots', [:provider, :external_id], unique: true
   end
 end
