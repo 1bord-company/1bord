@@ -5,4 +5,12 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
 
   root "articles#index"
+
+  namespace :xapp do
+    resources :providers, only: [] do
+      scope module: :providers do
+        resources :redirects, only: :new
+      end
+    end
+  end
 end
