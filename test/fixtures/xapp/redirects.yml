@@ -3,9 +3,7 @@
 one:
   endpoint: MyString
   params: 
-  bot: one
 
 two:
   endpoint: MyString
   params: 
-  bot: two

@@ -5,9 +5,11 @@ one:
   external_id: 1234
   account__company: one
   external_data: 
+  redirect: one
 
 two:
   provider: Slack
   external_id: bot_123
   account__company: two
   external_data: 
+  redirect: two

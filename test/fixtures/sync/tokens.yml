@@ -7,7 +7,6 @@ one:
   scope: MyString
   authorizer_type: MyString
   authorizer_id: 
-  account__company: one
 
 two:
   token: MyString
@@ -16,4 +15,3 @@ two:
   scope: MyString
   authorizer_type: MyString
   authorizer_id: 
-  account__company: two

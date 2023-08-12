@@ -7,9 +7,6 @@ class CreateSyncTokens < ActiveRecord::Migration[7.0]
       t.string :scope
       t.string :authorizer_type
       t.bigint :authorizer_id
-      t.belongs_to :account__company,
-                   null: false,
-                   foreign_key: { to_table: 'account/companies' }
       t.timestamp :expires_at
 
       t.timestamps

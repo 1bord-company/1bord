@@ -4,8 +4,12 @@ class CreateXappBots < ActiveRecord::Migration[7.0]
       t.string :provider
       t.string :external_id
       t.belongs_to :account__company,
-                   null: false,
+                   null: true,
                    foreign_key: { to_table: 'account/companies' }
+      t.belongs_to :redirect,
+                   null: false,
+                   foreign_key: { to_table: 'xapp/redirects' },
+                   index: { unique: true }
       t.jsonb :external_data
 
       t.timestamps
