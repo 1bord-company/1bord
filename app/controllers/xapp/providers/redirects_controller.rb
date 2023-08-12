@@ -12,6 +12,17 @@ module Xapp::Providers
         endpoint: uri.path,
         params: Hash[URI.decode_www_form(uri.query)]
       )
+
+      client =
+        "Providers::#{params[:provider_id]}::UserAccessTokenClient".constantize
+      token_info = client.create(code: @redirect.params['code'])
+      Sync::Token.create!(
+        authorizer: @bot,
+        account__company: Account::Current.company,
+        provider: params[:provider_id],
+        scope: token_info['scope'],
+        token: token_info['access_token']
+      )
     end
   end
 end

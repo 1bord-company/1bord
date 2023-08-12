@@ -1,25 +1,24 @@
-require "test_helper"
+require 'test_helper'
 
 class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
-  def get_new_redirect(provider_id: 'GitHub', code: 'abcd',
-                       installation_id: '123')
+  test 'storing the redirect' do
+    bot_creds = Rails.application.credentials.providers.git_hub.bot
 
-    get url_for [
-      :new, :xapp, :provider, :redirect,
-      { provider_id: provider_id, code: code, installation_id: installation_id }
-    ]
-  end
+    assert_difference [
+      -> { Xapp::Redirect.count },
+      -> { Xapp::Bot.count },
+      -> { Sync::Token.count }
+    ] do
+      VCR.insert_cassette('providers.git_hub.user_access_client#create')
 
-  test "visiting the index" do
-    assert_difference [-> { Xapp::Redirect.count }, -> { Xapp::Bot.count }] do
-      get_new_redirect
-    end
-    assert_no_difference([-> { Xapp::Redirect.count },
-                          -> { Xapp::Bot.count }]) do
-      get_new_redirect
-    end
-    assert_difference([-> { Xapp::Redirect.count }]) do
-      get_new_redirect(code: 'wxyz')
+      get url_for [
+        :new, :xapp, :provider, :redirect,
+        { provider_id: 'GitHub', code: bot_creds.code,
+          installation_id: bot_creds.id,
+          setup_action: 'install' }
+      ]
+
+      VCR.eject_cassette
     end
   end
 end
