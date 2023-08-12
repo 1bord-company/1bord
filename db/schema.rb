@@ -119,6 +119,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_11_095022) do
     t.string "authorizer_type"
     t.bigint "authorizer_id"
     t.bigint "account__company_id", null: false
+    t.datetime "expires_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account__company_id"], name: "index_sync/tokens_on_account__company_id"

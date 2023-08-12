@@ -10,6 +10,7 @@ class CreateSyncTokens < ActiveRecord::Migration[7.0]
       t.belongs_to :account__company,
                    null: false,
                    foreign_key: { to_table: 'account/companies' }
+      t.timestamp :expires_at
 
       t.timestamps
     end
