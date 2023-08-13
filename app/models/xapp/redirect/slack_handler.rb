@@ -7,12 +7,12 @@ module Xapp
         @bot = Xapp::Bot.find_or_create_by!(
           redirect: redirect,
           external_id: redirect.params['installation_id'],
-          provider: 'GitHub'
+          provider: 'Slack'
         )
 
         @token = Sync::Token.create!(
           authorizer: @bot,
-          provider: 'GitHub',
+          provider: 'Slack',
           scope: token_info['scope'],
           token: token_info['access_token']
         )

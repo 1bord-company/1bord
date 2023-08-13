@@ -37,8 +37,8 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
 
     assert_difference [
       -> { Xapp::Redirect.count },
-      -> { Xapp::Bot.count },
-      -> { Sync::Token.count }
+      -> { Xapp::Bot.where(provider: 'Slack').count },
+      -> { Sync::Token.where(provider: 'Slack').count }
     ] do
       VCR.insert_cassette('providers.slack.user_access_client#create')
 
