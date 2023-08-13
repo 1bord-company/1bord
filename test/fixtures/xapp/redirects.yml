@@ -2,8 +2,10 @@
 
 one:
   endpoint: MyString
+  account__company: one
   params: 
 
 two:
   endpoint: MyString
+  account__company: two
   params: 
