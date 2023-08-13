@@ -10,6 +10,8 @@ module Account
     belongs_to :person, inverse_of: :user
     before_validation :create_profile, on: :create
 
+    delegate :company, to: :person
+
     has_many :sync__tokens,
              class_name: 'Sync::Token',
              as: :authorizer
