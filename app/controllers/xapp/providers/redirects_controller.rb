@@ -1,5 +1,7 @@
 module Xapp::Providers
   class RedirectsController < ApplicationController
+    before_action :authenticate_account_user!
+
     def new
       uri = URI(request.url)
       @redirect = Xapp::Redirect.find_or_create_by!(
