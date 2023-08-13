@@ -19,15 +19,7 @@ module Xapp
           provider: 'GitHub'
         )
 
-        bot_token_info =
-          GitHub::InstallationAccessTokenClient
-          .create(installation_id: redirect.params['installation_id'])
-
-        @bot_token = Sync::Token.create!(
-          authorizer: @bot,
-          provider: 'GitHub',
-          **bot_token_info
-        )
+        @bot.sync__token!
       end
     end
   end

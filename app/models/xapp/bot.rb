@@ -13,4 +13,15 @@ class Xapp::Bot < ApplicationRecord
   end
 
   def external_data_client = provider.constantize::InstallationClient
+
+  def sync__token!
+    sync__tokens.valid.first.presence ||
+      Sync::Token.create!(
+        authorizer: self,
+        provider: provider,
+        **provider.constantize::BotAccessTokenClient.create(
+          installation_id: external_id
+        )
+      )
+  end
 end

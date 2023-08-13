@@ -1,8 +1,8 @@
 require 'jwt'
 require 'net/http'
 
-class GitHub::InstallationAccessTokenClient
-  BASE_URL = 'https://api.github.com'
+class GitHub::BotAccessTokenClient
+  BASE_URL = 'https://api.github.com'.freeze
 
   def self.create(installation_id:)
     new(installation_id).create
