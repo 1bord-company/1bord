@@ -2,7 +2,7 @@
 
 one:
   provider: GitHub
-  external_id: 1234
+  external_id: <%= Rails.application.credentials.providers.git_hub.bot.id %>
   external_data: 
   redirect: one
 

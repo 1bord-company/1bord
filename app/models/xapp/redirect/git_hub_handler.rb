@@ -20,6 +20,7 @@ module Xapp
         )
 
         @bot.sync__token!
+        @bot.external_data!
       end
     end
   end

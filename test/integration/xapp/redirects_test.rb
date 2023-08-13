@@ -5,6 +5,8 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
 
   def setup
     sign_in account_users(:one)
+    Xapp::Webhook.destroy_all
+    Xapp::Bot.destroy_all
   end
 
   test 'GitHub' do
@@ -14,11 +16,13 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     assert_difference [
       -> { Xapp::Redirect.count },
       -> { Xapp::Bot.count },
+      -> { Xapp::Bot.where.not(external_data: nil).count },
       -> { Sync::Token.where(authorizer_type: 'Account::User').count },
       -> { Sync::Token.where(authorizer_type: 'Xapp::Bot').count }
     ] do
       VCR.insert_cassette('providers.git_hub.user_access_client#create')
       VCR.insert_cassette('providers.git_hub.installation_access_token_client#create')
+      VCR.insert_cassette 'providers.git_hub.installation_client.show'
 
       get url_for [
         :new, :xapp, :provider, :redirect,
@@ -27,6 +31,7 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
           setup_action: 'install' }
       ]
 
+      VCR.eject_cassette
       VCR.eject_cassette
       VCR.eject_cassette
     end
