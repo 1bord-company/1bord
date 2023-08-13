@@ -1,13 +1,11 @@
 Rails.application.routes.draw do
-  devise_for 'account/users', class_name: "Account::User",
-    controllers: {
-      registrations: 'account/users/registrations'
-    }
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  devise_for 'account/users',
+             class_name: 'Account::User',
+             controllers: {
+               registrations: 'account/users/registrations'
+             }
 
-  # Defines the root path route ("/")
-
-  root "articles#index"
+  root 'account/companies#show'
 
   namespace :xapp do
     resources :providers, only: [] do
