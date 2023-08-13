@@ -7,7 +7,7 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     sign_in account_users(:one)
   end
 
-  test 'storing the redirect' do
+  test 'GitHub' do
     bot_creds = Rails.application.credentials.providers.git_hub.bot
 
     assert_difference [
@@ -22,6 +22,25 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
         { provider_id: 'GitHub', code: bot_creds.code,
           installation_id: bot_creds.id,
           setup_action: 'install' }
+      ]
+
+      VCR.eject_cassette
+    end
+  end
+
+  test 'Slack' do
+    bot_creds = Rails.application.credentials.providers.slack.bot
+
+    assert_difference [
+      -> { Xapp::Redirect.count },
+      -> { Xapp::Bot.count },
+      -> { Sync::Token.count }
+    ] do
+      VCR.insert_cassette('providers.slack.user_access_client#create')
+
+      get url_for [
+        :new, :xapp, :provider, :redirect,
+        { provider_id: 'Slack', code: bot_creds.code }
       ]
 
       VCR.eject_cassette

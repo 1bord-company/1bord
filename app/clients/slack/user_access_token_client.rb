@@ -1,6 +1,6 @@
 require 'net/http'
 
-class Providers::Slack::UserAccessTokenClient
+class Slack::UserAccessTokenClient
   def self.create(code:)
     new(code).create
   end

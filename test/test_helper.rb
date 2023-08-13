@@ -23,7 +23,12 @@ VCR.configure do |config|
     %i[providers git_hub app client_secret],
     %i[providers git_hub bot code],
     %i[providers git_hub bot token],
-    %i[providers git_hub bot id]
+    %i[providers git_hub bot id],
+    %i[providers slack app client_id],
+    %i[providers slack app client_secret],
+    %i[providers slack bot code],
+    %i[providers slack bot token],
+    %i[providers slack bot id]
   ].each do |credential_key|
     config.filter_sensitive_data("<CREDENTIAL:#{credential_key.join('.')}>") do
       Rails.application.credentials.dig(*credential_key)

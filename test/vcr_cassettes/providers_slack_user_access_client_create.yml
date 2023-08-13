@@ -1,0 +1,80 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://slack.com/api/oauth.v2.access
+    body:
+      encoding: US-ASCII
+      string: client_id=<CREDENTIAL:providers.slack.app.client_id>&client_secret=<CREDENTIAL:providers.slack.app.client_secret>&code=<CREDENTIAL:providers.slack.bot.code>
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 13 Aug 2023 13:51:19 GMT
+      Server:
+      - Apache
+      Vary:
+      - Accept-Encoding
+      X-Slack-Req-Id:
+      - 79606e0b11c000820e0c92f03553352e
+      X-Content-Type-Options:
+      - nosniff
+      X-Xss-Protection:
+      - '0'
+      X-Robots-Tag:
+      - noindex,nofollow
+      Pragma:
+      - no-cache
+      Cache-Control:
+      - private, no-cache, no-store, must-revalidate
+      Expires:
+      - Sat, 26 Jul 1997 05:00:00 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Access-Control-Expose-Headers:
+      - x-slack-req-id, retry-after
+      Access-Control-Allow-Headers:
+      - slack-route, x-slack-version-ts, x-b3-traceid, x-b3-spanid, x-b3-parentspanid,
+        x-b3-sampled, x-b3-flags
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Slack-Unique-Id:
+      - ZNjf1wU94Z-C6UrBPNyV0wAAADQ
+      X-Slack-Backend:
+      - r
+      Referrer-Policy:
+      - no-referrer
+      Access-Control-Allow-Origin:
+      - "*"
+      Via:
+      - 1.1 slack-prod.tinyspeck.com, envoy-www-iad-lxztimbu, envoy-edge-bom-mhidbcch
+      Content-Length:
+      - '266'
+      X-Envoy-Upstream-Service-Time:
+      - '366'
+      X-Backend:
+      - main_normal main_canary_with_overflow main_control_with_overflow
+      X-Server:
+      - slack-www-hhvm-main-iad-aeco
+      X-Slack-Shared-Secret-Outcome:
+      - no-match
+      X-Edge-Backend:
+      - envoy-www
+      X-Slack-Edge-Shared-Secret-Outcome:
+      - no-match
+    body:
+      encoding: ASCII-8BIT
+      string: '{"ok":true,"app_id":"A05FDCGGTGS","authed_user":{"id":"U05FFG63TUL"},"scope":"users:read,users:read.email,incoming-webhook","token_type":"bot","access_token":"<CREDENTIAL:providers.slack.bot.token>","bot_user_id":"<CREDENTIAL:providers.slack.bot.id>","team":{"id":"T05G2Q317DW","name":"Quester"},"enterprise":null,"is_enterprise_install":false}'
+  recorded_at: Sun, 13 Aug 2023 13:51:19 GMT
+recorded_with: VCR 6.2.0
