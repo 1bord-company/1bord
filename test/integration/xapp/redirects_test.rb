@@ -1,6 +1,12 @@
 require 'test_helper'
 
 class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+
+  def setup
+    sign_in account_users(:one)
+  end
+
   test 'storing the redirect' do
     bot_creds = Rails.application.credentials.providers.git_hub.bot
 

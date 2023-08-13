@@ -3,7 +3,7 @@ class Account::Current < ActiveSupport::CurrentAttributes
 
   def user=(user)
     super
-    self.person = user.person
-    self.company = user.company
+    self.person = user&.person
+    self.company = user&.company
   end
 end

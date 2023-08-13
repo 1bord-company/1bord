@@ -1,6 +1,6 @@
 require 'net/http'
 
-class Providers::GitHub::UserAccessTokenClient
+class GitHub::UserAccessTokenClient
   def self.create(code:)
     new(code).create
   end

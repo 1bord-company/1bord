@@ -7,7 +7,9 @@
 one:
   person: one
   email: one@one.one
+  confirmed_at: <%= Time.current %>
 
 two:
   person: two
   email: two@two.two
+  confirmed_at: <%= Time.current %>
