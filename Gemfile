@@ -78,3 +78,5 @@ gem "rails-erd", "~> 1.7", :group => :development
 gem "vcr", "~> 6.2", :group => :test
 
 gem "webmock", "~> 3.18", :group => :test
+
+gem "jwt", "~> 2.7"
