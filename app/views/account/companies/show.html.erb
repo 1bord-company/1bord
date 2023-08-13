@@ -1,4 +1,11 @@
 <h1>Company: <%= @company.name %></h1>
 <p>Email: <%= @company.email %></p>
 
-<%= render 'icons/git_hub', classes: 'icon icon--small' %>
+<ul>
+  <% %w[git_hub slack].each do |provider| %>
+    <li>
+      <%= render "icons/#{provider}", classes: 'icon icon--medium' %>
+      <%= link_to "Connect to #{provider.camelize}", route_for(provider), target: :_blank %>
+    </li>
+  <% end %>
+</ul>

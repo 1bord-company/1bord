@@ -14,4 +14,9 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  {
+    git_hub: 'https://github.com/apps/1bord-basic/',
+    slack: 'https://slack.com/apps/A05FDCGGTGS-1bord-basic'
+  }.each { |key, url| direct key do url end }
 end
