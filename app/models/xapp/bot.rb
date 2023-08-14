@@ -1,6 +1,8 @@
 class Xapp::Bot < ApplicationRecord
   belongs_to :redirect
 
+  delegate :account__company, to: :redirect
+
   has_many :sync__tokens,
            class_name: 'Sync::Token',
            as: :authorizer
@@ -15,7 +17,7 @@ class Xapp::Bot < ApplicationRecord
   def external_data_client = provider.constantize::InstallationClient
 
   def sync__token!
-    sync__tokens.valid.first.presence ||
+    sync__token.presence ||
       Sync::Token.create!(
         authorizer: self,
         provider: provider,
@@ -23,5 +25,9 @@ class Xapp::Bot < ApplicationRecord
           installation_id: external_id
         )
       )
+  end
+
+  def sync__token
+    sync__tokens.valid.first
   end
 end

@@ -18,11 +18,13 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
       -> { Xapp::Bot.count },
       -> { Xapp::Bot.where.not(external_data: nil).count },
       -> { Sync::Token.where(authorizer_type: 'Account::User').count },
-      -> { Sync::Token.where(authorizer_type: 'Xapp::Bot').count }
+      -> { Sync::Token.where(authorizer_type: 'Xapp::Bot').count },
+      -> { Core::Persona.where(provider: 'GitHub', external_type: 'Member', account__company: account_users(:one).company).count }
     ] do
-      VCR.insert_cassette('providers.git_hub.user_access_client#create')
-      VCR.insert_cassette('providers.git_hub.installation_access_token_client#create')
+      VCR.insert_cassette 'providers.git_hub.user_access_client#create'
+      VCR.insert_cassette 'providers.git_hub.installation_access_token_client#create', erb: true
       VCR.insert_cassette 'providers.git_hub.installation_client.show'
+      VCR.insert_cassette 'providers.git_hub.members_client.index'
 
       get url_for [
         :new, :xapp, :provider, :redirect,
@@ -31,6 +33,7 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
           setup_action: 'install' }
       ]
 
+      VCR.eject_cassette
       VCR.eject_cassette
       VCR.eject_cassette
       VCR.eject_cassette

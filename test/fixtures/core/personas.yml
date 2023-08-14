@@ -6,6 +6,7 @@ one:
   external_id: MyString
   provider: MyString
   account__person: one
+  account__company: one
   external_data: 
 
 two:
@@ -14,4 +15,5 @@ two:
   external_id: MyString
   provider: MyString
   account__person: two
+  account__company: two
   external_data: 

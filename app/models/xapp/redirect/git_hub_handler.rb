@@ -21,6 +21,21 @@ module Xapp
 
         @bot.sync__token!
         @bot.external_data!
+
+        members =
+          GitHub::MembersClient
+          .index @bot.sync__token.token, @bot.external_data.dig('account', 'login')
+
+        members.each do |member|
+          Core::Persona.create!(
+            name: member['login'],
+            external_id: member['id'],
+            provider: 'GitHub',
+            external_data: member['data'],
+            external_type: 'Member',
+            account__company: @bot.account__company
+          )
+        end
       end
     end
   end

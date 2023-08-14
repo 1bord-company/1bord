@@ -63,10 +63,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_11_095022) do
     t.string "external_type"
     t.string "external_id"
     t.string "provider"
-    t.bigint "account__person_id", null: false
+    t.bigint "account__company_id", null: false
+    t.bigint "account__person_id"
     t.jsonb "external_data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["account__company_id"], name: "index_core/personas_on_account__company_id"
     t.index ["account__person_id"], name: "index_core/personas_on_account__person_id"
   end
 
@@ -156,6 +158,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_11_095022) do
 
   add_foreign_key "account/people", "account/companies", column: "company_id"
   add_foreign_key "account/users", "account/people", column: "person_id"
+  add_foreign_key "core/personas", "account/companies", column: "account__company_id"
   add_foreign_key "core/personas", "account/people", column: "account__person_id"
   add_foreign_key "core/resources", "account/companies", column: "account__company_id"
   add_foreign_key "core/roles", "core/personas", column: "persona_id"

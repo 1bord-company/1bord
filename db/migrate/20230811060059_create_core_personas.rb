@@ -5,8 +5,11 @@ class CreateCorePersonas < ActiveRecord::Migration[7.0]
       t.string :external_type
       t.string :external_id
       t.string :provider
-      t.belongs_to :account__person,
+      t.belongs_to :account__company,
                    null: false,
+                   foreign_key: { to_table: 'account/companies' }
+      t.belongs_to :account__person,
+                   null: true,
                    foreign_key: { to_table: 'account/people' }
       t.jsonb :external_data
 

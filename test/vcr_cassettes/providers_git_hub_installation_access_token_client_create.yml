@@ -64,6 +64,6 @@ http_interactions:
       - CE42:1161ED:150DE6D:1694998:64D8E613
     body:
       encoding: UTF-8
-      string: '{"token":"<CREDENTIAL:providers.git_hub.bot.token>","expires_at":"2023-08-13T15:17:55Z","permissions":{"members":"read","administration":"read","metadata":"read"},"repository_selection":"all"}'
+      string: '{"token":"<CREDENTIAL:providers.git_hub.bot.token>","expires_at":"<%= (Time.current + 1.hour).strftime('%Y-%m-%dT%H:%M:%SZ') %>","permissions":{"members":"read","administration":"read","metadata":"read"},"repository_selection":"all"}'
   recorded_at: Sun, 13 Aug 2023 14:17:55 GMT
 recorded_with: VCR 6.2.0
