@@ -13,19 +13,25 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
   end
 
   git_hub_differences = lambda { |account__user|
-    [
-      -> { Xapp::Redirect.count },
-      -> { Xapp::Bot.count },
-      -> { Xapp::Bot.where.not(external_data: nil).count },
-      -> { Sync::Token.where(authorizer_type: 'Account::User').count },
-      -> { Sync::Token.where(authorizer_type: 'Xapp::Bot').count },
+    {
+      -> { Xapp::Redirect.count } => 1,
+      -> { Xapp::Bot.count } => 1,
+      -> { Xapp::Bot.where.not(external_data: nil).count } => 1,
+      -> { Sync::Token.where(authorizer_type: 'Account::User').count } => 1,
+      -> { Sync::Token.where(authorizer_type: 'Xapp::Bot').count } => 1,
       lambda {
         Core::Persona
           .where(provider: 'GitHub', external_type: 'Member',
                  account__holder: account__user.company)
           .count
-      }
-    ]
+      } => 1,
+      lambda {
+        Core::Persona
+          .where(provider: 'GitHub', external_type: 'OutsideCollaborator',
+                 account__holder: account__user.company)
+          .count
+      } => 3
+    }
   }
 
   git_hub_cassettes = [

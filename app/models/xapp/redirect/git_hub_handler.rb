@@ -40,6 +40,17 @@ module Xapp
         outside_collaborators =
           GitHub::OutsideCollaboratorsClient
           .index @bot.sync__token.token, @bot.external_data.dig('account', 'login')
+
+        outside_collaborators.each do |member|
+          Core::Persona.create!(
+            name: member['login'],
+            external_id: member['id'],
+            provider: 'GitHub',
+            external_data: member['data'],
+            external_type: 'OutsideCollaborator',
+            account__holder: @bot.account__company
+          )
+        end
       end
     end
   end
