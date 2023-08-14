@@ -20,6 +20,12 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
       -> { Sync::Token.where(authorizer_type: 'Account::User').count } => 1,
       -> { Sync::Token.where(authorizer_type: 'Xapp::Bot').count } => 1,
       lambda {
+        Core::Resource
+          .where(provider: 'GitHub', external_type: 'Organization',
+                 account__holder: account__user.company)
+          .count
+      } => 1,
+      lambda {
         Core::Persona
           .where(provider: 'GitHub', external_type: 'Member',
                  account__holder: account__user.company)

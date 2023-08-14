@@ -22,9 +22,20 @@ module Xapp
         @bot.sync__token!
         @bot.external_data!
 
+        account = @bot.external_data['account']
+
+        Core::Resource.create!(
+          name: account['login'],
+          external_id: account['id'],
+          provider: 'GitHub',
+          external_data: account,
+          external_type: account['type'],
+          account__holder: @bot.account__company
+        )
+
         members =
           GitHub::MembersClient
-          .index @bot.sync__token.token, @bot.external_data.dig('account', 'login')
+          .index @bot.sync__token.token, account['login']
 
         members.each do |member|
           Core::Persona.create!(
@@ -39,7 +50,7 @@ module Xapp
 
         outside_collaborators =
           GitHub::OutsideCollaboratorsClient
-          .index @bot.sync__token.token, @bot.external_data.dig('account', 'login')
+          .index @bot.sync__token.token, account['login']
 
         outside_collaborators.each do |member|
           Core::Persona.create!(
