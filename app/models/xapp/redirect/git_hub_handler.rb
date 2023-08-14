@@ -36,6 +36,10 @@ module Xapp
             account__holder: @bot.account__company
           )
         end
+
+        outside_collaborators =
+          GitHub::OutsideCollaboratorsClient
+          .index @bot.sync__token.token, @bot.external_data.dig('account', 'login')
       end
     end
   end

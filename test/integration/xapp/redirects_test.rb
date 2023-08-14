@@ -25,6 +25,7 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
       VCR.insert_cassette 'providers.git_hub.installation_access_token_client#create', erb: true
       VCR.insert_cassette 'providers.git_hub.installation_client.show'
       VCR.insert_cassette 'providers.git_hub.members_client.index'
+      VCR.insert_cassette 'providers.git_hub.outside_collaborators_client.index'
 
       get url_for [
         :new, :xapp, :provider, :redirect,

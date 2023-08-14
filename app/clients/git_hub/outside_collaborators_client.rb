@@ -1,6 +1,6 @@
 require 'net/http'
 
-class GitHub::MembersClient
+class GitHub::OutsideCollaboratorsClient
   def self.index(token, org) = new(token, org).index
   def initialize(token, org)
     @token = token
@@ -9,7 +9,7 @@ class GitHub::MembersClient
 
   def index
     # Set the API endpoint URL
-    url = URI.parse("https://api.github.com/orgs/#{@org}/members")
+    url = URI.parse("https://api.github.com/orgs/#{@org}/outside_collaborators")
 
     # Create the HTTP request
     request = Net::HTTP::Get.new(url)
