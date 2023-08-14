@@ -20,10 +20,10 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     "Sync::Token.where(authorizer_type: 'Xapp::Bot').count" => 1,
     "Core::Resource.git_hub.where(external_type: 'Organization', "\
       'account__holder: @account__user.company).count' => 1,
-    "Core::Persona.git_hub.where(external_type: 'Member', "\
-      'account__holder: @account__user.company).count' => 1,
-    "Core::Persona.git_hub.where(external_type: 'OutsideCollaborator', "\
-      'account__holder: @account__user.company).count' => 3
+    "Core::Persona.git_hub.where(external_type: 'User', "\
+      'account__holder: @account__user.company).count' => 4,
+    "Core::Role.git_hub.where(name: 'Member').count" => 1,
+    "Core::Role.git_hub.where(name: 'OutsideCollaborator').count" => 3
   }.each do |check, diff|
     test "GitHub:#{check}" do
       assert_difference check, diff do
