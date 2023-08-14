@@ -5,6 +5,10 @@ module Account
 
     has_one :user, inverse_of: :person
 
+    has_many :core__entities,
+             class_name: 'Core::Entity',
+             as: :account__holder
+
     private
 
     def create_company

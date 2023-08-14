@@ -58,30 +58,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_11_095022) do
     t.index ["unlock_token"], name: "index_account/users_on_unlock_token", unique: true
   end
 
-  create_table "core/personas", force: :cascade do |t|
+  create_table "core/entities", force: :cascade do |t|
     t.string "name"
+    t.string "type"
     t.string "external_type"
     t.string "external_id"
     t.string "provider"
-    t.bigint "account__company_id", null: false
-    t.bigint "account__person_id"
-    t.jsonb "external_data"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["account__company_id"], name: "index_core/personas_on_account__company_id"
-    t.index ["account__person_id"], name: "index_core/personas_on_account__person_id"
-  end
-
-  create_table "core/resources", force: :cascade do |t|
-    t.string "name"
-    t.string "external_type"
-    t.string "external_id"
-    t.string "provider"
-    t.bigint "account__company_id", null: false
+    t.string "account__holder_type"
+    t.bigint "account__holder_id"
     t.jsonb "external_data", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["account__company_id"], name: "index_core/resources_on_account__company_id"
   end
 
   create_table "core/roles", force: :cascade do |t|
@@ -158,11 +145,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_11_095022) do
 
   add_foreign_key "account/people", "account/companies", column: "company_id"
   add_foreign_key "account/users", "account/people", column: "person_id"
-  add_foreign_key "core/personas", "account/companies", column: "account__company_id"
-  add_foreign_key "core/personas", "account/people", column: "account__person_id"
-  add_foreign_key "core/resources", "account/companies", column: "account__company_id"
-  add_foreign_key "core/roles", "core/personas", column: "persona_id"
-  add_foreign_key "core/roles", "core/resources", column: "resource_id"
+  add_foreign_key "core/roles", "core/entities", column: "persona_id"
+  add_foreign_key "core/roles", "core/entities", column: "resource_id"
   add_foreign_key "sync/api_calls", "sync/tokens", column: "token_id"
   add_foreign_key "xapp/bots", "xapp/redirects", column: "redirect_id"
   add_foreign_key "xapp/redirects", "account/companies", column: "account__company_id"

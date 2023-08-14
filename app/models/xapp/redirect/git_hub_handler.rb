@@ -33,7 +33,7 @@ module Xapp
             provider: 'GitHub',
             external_data: member['data'],
             external_type: 'Member',
-            account__company: @bot.account__company
+            account__holder: @bot.account__company
           )
         end
       end

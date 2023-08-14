@@ -19,7 +19,7 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
       -> { Xapp::Bot.where.not(external_data: nil).count },
       -> { Sync::Token.where(authorizer_type: 'Account::User').count },
       -> { Sync::Token.where(authorizer_type: 'Xapp::Bot').count },
-      -> { Core::Persona.where(provider: 'GitHub', external_type: 'Member', account__company: account_users(:one).company).count }
+      -> { Core::Persona.where(provider: 'GitHub', external_type: 'Member', account__holder: account_users(:one).company).count }
     ] do
       VCR.insert_cassette 'providers.git_hub.user_access_client#create'
       VCR.insert_cassette 'providers.git_hub.installation_access_token_client#create', erb: true

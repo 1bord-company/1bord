@@ -1,17 +1,17 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+repository_1:
   name: MyString
   external_type: MyString
   external_id: MyString
-  provider: MyString
-  account__company: one
+  provider: GitHub
+  account__holder: one (Account::Company)
   external_data: 
 
-two:
+channel_1:
   name: MyString
   external_type: MyString
   external_id: MyString
-  provider: MyString
-  account__company: two
+  provider: Slack
+  account__holder: two (Account::Company)
   external_data: 

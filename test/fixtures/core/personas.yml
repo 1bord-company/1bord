@@ -5,8 +5,7 @@ one:
   external_type: MyString
   external_id: MyString
   provider: MyString
-  account__person: one
-  account__company: one
+  account__holder: one (Account::Person)
   external_data: 
 
 two:
@@ -14,6 +13,5 @@ two:
   external_type: MyString
   external_id: MyString
   provider: MyString
-  account__person: two
-  account__company: two
+  account__holder: one (Account::Company)
   external_data: 
