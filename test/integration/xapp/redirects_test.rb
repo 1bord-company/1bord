@@ -5,10 +5,28 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   def setup
-    sign_in account_users(:one)
+    @account__user = account_users(:one)
+    sign_in @account__user
+
     Xapp::Webhook.destroy_all
     Xapp::Bot.destroy_all
   end
+
+  git_hub_differences = lambda { |account__user|
+    [
+      -> { Xapp::Redirect.count },
+      -> { Xapp::Bot.count },
+      -> { Xapp::Bot.where.not(external_data: nil).count },
+      -> { Sync::Token.where(authorizer_type: 'Account::User').count },
+      -> { Sync::Token.where(authorizer_type: 'Xapp::Bot').count },
+      lambda {
+        Core::Persona
+          .where(provider: 'GitHub', external_type: 'Member',
+                 account__holder: account__user.company)
+          .count
+      }
+    ]
+  }
 
   git_hub_cassettes = [
     'providers.git_hub.user_access_client#create',
@@ -18,29 +36,19 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     'providers.git_hub.outside_collaborators_client.index'
   ]
 
-  test 'GitHub' do
-    git_hub_creds = Rails.application.credentials.providers.git_hub
+  git_hub_creds = Rails.application.credentials.providers.git_hub
 
-    assert_difference [
-      -> { Xapp::Redirect.count },
-      -> { Xapp::Bot.count },
-      -> { Xapp::Bot.where.not(external_data: nil).count },
-      -> { Sync::Token.where(authorizer_type: 'Account::User').count },
-      -> { Sync::Token.where(authorizer_type: 'Xapp::Bot').count },
-      lambda {
-        Core::Persona
-          .where(provider: 'GitHub', external_type: 'Member',
-                 account__holder: account_users(:one).company)
-          .count
-      }
-    ] do
+  git_hub_url = [
+    :new, :xapp, :provider, :redirect,
+    { provider_id: 'GitHub', code: git_hub_creds.user.code,
+      installation_id: git_hub_creds.bot.id,
+      setup_action: 'install' }
+  ]
+
+  test 'GitHub' do
+    assert_difference git_hub_differences[@account__user] do
       VCR.insert_cassettes git_hub_cassettes do
-        get url_for [
-          :new, :xapp, :provider, :redirect,
-          { provider_id: 'GitHub', code: git_hub_creds.user.code,
-            installation_id: git_hub_creds.bot.id,
-            setup_action: 'install' }
-        ]
+        get url_for git_hub_url
       end
     end
   end
