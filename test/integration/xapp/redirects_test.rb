@@ -12,55 +12,37 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     Xapp::Bot.destroy_all
   end
 
-  git_hub_differences = lambda { |account__user|
-    {
-      -> { Xapp::Redirect.count } => 1,
-      -> { Xapp::Bot.count } => 1,
-      -> { Xapp::Bot.where.not(external_data: nil).count } => 1,
-      -> { Sync::Token.where(authorizer_type: 'Account::User').count } => 1,
-      -> { Sync::Token.where(authorizer_type: 'Xapp::Bot').count } => 1,
-      lambda {
-        Core::Resource
-          .where(provider: 'GitHub', external_type: 'Organization',
-                 account__holder: account__user.company)
-          .count
-      } => 1,
-      lambda {
-        Core::Persona
-          .where(provider: 'GitHub', external_type: 'Member',
-                 account__holder: account__user.company)
-          .count
-      } => 1,
-      lambda {
-        Core::Persona
-          .where(provider: 'GitHub', external_type: 'OutsideCollaborator',
-                 account__holder: account__user.company)
-          .count
-      } => 3
-    }
-  }
-
-  git_hub_cassettes = [
-    'providers.git_hub.user_access_client#create',
-    'providers.git_hub.installation_access_token_client#create',
-    'providers.git_hub.installation_client.show',
-    'providers.git_hub.members_client.index',
-    'providers.git_hub.outside_collaborators_client.index'
-  ]
-
-  git_hub_creds = Rails.application.credentials.providers.git_hub
-
-  git_hub_url = [
-    :new, :xapp, :provider, :redirect,
-    { provider_id: 'GitHub', code: git_hub_creds.user.code,
-      installation_id: git_hub_creds.bot.id,
-      setup_action: 'install' }
-  ]
-
-  test 'GitHub' do
-    assert_difference git_hub_differences[@account__user] do
-      VCR.insert_cassettes git_hub_cassettes do
-        get url_for git_hub_url
+  {
+    'Xapp::Redirect.count' => 1,
+    'Xapp::Bot.count' => 1,
+    'Xapp::Bot.where.not(external_data: nil).count' => 1,
+    "Sync::Token.where(authorizer_type: 'Account::User').count" => 1,
+    "Sync::Token.where(authorizer_type: 'Xapp::Bot').count" => 1,
+    "Core::Resource.where(provider: 'GitHub', external_type: 'Organization', "\
+      'account__holder: @account__user.company).count' => 1,
+    "Core::Persona.where(provider: 'GitHub', external_type: 'Member', "\
+      'account__holder: @account__user.company).count' => 1,
+    "Core::Persona.where(provider: 'GitHub', "\
+      "external_type: 'OutsideCollaborator', "\
+      'account__holder: @account__user.company).count' => 3
+  }.each do |check, diff|
+    test "GitHub:#{check}" do
+      assert_difference check, diff do
+        VCR.insert_cassettes [
+          'providers.git_hub.user_access_client#create',
+          'providers.git_hub.installation_access_token_client#create',
+          'providers.git_hub.installation_client.show',
+          'providers.git_hub.members_client.index',
+          'providers.git_hub.outside_collaborators_client.index'
+        ] do
+          git_hub_creds = Rails.application.credentials.providers.git_hub
+          get url_for [
+            :new, :xapp, :provider, :redirect,
+            { provider_id: 'GitHub', code: git_hub_creds.user.code,
+              installation_id: git_hub_creds.bot.id,
+              setup_action: 'install' }
+          ]
+        end
       end
     end
   end
