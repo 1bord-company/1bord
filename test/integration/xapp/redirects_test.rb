@@ -1,4 +1,5 @@
 require 'test_helper'
+require './lib/ext/vcr'
 
 class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
@@ -9,9 +10,16 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     Xapp::Bot.destroy_all
   end
 
+  git_hub_cassettes = [
+    'providers.git_hub.user_access_client#create',
+    'providers.git_hub.installation_access_token_client#create',
+    'providers.git_hub.installation_client.show',
+    'providers.git_hub.members_client.index',
+    'providers.git_hub.outside_collaborators_client.index'
+  ]
+
   test 'GitHub' do
-    user_creds = Rails.application.credentials.providers.git_hub.user
-    bot_creds = Rails.application.credentials.providers.git_hub.bot
+    git_hub_creds = Rails.application.credentials.providers.git_hub
 
     assert_difference [
       -> { Xapp::Redirect.count },
@@ -19,25 +27,21 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
       -> { Xapp::Bot.where.not(external_data: nil).count },
       -> { Sync::Token.where(authorizer_type: 'Account::User').count },
       -> { Sync::Token.where(authorizer_type: 'Xapp::Bot').count },
-      -> { Core::Persona.where(provider: 'GitHub', external_type: 'Member', account__holder: account_users(:one).company).count }
+      lambda {
+        Core::Persona
+          .where(provider: 'GitHub', external_type: 'Member',
+                 account__holder: account_users(:one).company)
+          .count
+      }
     ] do
-      VCR.insert_cassette 'providers.git_hub.user_access_client#create'
-      VCR.insert_cassette 'providers.git_hub.installation_access_token_client#create', erb: true
-      VCR.insert_cassette 'providers.git_hub.installation_client.show'
-      VCR.insert_cassette 'providers.git_hub.members_client.index'
-      VCR.insert_cassette 'providers.git_hub.outside_collaborators_client.index'
-
-      get url_for [
-        :new, :xapp, :provider, :redirect,
-        { provider_id: 'GitHub', code: user_creds.code,
-          installation_id: bot_creds.id,
-          setup_action: 'install' }
-      ]
-
-      VCR.eject_cassette
-      VCR.eject_cassette
-      VCR.eject_cassette
-      VCR.eject_cassette
+      VCR.insert_cassettes git_hub_cassettes do
+        get url_for [
+          :new, :xapp, :provider, :redirect,
+          { provider_id: 'GitHub', code: git_hub_creds.user.code,
+            installation_id: git_hub_creds.bot.id,
+            setup_action: 'install' }
+        ]
+      end
     end
   end
 
