@@ -1,5 +1,4 @@
 require 'test_helper'
-require './lib/ext/vcr'
 
 class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
@@ -41,6 +40,8 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
               installation_id: git_hub_creds.bot.id,
               setup_action: 'install' }
           ]
+
+          assert_redirected_to root_path
         end
       end
     end

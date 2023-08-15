@@ -5,6 +5,10 @@ class Account::Company < ApplicationRecord
            class_name: 'Core::Entity',
            as: :account__holder
 
+  has_many :core__resources,
+           class_name: 'Core::Resource',
+           as: :account__holder
+
   has_many :xapp__redirects,
            class_name: 'Xapp::Redirect',
            foreign_key: :account__company_id

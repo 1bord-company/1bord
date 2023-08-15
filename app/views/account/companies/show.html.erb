@@ -9,3 +9,14 @@
     </li>
   <% end %>
 </ul>
+
+<% @company.core__resources.each do |resource| %>
+  <%= render "icons/#{resource.provider.underscore}", classes: 'icon icon--medium' %>
+  <%= resource.name %>
+
+  <ul>
+  <% resource.personas.each do |persona| %>
+    <li><%= render persona %></li>
+  <% end %>
+  </ul>
+<% end %>
