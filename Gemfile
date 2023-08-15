@@ -80,3 +80,7 @@ gem "vcr", "~> 6.2", :group => :test
 gem "webmock", "~> 3.18", :group => :test
 
 gem "jwt", "~> 2.7"
+
+gem 'rubycritic', '~> 4.8', :group => :development, :require => false
+
+gem 'simplecov', '~> 0.22.0', :group => :test, :require => false

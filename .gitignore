@@ -33,3 +33,4 @@
 /config/credentials/test.key
 
 /config/credentials/development.key
+coverage
