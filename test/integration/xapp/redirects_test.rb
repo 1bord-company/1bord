@@ -47,22 +47,36 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'Slack' do
-    bot_creds = Rails.application.credentials.providers.slack.bot
+  {
+    'Xapp::Redirect.count' => 1,
+    'Xapp::Bot.count' => 1,
+    'Xapp::Bot.where.not(external_data: nil).count' => 1,
+    "Sync::Token.where(authorizer_type: 'Xapp::Bot').count" => 1,
+    "Core::Resource.slack.where(external_type: 'Workspace', "\
+      'account__holder: @account__user.company).count' => 1,
+    "Core::Persona.slack.where(external_type: 'User', "\
+      'account__holder: @account__user.company).count' => 3,
+    "Core::Persona.slack.where(external_type: 'Bot', "\
+      'account__holder: @account__user.company).count' => 1,
+    "Core::Role.slack.where(name: 'Member').count" => 2,
+    "Core::Role.slack.where(name: 'PrimaryOwner').count" => 1,
+    "Core::Role.slack.where(name: 'InvitedUser').count" => 1
+  }.each do |check, diff|
+    test "Slack:#{check}" do
+      assert_difference check, diff do
+        VCR.insert_cassettes [
+          'providers.slack.user_access_client#create',
+          'providers.slack.users_client#index'
+        ] do
+          get url_for [
+            :new, :xapp, :provider, :redirect,
+            { provider_id: 'Slack', state: '',
+              code: Rails.application.credentials.providers.slack.bot.code }
+          ]
 
-    assert_difference [
-      -> { Xapp::Redirect.count },
-      -> { Xapp::Bot.where(provider: 'Slack').count },
-      -> { Sync::Token.where(provider: 'Slack').count }
-    ] do
-      VCR.insert_cassette('providers.slack.user_access_client#create')
-
-      get url_for [
-        :new, :xapp, :provider, :redirect,
-        { provider_id: 'Slack', code: bot_creds.code }
-      ]
-
-      VCR.eject_cassette
+          assert_redirected_to root_path
+        end
+      end
     end
   end
 end

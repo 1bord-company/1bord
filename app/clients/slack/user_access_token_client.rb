@@ -32,7 +32,8 @@ class Slack::UserAccessTokenClient
     {
       'external_id' => json['bot_user_id'],
       'access_token' => json['access_token'],
-      'scope' => json['scope']
+      'scope' => json['scope'],
+      'team' => json['team']
     }
   end
 end

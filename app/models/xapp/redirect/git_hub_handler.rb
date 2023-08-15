@@ -50,7 +50,7 @@ module Xapp
           Core::Role.git_hub.create!(
             name: 'Member',
             resource: org,
-            persona: persona,
+            persona: persona
           )
         end
 
