@@ -82,12 +82,15 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
 
   {
     'Xapp::Redirect.count' => 1,
-    "Sync::Token.where(authorizer: @account__user).count" => 1
+    'Sync::Token.where(authorizer: @account__user).count' => 1,
+    "Core::Resource.where(external_type: 'Resource', "\
+      'account__holder: @account__user.company).count' => 1
   }.each do |check, diff|
     test "Jira:#{check}" do
       assert_difference check, diff do
         VCR.insert_cassettes [
-          'providers.jira.user_access_token_client#create'
+          'providers.jira.user_access_token_client#create',
+          'providers.jira.accessible_resources_client#index'
         ] do
           get url_for [
             :new, :xapp, :provider, :redirect,

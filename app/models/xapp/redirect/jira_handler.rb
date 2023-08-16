@@ -11,6 +11,18 @@ module Xapp
           token: token_info['access_token'],
           expires_at: Time.current + token_info['expires_in'].to_i.seconds
         )
+
+        resources =
+          Jira::AccessibleResourcesClient.index(@token.token).map do |resource|
+            Core::Resource.create!(
+              name: resource['name'],
+              external_id: resource['id'],
+              account__holder: Account::Current.company,
+              external_type: 'Resource',
+              external_data: resource,
+              provider: 'Jira'
+            )
+          end
       end
     end
   end

@@ -1,0 +1,59 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.atlassian.com/oauth/token/accessible-resources
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - api.atlassian.com
+      Authorization:
+      - Bearer <CREDENTIAL:providers.jira.bot.token>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 16 Aug 2023 05:39:32 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '230'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Typeoptions:
+      - nosniff
+      Etag:
+      - W/"e6-+0SqSw6nQij5SPx6AB9H+q7EP2s"
+      Server:
+      - AtlassianEdge
+      X-Trace-Id:
+      - bc9365f6c1c3fe96
+      X-Content-Type-Options:
+      - nosniff
+      X-Xss-Protection:
+      - 1; mode=block
+      Atl-Traceid:
+      - bc9365f6c1c3fe96
+      Report-To:
+      - '{"endpoints": [{"url": "https://dz8aopenkvv6s.cloudfront.net"}], "group":
+        "endpoint-1", "include_subdomains": true, "max_age": 600}'
+      Nel:
+      - '{"failure_fraction": 0.001, "include_subdomains": true, "max_age": 600, "report_to":
+        "endpoint-1"}'
+      Strict-Transport-Security:
+      - max-age=63072000; preload
+    body:
+      encoding: UTF-8
+      string: '[{"id":"7b7ab686-79f7-4375-9d1e-327a882f2c0b","url":"https://quester-xyz.atlassian.net","name":"quester-xyz","scopes":["read:jira-user"],"avatarUrl":"https://site-admin-avatar-cdn.prod.public.atl-paas.net/avatars/240/jersey.png"}]'
+  recorded_at: Wed, 16 Aug 2023 05:39:32 GMT
+recorded_with: VCR 6.2.0
