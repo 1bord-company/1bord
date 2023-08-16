@@ -13,6 +13,7 @@ sensitive_data = [
   %i[providers jira app client_secret],
   %i[providers jira bot code],
   %i[providers jira bot token],
+  %i[providers jira bot refresh_token],
 
   %i[providers slack app client_id],
   %i[providers slack app client_secret],

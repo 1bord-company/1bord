@@ -29,12 +29,6 @@ class Jira::UserAccessTokenClient
 
     response = http.request(request)
 
-    json = JSON.parse response.body
-
-    {
-      'expires_in' => json['expires_in'],
-      'access_token' => json['access_token'],
-      'scope' => json['scope']
-    }
+    JSON.parse response.body
   end
 end

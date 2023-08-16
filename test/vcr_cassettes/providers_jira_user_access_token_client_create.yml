@@ -21,15 +21,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 16 Aug 2023 03:50:39 GMT
+      - Wed, 16 Aug 2023 08:16:42 GMT
       Content-Type:
       - application/json;charset=UTF-8
       Content-Length:
-      - '1976'
+      - '3550'
       Server:
       - AtlassianEdge
       Set-Cookie:
-      - JSESSIONID=9B2652CF8FA1A758A4FA341720C8CF52; Path=/; Secure; HttpOnly
+      - JSESSIONID=02F0197E58A6CFFCBDB0F982704A4D9B; Path=/; Secure; HttpOnly
       Vary:
       - Origin,Access-Control-Request-Method,Access-Control-Request-Headers
       Cache-Control:
@@ -43,7 +43,7 @@ http_interactions:
       X-Xss-Protection:
       - 1; mode=block
       Atl-Traceid:
-      - 8d7a8c750fa81f84
+      - a88f92ad3c33cf14
       Report-To:
       - '{"endpoints": [{"url": "https://dz8aopenkvv6s.cloudfront.net"}], "group":
         "endpoint-1", "include_subdomains": true, "max_age": 600}'
@@ -54,6 +54,7 @@ http_interactions:
       - max-age=63072000; preload
     body:
       encoding: UTF-8
-      string: '{"access_token":"<CREDENTIAL:providers.jira.bot.token>","expires_in":3600,"token_type":"Bearer","scope":"read:jira-user"}'
-  recorded_at: Wed, 16 Aug 2023 03:50:39 GMT
+      string: '{"access_token":"<CREDENTIAL:providers.jira.bot.token>","expires_in":3600,"token_type":"Bearer","refresh_token":"<CREDENTIAL:providers.jira.bot.refresh_token>","scope":"offline_access
+        read:jira-user"}'
+  recorded_at: Wed, 16 Aug 2023 08:16:42 GMT
 recorded_with: VCR 6.2.0

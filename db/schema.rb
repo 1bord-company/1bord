@@ -108,6 +108,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_11_095022) do
     t.string "authorizer_type"
     t.bigint "authorizer_id"
     t.datetime "expires_at", precision: nil
+    t.string "refresh_token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -8,6 +8,7 @@ class CreateSyncTokens < ActiveRecord::Migration[7.0]
       t.string :authorizer_type
       t.bigint :authorizer_id
       t.timestamp :expires_at
+      t.string :refresh_token
 
       t.timestamps
     end

@@ -82,7 +82,8 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
 
   {
     'Xapp::Redirect.count' => 1,
-    'Sync::Token.where(authorizer: @account__user).count' => 1,
+    'Sync::Token.where(authorizer: @account__user)'\
+      '.where.not(refresh_token: nil).count' => 1,
     "Core::Resource.where(external_type: 'Resource', "\
       'account__holder: @account__user.company).count' => 1,
     "Core::Persona.where(external_type: 'User').count" => 1,

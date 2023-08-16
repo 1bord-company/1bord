@@ -23,7 +23,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 16 Aug 2023 06:16:41 GMT
+      - Wed, 16 Aug 2023 08:21:57 GMT
       Content-Type:
       - application/json;charset=UTF-8
       Server:
@@ -31,9 +31,9 @@ http_interactions:
       Timing-Allow-Origin:
       - "*"
       X-Arequestid:
-      - d1fd5e8fb70987dafa2bd8c47fb89b84
+      - dc1c13572fd62d1c2ca987d4a5b017e5
       Set-Cookie:
-      - atlassian.xsrf.token=ea9427c831f928a6e42edc4945799403d142740f_lin; Path=/;
+      - atlassian.xsrf.token=5d3320f4b502d66322697fcdf08933eddc88326e_lin; Path=/;
         SameSite=None; Secure
       X-Aaccountid:
       - 557058%3A34b043d6-eaf8-4610-bda1-df750e9036ee
@@ -42,7 +42,7 @@ http_interactions:
       Vary:
       - Accept-Encoding
       X-Trace-Id:
-      - abad9d0166733e1e
+      - a25152f102c3538b
       X-Frame-Options:
       - SameOrigin
       X-Content-Type-Options:
@@ -50,7 +50,7 @@ http_interactions:
       X-Xss-Protection:
       - 1; mode=block
       Atl-Traceid:
-      - abad9d0166733e1e
+      - a25152f102c3538b
       Report-To:
       - '{"endpoints": [{"url": "https://dz8aopenkvv6s.cloudfront.net"}], "group":
         "endpoint-1", "include_subdomains": true, "max_age": 600}'
@@ -76,5 +76,5 @@ http_interactions:
         Migrator","active":true},{"self":"https://api.atlassian.com/ex/jira/7b7ab686-79f7-4375-9d1e-327a882f2c0b/rest/api/3/user?accountId=630db2cd9796033b256bc349","accountId":"630db2cd9796033b256bc349","accountType":"app","avatarUrls":{"48x48":"https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/630db2cd9796033b256bc349/4f3c075d-f5e0-4bef-a0c8-81181a2e1b5d/48","24x24":"https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/630db2cd9796033b256bc349/4f3c075d-f5e0-4bef-a0c8-81181a2e1b5d/24","16x16":"https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/630db2cd9796033b256bc349/4f3c075d-f5e0-4bef-a0c8-81181a2e1b5d/16","32x32":"https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/630db2cd9796033b256bc349/4f3c075d-f5e0-4bef-a0c8-81181a2e1b5d/32"},"displayName":"Atlas
         for Jira Cloud","active":true},{"self":"https://api.atlassian.com/ex/jira/7b7ab686-79f7-4375-9d1e-327a882f2c0b/rest/api/3/user?accountId=712020:81a3636d-6662-42fc-9258-1bb276c262bd","accountId":"712020:81a3636d-6662-42fc-9258-1bb276c262bd","accountType":"app","avatarUrls":{"48x48":"https://secure.gravatar.com/avatar/4ec7ae49006ed5b49f3d79e079846a90?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Fdefault-avatar-6.png","24x24":"https://secure.gravatar.com/avatar/4ec7ae49006ed5b49f3d79e079846a90?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Fdefault-avatar-6.png","16x16":"https://secure.gravatar.com/avatar/4ec7ae49006ed5b49f3d79e079846a90?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Fdefault-avatar-6.png","32x32":"https://secure.gravatar.com/avatar/4ec7ae49006ed5b49f3d79e079846a90?d=https%3A%2F%2Favatar-management--avatars.us-west-2.prod.public.atl-paas.net%2Fdefault-avatar-6.png"},"displayName":"1bord
         Basic","active":true}]'
-  recorded_at: Wed, 16 Aug 2023 06:16:41 GMT
+  recorded_at: Wed, 16 Aug 2023 08:21:57 GMT
 recorded_with: VCR 6.2.0

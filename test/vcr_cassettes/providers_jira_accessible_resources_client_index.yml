@@ -23,7 +23,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 16 Aug 2023 05:39:32 GMT
+      - Wed, 16 Aug 2023 08:20:59 GMT
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
@@ -37,13 +37,13 @@ http_interactions:
       Server:
       - AtlassianEdge
       X-Trace-Id:
-      - bc9365f6c1c3fe96
+      - abb9c4696f54dcd5
       X-Content-Type-Options:
       - nosniff
       X-Xss-Protection:
       - 1; mode=block
       Atl-Traceid:
-      - bc9365f6c1c3fe96
+      - abb9c4696f54dcd5
       Report-To:
       - '{"endpoints": [{"url": "https://dz8aopenkvv6s.cloudfront.net"}], "group":
         "endpoint-1", "include_subdomains": true, "max_age": 600}'
@@ -55,5 +55,5 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '[{"id":"7b7ab686-79f7-4375-9d1e-327a882f2c0b","url":"https://quester-xyz.atlassian.net","name":"quester-xyz","scopes":["read:jira-user"],"avatarUrl":"https://site-admin-avatar-cdn.prod.public.atl-paas.net/avatars/240/jersey.png"}]'
-  recorded_at: Wed, 16 Aug 2023 05:39:32 GMT
+  recorded_at: Wed, 16 Aug 2023 08:20:59 GMT
 recorded_with: VCR 6.2.0
