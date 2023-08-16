@@ -23,6 +23,25 @@ module Xapp
               provider: 'Jira'
             )
           end
+
+        resources.each do |resource|
+          Jira::UsersClient.index(@token.token, resource.external_id).each do |user|
+            persona = Core::Persona.create!(
+              name: user['displayName'],
+              external_id: user['accountId'],
+              external_type: (user['accountType'] == 'app' ? 'Bot' : 'User'),
+              account__holder: Account::Current.company,
+              external_data: user,
+              provider: 'Jira'
+            )
+
+            persona.roles.create!(
+              resource: resource,
+              name: 'Role',
+              provider: 'Jira'
+            )
+          end
+        end
       end
     end
   end
