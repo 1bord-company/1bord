@@ -79,4 +79,25 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
       end
     end
   end
+
+  {
+    'Xapp::Redirect.count' => 1,
+    "Sync::Token.where(authorizer: @account__user).count" => 1
+  }.each do |check, diff|
+    test "Jira:#{check}" do
+      assert_difference check, diff do
+        VCR.insert_cassettes [
+          'providers.jira.user_access_token_client#create'
+        ] do
+          get url_for [
+            :new, :xapp, :provider, :redirect,
+            { provider_id: 'Jira', state: '',
+              code: Rails.application.credentials.providers.jira.bot.code }
+          ]
+
+          assert_redirected_to root_path
+        end
+      end
+    end
+  end
 end

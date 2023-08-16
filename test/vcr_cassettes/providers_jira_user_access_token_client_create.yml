@@ -1,0 +1,59 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://auth.atlassian.com/oauth/token
+    body:
+      encoding: US-ASCII
+      string: grant_type=authorization_code&client_id=<CREDENTIAL:providers.jira.app.client_id>&client_secret=<CREDENTIAL:providers.jira.app.client_secret>&redirect_uri=<URL:host_url>%2Fxapp%2Fproviders%2FJira%2Fredirects%2Fnew&code=<CREDENTIAL:providers.jira.bot.code>
+    headers:
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 16 Aug 2023 03:50:39 GMT
+      Content-Type:
+      - application/json;charset=UTF-8
+      Content-Length:
+      - '1976'
+      Server:
+      - AtlassianEdge
+      Set-Cookie:
+      - JSESSIONID=9B2652CF8FA1A758A4FA341720C8CF52; Path=/; Secure; HttpOnly
+      Vary:
+      - Origin,Access-Control-Request-Method,Access-Control-Request-Headers
+      Cache-Control:
+      - no-store
+      Pragma:
+      - no-cache
+      X-Frame-Options:
+      - DENY
+      X-Content-Type-Options:
+      - nosniff
+      X-Xss-Protection:
+      - 1; mode=block
+      Atl-Traceid:
+      - 8d7a8c750fa81f84
+      Report-To:
+      - '{"endpoints": [{"url": "https://dz8aopenkvv6s.cloudfront.net"}], "group":
+        "endpoint-1", "include_subdomains": true, "max_age": 600}'
+      Nel:
+      - '{"failure_fraction": 0.001, "include_subdomains": true, "max_age": 600, "report_to":
+        "endpoint-1"}'
+      Strict-Transport-Security:
+      - max-age=63072000; preload
+    body:
+      encoding: UTF-8
+      string: '{"access_token":"<CREDENTIAL:providers.jira.bot.token>","expires_in":3600,"token_type":"Bearer","scope":"read:jira-user"}'
+  recorded_at: Wed, 16 Aug 2023 03:50:39 GMT
+recorded_with: VCR 6.2.0

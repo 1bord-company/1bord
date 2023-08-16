@@ -7,6 +7,13 @@ sensitive_data = [
   %i[providers git_hub bot code],
   %i[providers git_hub bot token],
   %i[providers git_hub bot id],
+
+  %i[providers jira app id],
+  %i[providers jira app client_id],
+  %i[providers jira app client_secret],
+  %i[providers jira bot code],
+  %i[providers jira bot token],
+
   %i[providers slack app client_id],
   %i[providers slack app client_secret],
   %i[providers slack bot code],
