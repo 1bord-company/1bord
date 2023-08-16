@@ -16,7 +16,10 @@
 
   <ul>
   <% resource.personas.each do |persona| %>
-    <li><%= render persona %></li>
+    <li>
+      <%= image_tag persona.avatar_url, size: '24' %>
+      <%= render persona %>
+    </li>
   <% end %>
   </ul>
 <% end %>

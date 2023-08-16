@@ -4,6 +4,7 @@ ENV["RAILS_ENV"] ||= "test"
 require_relative "../config/environment"
 require "rails/test_help"
 
+require 'webdrivers_helper'
 require 'vcr_helper'
 
 class ActiveSupport::TestCase
