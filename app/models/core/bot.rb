@@ -1,7 +1,6 @@
 module Core
   class Bot < Entity
     belongs_to :account__company,
-               class_name: 'Account::Company',
                foreign_key: :account__holder_id
 
     has_many :sync__tokens,
