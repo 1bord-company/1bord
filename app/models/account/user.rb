@@ -13,7 +13,6 @@ module Account
     delegate :company, to: :person
 
     has_many :sync__tokens,
-             class_name: 'Sync::Token',
              as: :authorizer
 
 

@@ -9,4 +9,17 @@ class ApplicationRecord < ActiveRecord::Base
 
     super
   end
+
+  def self.has_many(name, scope = nil, **options, &extension)
+    return super if name.to_s.exclude? '__'
+    return super if options[:through]
+
+    options.merge! class_name: name.to_s
+                                   .split('__')
+                                   .map(&:camelize)
+                                   .join('::')
+                                   .singularize
+
+    super
+  end
 end

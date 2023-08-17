@@ -6,7 +6,6 @@ module Account
     has_one :user, inverse_of: :person
 
     has_many :core__personas,
-             class_name: 'Core::Persona',
              as: :account__holder
 
 

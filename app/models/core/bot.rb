@@ -4,7 +4,6 @@ module Core
                foreign_key: :account__holder_id
 
     has_many :sync__tokens,
-             class_name: 'Sync::Token',
              as: :authorizer
 
     def sync__token!
