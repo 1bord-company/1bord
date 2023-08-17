@@ -4,17 +4,9 @@ module Xapp
       def self.handle(redirect)
         token_info = Jira::UserAccessTokenClient.create(code: redirect.params['code'])
 
-        @token = Sync::Token.create!(
-          authorizer: Account::Current.user,
-          provider: 'Jira',
-          scope: token_info['scope'],
-          token: token_info['access_token'],
-          expires_at: Time.current + token_info['expires_in'].to_i.seconds,
-          refresh_token: token_info['refresh_token']
-        )
-
         resources =
-          Jira::AccessibleResourcesClient.index(@token.token).map do |resource|
+          Jira::AccessibleResourcesClient
+          .index(token_info['access_token']).map do |resource|
             Core::Resource.create!(
               name: resource['name'],
               external_id: resource['id'],
@@ -26,7 +18,8 @@ module Xapp
           end
 
         resources.each do |resource|
-          Jira::UsersClient.index(@token.token, resource.external_id).each do |user|
+          Jira::UsersClient
+            .index(token_info['access_token'], resource.external_id).each do |user|
             persona = Core::Persona.create!(
               name: user['displayName'],
               external_id: user['accountId'],
@@ -41,8 +34,25 @@ module Xapp
               name: 'Role',
               provider: 'Jira'
             )
+
+            next if persona.name != '1bord Basic'
+
+            @bot = Xapp::Bot.create!(
+              redirect: redirect,
+              external_id: persona.external_id,
+              provider: 'Jira'
+            )
           end
         end
+
+        @token = Sync::Token.create!(
+          authorizer: @bot,
+          provider: 'Jira',
+          scope: token_info['scope'],
+          token: token_info['access_token'],
+          expires_at: Time.current + token_info['expires_in'].to_i.seconds,
+          refresh_token: token_info['refresh_token']
+        )
       end
     end
   end
