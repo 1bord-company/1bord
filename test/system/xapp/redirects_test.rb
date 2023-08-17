@@ -6,9 +6,6 @@ class Xapp::RedirectsTest < ApplicationSystemTestCase
   def setup
     @account__user = account_users(:one)
     sign_in @account__user
-
-    Xapp::Webhook.destroy_all
-    Xapp::Bot.destroy_all
   end
 
   test 'to home page' do

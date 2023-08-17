@@ -4,11 +4,12 @@ module Xapp
       def self.handle(redirect)
         token_info = Slack::UserAccessTokenClient.create(code: redirect.params['code'])
 
-        @bot = Xapp::Bot.find_or_create_by!(
-          redirect: redirect,
+        @bot = Core::Bot.find_or_create_by!(
           external_id: token_info['bot_user_id'],
+          external_type: 'Bot',
           provider: 'Slack',
-          external_data: token_info
+          external_data: token_info,
+          account__holder: Account::Current.company
         )
 
         @token = Sync::Token.create!(

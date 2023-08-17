@@ -113,17 +113,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_11_095022) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "xapp/bots", force: :cascade do |t|
-    t.string "provider"
-    t.string "external_id"
-    t.bigint "redirect_id", null: false
-    t.jsonb "external_data"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["provider", "external_id"], name: "index_xapp/bots_on_provider_and_external_id", unique: true
-    t.index ["redirect_id"], name: "index_xapp/bots_on_redirect_id", unique: true
-  end
-
   create_table "xapp/redirects", force: :cascade do |t|
     t.string "endpoint"
     t.jsonb "params"
@@ -134,22 +123,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_11_095022) do
     t.index ["account__company_id"], name: "index_xapp/redirects_on_account__company_id"
   end
 
-  create_table "xapp/webhooks", force: :cascade do |t|
-    t.string "endpoint"
-    t.jsonb "payload"
-    t.jsonb "headers"
-    t.bigint "bot_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["bot_id"], name: "index_xapp/webhooks_on_bot_id"
-  end
-
   add_foreign_key "account/people", "account/companies", column: "company_id"
   add_foreign_key "account/users", "account/people", column: "person_id"
   add_foreign_key "core/roles", "core/entities", column: "persona_id"
   add_foreign_key "core/roles", "core/entities", column: "resource_id"
   add_foreign_key "sync/api_calls", "sync/tokens", column: "token_id"
-  add_foreign_key "xapp/bots", "xapp/redirects", column: "redirect_id"
   add_foreign_key "xapp/redirects", "account/companies", column: "account__company_id"
-  add_foreign_key "xapp/webhooks", "xapp/bots", column: "bot_id"
 end

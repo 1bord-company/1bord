@@ -1,6 +1,6 @@
 require "test_helper"
 
-class Xapp::BotTest < ActiveSupport::TestCase
+class Core::BotTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

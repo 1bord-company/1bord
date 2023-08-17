@@ -13,10 +13,11 @@ module Xapp
 
         return if redirect.params['installation_id'].blank?
 
-        @bot = Xapp::Bot.find_or_create_by!(
-          redirect: redirect,
+        @bot = Core::Bot.find_or_create_by!(
           external_id: redirect.params['installation_id'],
-          provider: 'GitHub'
+          external_type: 'Installation',
+          provider: 'GitHub',
+          account__holder: Account::Current.company
         )
 
         @bot.sync__token!

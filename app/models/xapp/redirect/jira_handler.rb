@@ -37,10 +37,12 @@ module Xapp
 
             next if persona.name != '1bord Basic'
 
-            @bot = Xapp::Bot.create!(
-              redirect: redirect,
+            @bot = Core::Bot.create!(
               external_id: persona.external_id,
-              provider: 'Jira'
+              external_type: 'Bot',
+              provider: 'Jira',
+              external_data: persona.external_data,
+              account__holder: Account::Current.company
             )
           end
         end
