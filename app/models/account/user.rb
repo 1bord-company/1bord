@@ -15,6 +15,8 @@ module Account
     has_many :sync__tokens,
              as: :authorizer
 
+    has_many :account__audits,
+             as: :auditor
 
     private
 

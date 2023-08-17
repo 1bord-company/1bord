@@ -6,6 +6,9 @@ module Core
     has_many :sync__tokens,
              as: :authorizer
 
+    has_many :account__audits,
+             as: :auditor
+
     def sync__token!
       sync__token.presence ||
         Sync::Token.create!(
