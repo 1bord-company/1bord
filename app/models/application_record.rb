@@ -5,7 +5,7 @@ class ApplicationRecord < ActiveRecord::Base
     return super unless cross_domain? name
     return super if options[:polymorphic]
 
-    options.merge! class_name: cross_domain_class_name(name)
+    options.merge! class_name: cross_domain_class_name(name).singularize
 
     super
   end
