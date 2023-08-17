@@ -9,7 +9,7 @@ module Xapp
           external_type: 'Bot',
           provider: 'Slack',
           external_data: token_info,
-          account__holder: Account::Current.company
+          account__company: Account::Current.company
         )
 
         @token = Sync::Token.create!(
@@ -26,7 +26,7 @@ module Xapp
           provider: 'Slack',
           external_data: {},
           external_type: 'Workspace',
-          account__holder: @bot.account__company
+          account__company: @bot.account__company
         )
 
         Slack::UsersClient.index(@token.token).each do |member|

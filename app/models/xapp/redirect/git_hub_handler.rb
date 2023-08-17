@@ -17,7 +17,7 @@ module Xapp
           external_id: redirect.params['installation_id'],
           external_type: 'Installation',
           provider: 'GitHub',
-          account__holder: Account::Current.company
+          account__company: Account::Current.company
         )
 
         @bot.sync__token!
@@ -31,7 +31,7 @@ module Xapp
           provider: 'GitHub',
           external_data: account,
           external_type: account['type'],
-          account__holder: @bot.account__company
+          account__company: @bot.account__company
         )
 
         members =

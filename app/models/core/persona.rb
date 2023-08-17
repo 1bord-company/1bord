@@ -1,6 +1,9 @@
 class Core::Persona < Core::Entity
   has_many :roles
 
+  belongs_to :account__holder,
+             polymorphic: true
+
   has_and_belongs_to_many :resources,
                            join_table: 'core/roles'
 

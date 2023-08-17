@@ -3,9 +3,9 @@
 one:
   name: MyString
   email: MyString
-  company: one
+  company_id: 1
 
 two:
   name: MyString
   email: MyString
-  company: two
+  company_id: 2

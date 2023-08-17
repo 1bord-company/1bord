@@ -15,7 +15,7 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     "Sync::Token.where(authorizer_type: 'Account::User').count" => 1,
     "Sync::Token.where(authorizer_type: 'Core::Entity').count" => 1,
     "Core::Resource.git_hub.where(external_type: 'Organization', "\
-      'account__holder: @account__user.company).count' => 1,
+      'account__company: @account__user.company).count' => 1,
     "Core::Persona.git_hub.where(external_type: 'User', "\
       'account__holder: @account__user.company).count' => 4,
     "Core::Role.git_hub.where(name: 'Member').count" => 1,
@@ -50,7 +50,7 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     'Core::Bot.where.not(external_data: nil).count' => 1,
     "Sync::Token.where(authorizer_type: 'Core::Entity').count" => 1,
     "Core::Resource.slack.where(external_type: 'Workspace', "\
-      'account__holder: @account__user.company).count' => 1,
+      'account__company: @account__user.company).count' => 1,
     "Core::Persona.slack.where(external_type: 'User', "\
       'account__holder: @account__user.company).count' => 3,
     "Core::Persona.slack.where(external_type: 'Bot', "\
@@ -83,7 +83,7 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     "Sync::Token.where(authorizer_type: 'Core::Entity')"\
       '.where.not(refresh_token: nil).count' => 1,
     "Core::Resource.where(external_type: 'Resource', "\
-      'account__holder: @account__user.company).count' => 1,
+      'account__company: @account__user.company).count' => 1,
     "Core::Persona.where(external_type: 'User').count" => 1,
     "Core::Persona.where(external_type: 'Bot').count" => 13,
     "Core::Role.jira.where(name: 'Role').count" => 14

@@ -5,7 +5,7 @@ repository_1:
   external_type: MyString
   external_id: MyString
   provider: GitHub
-  account__holder: one (Account::Company)
+  account__company: one
   external_data: 
 
 channel_1:
@@ -13,5 +13,5 @@ channel_1:
   external_type: MyString
   external_id: MyString
   provider: Slack
-  account__holder: two (Account::Company)
+  account__company: two
   external_data: 

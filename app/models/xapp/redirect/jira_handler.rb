@@ -10,7 +10,7 @@ module Xapp
             Core::Resource.create!(
               name: resource['name'],
               external_id: resource['id'],
-              account__holder: Account::Current.company,
+              account__company: Account::Current.company,
               external_type: 'Resource',
               external_data: resource,
               provider: 'Jira'
@@ -42,7 +42,7 @@ module Xapp
               external_type: 'Bot',
               provider: 'Jira',
               external_data: persona.external_data,
-              account__holder: Account::Current.company
+              account__company: Account::Current.company
             )
           end
         end
