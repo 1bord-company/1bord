@@ -2,16 +2,20 @@
 
 repository_1:
   name: MyString
+  type: Ext::Resource
   external_type: MyString
   external_id: MyString
   provider: GitHub
-  account__company: one
+  account__holder_id: 1
+  account__holder_type: Account::Company
   external_data: 
 
 channel_1:
   name: MyString
+  type: Ext::Resource
   external_type: MyString
   external_id: MyString
   provider: Slack
-  account__company: two
+  account__holder_id: 2
+  account__holder_type: Account::Company
   external_data: 

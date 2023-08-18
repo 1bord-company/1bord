@@ -1,7 +1,9 @@
 bot_1:
   name: MyString
+  type: Ext::Bot
   external_type: MyString
   external_id: MyString
   provider: GitHub
-  account__company: one
+  account__holder_id: 1
+  account__holder_type: Account::Company
   external_data: 

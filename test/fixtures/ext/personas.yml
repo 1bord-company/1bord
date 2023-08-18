@@ -2,16 +2,20 @@
 
 one:
   name: MyString
+  type: Ext::Persona
   external_type: MyString
   external_id: MyString
   provider: MyString
-  account__holder: one (Account::Person)
+  account__holder_id: 1
+  account__holder_type: Account::Person
   external_data: 
 
 two:
   name: MyString
+  type: Ext::Persona
   external_type: MyString
   external_id: MyString
   provider: MyString
-  account__holder: one (Account::Company)
+  account__holder_id: 1
+  account__holder_type: Account::Company
   external_data: 
