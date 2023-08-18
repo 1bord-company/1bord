@@ -10,6 +10,8 @@
   <% end %>
 </ul>
 
+<%= button_to 'Reaudit', [:account, :audit] %>
+
 <% @company.ext__resources.each do |resource| %>
   <%= render "icons/#{resource.provider.underscore}", classes: 'icon icon--medium' %>
   <%= resource.name %>

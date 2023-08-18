@@ -11,6 +11,10 @@ module Ext
     has_many :account__audits,
              as: :auditor
 
+    def audit!
+      "#{provider}Auditor".constantize.audit! self
+    end
+
     def token!
       token.presence ||
         Ext::Token.create!(

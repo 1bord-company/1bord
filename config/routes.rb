@@ -5,6 +5,10 @@ Rails.application.routes.draw do
                registrations: 'account/users/registrations'
              }
 
+  namespace :account do
+    resource :audit, only: :create
+  end
+
   root 'account/companies#show'
 
   namespace :xapp do

@@ -4,6 +4,9 @@ class Xapp::RedirectsTest < ApplicationSystemTestCase
   include Devise::Test::IntegrationHelpers
 
   def setup
+    Ext::Bot.destroy_all
+    Ext::Resource.destroy_all
+
     @account__user = account_users(:one)
     sign_in @account__user
   end
@@ -25,11 +28,31 @@ class Xapp::RedirectsTest < ApplicationSystemTestCase
           setup_action: 'install' }
       ]
 
-      resource = @account__user.company.ext__resources.first
-      assert_text resource.name
-      resource.personas.each do |persona|
-        find('img'){ _1['src'] == persona.avatar_url }
-        assert_text persona.name
+      @account__user.company.ext__resources.each do |resource|
+        assert_text resource.name
+        resource.personas.each do |persona|
+          find('img'){ _1['src'] == persona.avatar_url }
+          assert_text persona.name
+        end
+      end
+    end
+
+    Ext::Resource.destroy_all
+    Ext::Persona.destroy_all
+    visit root_path
+
+    VCR.insert_cassettes [
+      'providers.git_hub.members_client.index',
+      'providers.git_hub.outside_collaborators_client.index'
+    ] do
+      click_button 'Reaudit'
+
+      @account__user.company.ext__resources.each do |resource|
+        assert_text resource.name
+        resource.personas.each do |persona|
+          find('img'){ _1['src'] == persona.avatar_url }
+          assert_text persona.name
+        end
       end
     end
   end

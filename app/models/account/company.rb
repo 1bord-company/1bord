@@ -5,7 +5,9 @@ class Account::Company < ApplicationRecord
            foreign_key: :account__holder_id
 
   has_many :ext__bots,
-           foreign_key: :account__holder_id
+           foreign_key: :account__holder_id do
+             def audit! = each(&:audit!)
+           end
 
   has_many :ext__personas,
            as: :account__holder
