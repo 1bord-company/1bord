@@ -1,7 +1,9 @@
 module Ext
   class Bot < Entity
     belongs_to :account__company,
-               foreign_key: :account__holder_id
+               polymorphic: true,
+               foreign_key: :account__holder_id,
+               foreign_type: :account__holder_type
 
     has_many :tokens,
              as: :authorizer
