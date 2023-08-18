@@ -2,7 +2,6 @@ module Ext
   class Bot < Entity
     belongs_to :account__company,
                foreign_key: :account__holder_id
-    before_save -> { self.account__holder_type = 'Account::Company' }
 
     has_many :tokens,
              as: :authorizer
