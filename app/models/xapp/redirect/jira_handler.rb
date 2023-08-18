@@ -7,7 +7,7 @@ module Xapp
         resources =
           Jira::AccessibleResourcesClient
           .index(token_info['access_token']).map do |resource|
-            Core::Resource.create!(
+            Ext::Resource.create!(
               name: resource['name'],
               external_id: resource['id'],
               account__company: Account::Current.company,
@@ -20,7 +20,7 @@ module Xapp
         resources.each do |resource|
           Jira::UsersClient
             .index(token_info['access_token'], resource.external_id).each do |user|
-            persona = Core::Persona.create!(
+            persona = Ext::Persona.create!(
               name: user['displayName'],
               external_id: user['accountId'],
               external_type: (user['accountType'] == 'app' ? 'Bot' : 'User'),
@@ -37,7 +37,7 @@ module Xapp
 
             next if persona.name != '1bord Basic'
 
-            @bot = Core::Bot.create!(
+            @bot = Ext::Bot.create!(
               external_id: persona.external_id,
               external_type: 'Bot',
               provider: 'Jira',

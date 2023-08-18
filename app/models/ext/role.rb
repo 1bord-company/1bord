@@ -1,4 +1,4 @@
-class Core::Role < ApplicationRecord
+class Ext::Role < ApplicationRecord
   include Providable
 
   belongs_to :resource

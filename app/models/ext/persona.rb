@@ -1,11 +1,11 @@
-class Core::Persona < Core::Entity
+class Ext::Persona < Ext::Entity
   has_many :roles
 
   belongs_to :account__holder,
              polymorphic: true
 
   has_and_belongs_to_many :resources,
-                           join_table: 'core/roles'
+                           join_table: 'ext/roles'
 
   has_many :account__audits,
            as: :auditee

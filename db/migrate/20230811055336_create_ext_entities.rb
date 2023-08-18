@@ -1,6 +1,6 @@
-class CreateCoreEntities < ActiveRecord::Migration[7.0]
+class CreateExtEntities < ActiveRecord::Migration[7.0]
   def change
-    create_table 'core/entities' do |t|
+    create_table 'ext/entities' do |t|
       t.string :name
       t.string :type
       t.string :external_type

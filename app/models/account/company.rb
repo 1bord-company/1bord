@@ -1,17 +1,17 @@
 class Account::Company < ApplicationRecord
   has_many :people, inverse_of: :company
 
-  has_many :core__resources,
+  has_many :ext__resources,
            foreign_key: :account__holder_id
 
-  has_many :core__bots,
+  has_many :ext__bots,
            foreign_key: :account__holder_id
 
-  has_many :core__personas,
+  has_many :ext__personas,
            as: :account__holder
 
   has_many :xapp__redirects,
            foreign_key: :account__company_id
 
-  has_many :sync__tokens, through: :core__bots
+  has_many :sync__tokens, through: :ext__bots
 end

@@ -1,6 +1,6 @@
 require "test_helper"
 
-class Core::PersonaTest < ActiveSupport::TestCase
+class Ext::RoleTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

@@ -5,7 +5,7 @@ module Account
 
     has_one :user, inverse_of: :person
 
-    has_many :core__personas,
+    has_many :ext__personas,
              as: :account__holder
 
 

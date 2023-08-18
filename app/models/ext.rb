@@ -1,5 +1,5 @@
-module Core
+module Ext
   def self.table_name_prefix
-    "core/"
+    "ext/"
   end
 end

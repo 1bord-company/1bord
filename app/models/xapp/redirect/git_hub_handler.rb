@@ -13,7 +13,7 @@ module Xapp
 
         return if redirect.params['installation_id'].blank?
 
-        @bot = Core::Bot.find_or_create_by!(
+        @bot = Ext::Bot.find_or_create_by!(
           external_id: redirect.params['installation_id'],
           external_type: 'Installation',
           provider: 'GitHub',
@@ -25,7 +25,7 @@ module Xapp
 
         account = @bot.external_data['account']
 
-        org = Core::Resource.create!(
+        org = Ext::Resource.create!(
           name: account['login'],
           external_id: account['id'],
           provider: 'GitHub',
@@ -39,7 +39,7 @@ module Xapp
           .index @bot.sync__token.token, account['login']
 
         members.each do |member|
-          persona = Core::Persona.create!(
+          persona = Ext::Persona.create!(
             name: member['login'],
             external_id: member['id'],
             provider: 'GitHub',
@@ -48,7 +48,7 @@ module Xapp
             account__holder: @bot.account__company
           )
 
-          Core::Role.git_hub.create!(
+          Ext::Role.git_hub.create!(
             name: 'Member',
             resource: org,
             persona: persona
@@ -60,7 +60,7 @@ module Xapp
           .index @bot.sync__token.token, account['login']
 
         outside_collaborators.each do |member|
-          persona = Core::Persona.create!(
+          persona = Ext::Persona.create!(
             name: member['login'],
             external_id: member['id'],
             provider: 'GitHub',
@@ -69,7 +69,7 @@ module Xapp
             account__holder: @bot.account__company
           )
 
-          Core::Role.git_hub.create!(
+          Ext::Role.git_hub.create!(
             name: 'OutsideCollaborator',
             resource: org,
             persona: persona

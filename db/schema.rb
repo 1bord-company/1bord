@@ -67,7 +67,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_17_232917) do
     t.index ["unlock_token"], name: "index_account/users_on_unlock_token", unique: true
   end
 
-  create_table "core/entities", force: :cascade do |t|
+  create_table "ext/entities", force: :cascade do |t|
     t.string "name"
     t.string "type"
     t.string "external_type"
@@ -80,7 +80,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_17_232917) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "core/roles", force: :cascade do |t|
+  create_table "ext/roles", force: :cascade do |t|
     t.string "name"
     t.string "provider"
     t.bigint "resource_id", null: false
@@ -91,8 +91,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_17_232917) do
     t.datetime "offboarded_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["persona_id"], name: "index_core/roles_on_persona_id"
-    t.index ["resource_id"], name: "index_core/roles_on_resource_id"
+    t.index ["persona_id"], name: "index_ext/roles_on_persona_id"
+    t.index ["resource_id"], name: "index_ext/roles_on_resource_id"
   end
 
   create_table "sync/tokens", force: :cascade do |t|
@@ -120,7 +120,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_17_232917) do
 
   add_foreign_key "account/people", "account/companies", column: "company_id"
   add_foreign_key "account/users", "account/people", column: "person_id"
-  add_foreign_key "core/roles", "core/entities", column: "persona_id"
-  add_foreign_key "core/roles", "core/entities", column: "resource_id"
+  add_foreign_key "ext/roles", "ext/entities", column: "persona_id"
+  add_foreign_key "ext/roles", "ext/entities", column: "resource_id"
   add_foreign_key "xapp/redirects", "account/companies", column: "account__company_id"
 end

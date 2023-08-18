@@ -1,0 +1,7 @@
+bot_1:
+  name: MyString
+  external_type: MyString
+  external_id: MyString
+  provider: GitHub
+  account__company: one
+  external_data: 

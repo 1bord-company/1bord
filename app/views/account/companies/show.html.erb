@@ -10,7 +10,7 @@
   <% end %>
 </ul>
 
-<% @company.core__resources.each do |resource| %>
+<% @company.ext__resources.each do |resource| %>
   <%= render "icons/#{resource.provider.underscore}", classes: 'icon icon--medium' %>
   <%= resource.name %>
 

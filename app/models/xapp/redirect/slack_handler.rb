@@ -4,7 +4,7 @@ module Xapp
       def self.handle(redirect)
         token_info = Slack::UserAccessTokenClient.create(code: redirect.params['code'])
 
-        @bot = Core::Bot.find_or_create_by!(
+        @bot = Ext::Bot.find_or_create_by!(
           external_id: token_info['bot_user_id'],
           external_type: 'Bot',
           provider: 'Slack',
@@ -20,7 +20,7 @@ module Xapp
         )
 
         team_info = token_info['team']
-        @team = Core::Resource.create!(
+        @team = Ext::Resource.create!(
           name: team_info['name'],
           external_id: team_info['id'],
           provider: 'Slack',
@@ -30,7 +30,7 @@ module Xapp
         )
 
         Slack::UsersClient.index(@token.token).each do |member|
-          persona = Core::Persona.create!(
+          persona = Ext::Persona.create!(
             name: member['name'],
             external_id: member['id'],
             external_data: member['data'],
@@ -39,7 +39,7 @@ module Xapp
             provider: 'Slack'
           )
 
-          Core::Role.slack.create!(
+          Ext::Role.slack.create!(
             name: role(member['data']), resource: @team, persona: persona
           )
         end

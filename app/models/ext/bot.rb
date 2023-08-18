@@ -1,4 +1,4 @@
-module Core
+module Ext
   class Bot < Entity
     belongs_to :account__company,
                foreign_key: :account__holder_id

@@ -1,6 +1,6 @@
 require "test_helper"
 
-class Core::ResourceTest < ActiveSupport::TestCase
+class Ext::BotTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

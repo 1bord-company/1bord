@@ -1,4 +1,4 @@
-class Core::Resource < Core::Entity
+class Ext::Resource < Ext::Entity
   has_many :roles
 
   belongs_to :account__company,
@@ -8,5 +8,5 @@ class Core::Resource < Core::Entity
            as: :auditee
 
   has_and_belongs_to_many :personas,
-                          join_table: 'core/roles'
+                          join_table: 'ext/roles'
 end

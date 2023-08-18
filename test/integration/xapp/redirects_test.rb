@@ -10,16 +10,16 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
 
   {
     'Xapp::Redirect.count' => 1,
-    'Core::Bot.count' => 1,
-    'Core::Bot.where.not(external_data: nil).count' => 1,
+    'Ext::Bot.count' => 1,
+    'Ext::Bot.where.not(external_data: nil).count' => 1,
     "Sync::Token.where(authorizer_type: 'Account::User').count" => 1,
-    "Sync::Token.where(authorizer_type: 'Core::Entity').count" => 1,
-    "Core::Resource.git_hub.where(external_type: 'Organization', "\
+    "Sync::Token.where(authorizer_type: 'Ext::Entity').count" => 1,
+    "Ext::Resource.git_hub.where(external_type: 'Organization', "\
       'account__company: @account__user.company).count' => 1,
-    "Core::Persona.git_hub.where(external_type: 'User', "\
+    "Ext::Persona.git_hub.where(external_type: 'User', "\
       'account__holder: @account__user.company).count' => 4,
-    "Core::Role.git_hub.where(name: 'Member').count" => 1,
-    "Core::Role.git_hub.where(name: 'OutsideCollaborator').count" => 3
+    "Ext::Role.git_hub.where(name: 'Member').count" => 1,
+    "Ext::Role.git_hub.where(name: 'OutsideCollaborator').count" => 3
   }.each do |check, diff|
     test "GitHub:#{check}" do
       assert_difference check, diff do
@@ -46,18 +46,18 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
 
   {
     'Xapp::Redirect.count' => 1,
-    'Core::Bot.count' => 1,
-    'Core::Bot.where.not(external_data: nil).count' => 1,
-    "Sync::Token.where(authorizer_type: 'Core::Entity').count" => 1,
-    "Core::Resource.slack.where(external_type: 'Workspace', "\
+    'Ext::Bot.count' => 1,
+    'Ext::Bot.where.not(external_data: nil).count' => 1,
+    "Sync::Token.where(authorizer_type: 'Ext::Entity').count" => 1,
+    "Ext::Resource.slack.where(external_type: 'Workspace', "\
       'account__company: @account__user.company).count' => 1,
-    "Core::Persona.slack.where(external_type: 'User', "\
+    "Ext::Persona.slack.where(external_type: 'User', "\
       'account__holder: @account__user.company).count' => 3,
-    "Core::Persona.slack.where(external_type: 'Bot', "\
+    "Ext::Persona.slack.where(external_type: 'Bot', "\
       'account__holder: @account__user.company).count' => 1,
-    "Core::Role.slack.where(name: 'Member').count" => 2,
-    "Core::Role.slack.where(name: 'PrimaryOwner').count" => 1,
-    "Core::Role.slack.where(name: 'InvitedUser').count" => 1
+    "Ext::Role.slack.where(name: 'Member').count" => 2,
+    "Ext::Role.slack.where(name: 'PrimaryOwner').count" => 1,
+    "Ext::Role.slack.where(name: 'InvitedUser').count" => 1
   }.each do |check, diff|
     test "Slack:#{check}" do
       assert_difference check, diff do
@@ -79,14 +79,14 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
 
   {
     'Xapp::Redirect.count' => 1,
-    'Core::Bot.count' => 1,
-    "Sync::Token.where(authorizer_type: 'Core::Entity')"\
+    'Ext::Bot.count' => 1,
+    "Sync::Token.where(authorizer_type: 'Ext::Entity')"\
       '.where.not(refresh_token: nil).count' => 1,
-    "Core::Resource.where(external_type: 'Resource', "\
+    "Ext::Resource.where(external_type: 'Resource', "\
       'account__company: @account__user.company).count' => 1,
-    "Core::Persona.where(external_type: 'User').count" => 1,
-    "Core::Persona.where(external_type: 'Bot').count" => 13,
-    "Core::Role.jira.where(name: 'Role').count" => 14
+    "Ext::Persona.where(external_type: 'User').count" => 1,
+    "Ext::Persona.where(external_type: 'Bot').count" => 13,
+    "Ext::Role.jira.where(name: 'Role').count" => 14
   }.each do |check, diff|
     test "Jira:#{check}" do
       assert_difference check, diff do

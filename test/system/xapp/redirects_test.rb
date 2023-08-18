@@ -25,7 +25,7 @@ class Xapp::RedirectsTest < ApplicationSystemTestCase
           setup_action: 'install' }
       ]
 
-      resource = @account__user.company.core__resources.first
+      resource = @account__user.company.ext__resources.first
       assert_text resource.name
       resource.personas.each do |persona|
         find('img'){ _1['src'] == persona.avatar_url }
