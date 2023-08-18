@@ -34,6 +34,8 @@ module Xapp
           account__company: @bot.account__company
         )
 
+        Account::Audit.create! auditor: @bot, auditee: org
+
         members =
           GitHub::MembersClient
           .index @bot.token.token, account['login']

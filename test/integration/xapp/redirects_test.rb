@@ -19,7 +19,8 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     "Ext::Persona.git_hub.where(external_type: 'User', "\
       'account__holder: @account__user.company).count' => 4,
     "Ext::Role.git_hub.where(name: 'Member').count" => 1,
-    "Ext::Role.git_hub.where(name: 'OutsideCollaborator').count" => 3
+    "Ext::Role.git_hub.where(name: 'OutsideCollaborator').count" => 3,
+    'Account::Audit.count' => 1
   }.each do |check, diff|
     test "GitHub:#{check}" do
       assert_difference check, diff do
@@ -57,7 +58,8 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
       'account__holder: @account__user.company).count' => 1,
     "Ext::Role.slack.where(name: 'Member').count" => 2,
     "Ext::Role.slack.where(name: 'PrimaryOwner').count" => 1,
-    "Ext::Role.slack.where(name: 'InvitedUser').count" => 1
+    "Ext::Role.slack.where(name: 'InvitedUser').count" => 1,
+    'Account::Audit.count' => 1
   }.each do |check, diff|
     test "Slack:#{check}" do
       assert_difference check, diff do
@@ -86,7 +88,8 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
       'account__company: @account__user.company).count' => 1,
     "Ext::Persona.where(external_type: 'User').count" => 1,
     "Ext::Persona.where(external_type: 'Bot').count" => 13,
-    "Ext::Role.jira.where(name: 'Role').count" => 14
+    "Ext::Role.jira.where(name: 'Role').count" => 14,
+    'Account::Audit.count' => 1
   }.each do |check, diff|
     test "Jira:#{check}" do
       assert_difference check, diff do

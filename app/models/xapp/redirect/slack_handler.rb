@@ -29,6 +29,8 @@ module Xapp
           account__company: @bot.account__company
         )
 
+        Account::Audit.create! auditor: @bot, auditee: @team
+
         Slack::UsersClient.index(@token.token).each do |member|
           persona = Ext::Persona.create!(
             name: member['name'],

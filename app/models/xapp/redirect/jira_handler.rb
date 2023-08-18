@@ -44,6 +44,8 @@ module Xapp
               external_data: persona.external_data,
               account__company: Account::Current.company
             )
+
+            Account::Audit.create! auditor: @bot, auditee: resource
           end
         end
 
