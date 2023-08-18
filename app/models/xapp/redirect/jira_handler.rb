@@ -47,7 +47,7 @@ module Xapp
           end
         end
 
-        @token = Sync::Token.create!(
+        @token = Ext::Token.create!(
           authorizer: @bot,
           provider: 'Jira',
           scope: token_info['scope'],

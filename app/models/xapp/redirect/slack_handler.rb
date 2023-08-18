@@ -12,7 +12,7 @@ module Xapp
           account__company: Account::Current.company
         )
 
-        @token = Sync::Token.create!(
+        @token = Ext::Token.create!(
           authorizer: @bot,
           provider: 'Slack',
           scope: token_info['scope'],

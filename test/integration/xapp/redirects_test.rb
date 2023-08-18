@@ -12,8 +12,8 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     'Xapp::Redirect.count' => 1,
     'Ext::Bot.count' => 1,
     'Ext::Bot.where.not(external_data: nil).count' => 1,
-    "Sync::Token.where(authorizer_type: 'Account::User').count" => 1,
-    "Sync::Token.where(authorizer_type: 'Ext::Entity').count" => 1,
+    "Ext::Token.where(authorizer_type: 'Account::User').count" => 1,
+    "Ext::Token.where(authorizer_type: 'Ext::Entity').count" => 1,
     "Ext::Resource.git_hub.where(external_type: 'Organization', "\
       'account__company: @account__user.company).count' => 1,
     "Ext::Persona.git_hub.where(external_type: 'User', "\
@@ -48,7 +48,7 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     'Xapp::Redirect.count' => 1,
     'Ext::Bot.count' => 1,
     'Ext::Bot.where.not(external_data: nil).count' => 1,
-    "Sync::Token.where(authorizer_type: 'Ext::Entity').count" => 1,
+    "Ext::Token.where(authorizer_type: 'Ext::Entity').count" => 1,
     "Ext::Resource.slack.where(external_type: 'Workspace', "\
       'account__company: @account__user.company).count' => 1,
     "Ext::Persona.slack.where(external_type: 'User', "\
@@ -80,7 +80,7 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
   {
     'Xapp::Redirect.count' => 1,
     'Ext::Bot.count' => 1,
-    "Sync::Token.where(authorizer_type: 'Ext::Entity')"\
+    "Ext::Token.where(authorizer_type: 'Ext::Entity')"\
       '.where.not(refresh_token: nil).count' => 1,
     "Ext::Resource.where(external_type: 'Resource', "\
       'account__company: @account__user.company).count' => 1,

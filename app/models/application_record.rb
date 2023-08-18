@@ -13,7 +13,6 @@ class ApplicationRecord < ActiveRecord::Base
 
     def has_many(name, scope = nil, **options, &extension)
       return super unless cross_domain? name
-      return super if options[:through]
 
       options.merge! class_name: cross_domain_class_name(name).singularize
 

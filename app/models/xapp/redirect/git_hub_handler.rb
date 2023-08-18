@@ -4,7 +4,7 @@ module Xapp
       def self.handle(redirect)
         token_info = GitHub::UserAccessTokenClient.create(code: redirect.params['code'])
 
-        @token = Sync::Token.create!(
+        @token = Ext::Token.create!(
           authorizer: Account::Current.user,
           provider: 'GitHub',
           scope: token_info['scope'],
@@ -20,7 +20,7 @@ module Xapp
           account__company: Account::Current.company
         )
 
-        @bot.sync__token!
+        @bot.token!
         @bot.external_data!
 
         account = @bot.external_data['account']
@@ -36,7 +36,7 @@ module Xapp
 
         members =
           GitHub::MembersClient
-          .index @bot.sync__token.token, account['login']
+          .index @bot.token.token, account['login']
 
         members.each do |member|
           persona = Ext::Persona.create!(
@@ -57,7 +57,7 @@ module Xapp
 
         outside_collaborators =
           GitHub::OutsideCollaboratorsClient
-          .index @bot.sync__token.token, account['login']
+          .index @bot.token.token, account['login']
 
         outside_collaborators.each do |member|
           persona = Ext::Persona.create!(

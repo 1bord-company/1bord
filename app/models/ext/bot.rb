@@ -4,15 +4,15 @@ module Ext
                foreign_key: :account__holder_id
     before_save -> { self.account__holder_type = 'Account::Company' }
 
-    has_many :sync__tokens,
+    has_many :tokens,
              as: :authorizer
 
     has_many :account__audits,
              as: :auditor
 
-    def sync__token!
-      sync__token.presence ||
-        Sync::Token.create!(
+    def token!
+      token.presence ||
+        Ext::Token.create!(
           authorizer: self,
           provider: provider,
           **provider.constantize::BotAccessTokenClient.create(
@@ -21,8 +21,8 @@ module Ext
         )
     end
 
-    def sync__token
-      sync__tokens.valid.first
+    def token
+      tokens.valid.first
     end
 
     def external_data!

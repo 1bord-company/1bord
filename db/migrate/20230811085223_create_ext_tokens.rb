@@ -1,6 +1,6 @@
-class CreateSyncTokens < ActiveRecord::Migration[7.0]
+class CreateExtTokens < ActiveRecord::Migration[7.0]
   def change
-    create_table 'sync/tokens' do |t|
+    create_table 'ext/tokens' do |t|
       t.string :token
       t.string :type
       t.string :provider

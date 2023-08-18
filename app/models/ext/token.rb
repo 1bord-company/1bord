@@ -1,4 +1,4 @@
-class Sync::Token < ApplicationRecord
+class Ext::Token < ApplicationRecord
   belongs_to :authorizer,
              polymorphic: true
 

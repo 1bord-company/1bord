@@ -95,7 +95,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_17_232917) do
     t.index ["resource_id"], name: "index_ext/roles_on_resource_id"
   end
 
-  create_table "sync/tokens", force: :cascade do |t|
+  create_table "ext/tokens", force: :cascade do |t|
     t.string "token"
     t.string "type"
     t.string "provider"

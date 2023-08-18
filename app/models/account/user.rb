@@ -12,7 +12,7 @@ module Account
 
     delegate :company, to: :person
 
-    has_many :sync__tokens,
+    has_many :ext__tokens,
              as: :authorizer
 
     has_many :account__audits,
