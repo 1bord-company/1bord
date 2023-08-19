@@ -6,7 +6,7 @@ class GitHubAuditor
   def audit!
     account = @bot.external_data!['account']
 
-    org = Ext::Resource.create!(
+    org = Ext::Resource.create_or_find_by!(
       name: account['login'],
       external_id: account['id'],
       provider: 'GitHub',
@@ -22,7 +22,7 @@ class GitHubAuditor
       .index @bot.token!.token, account['login']
 
     members.each do |member|
-      persona = Ext::Persona.create!(
+      persona = Ext::Persona.create_or_find_by!(
         name: member['login'],
         external_id: member['id'],
         provider: 'GitHub',
@@ -31,7 +31,7 @@ class GitHubAuditor
         account__holder: @bot.account__company
       )
 
-      Ext::Role.git_hub.create!(
+      Ext::Role.git_hub.create_or_find_by!(
         name: 'Member',
         resource: org,
         persona: persona
@@ -43,7 +43,7 @@ class GitHubAuditor
       .index @bot.token!.token, account['login']
 
     outside_collaborators.each do |member|
-      persona = Ext::Persona.create!(
+      persona = Ext::Persona.create_or_find_by!(
         name: member['login'],
         external_id: member['id'],
         provider: 'GitHub',
@@ -52,7 +52,7 @@ class GitHubAuditor
         account__holder: @bot.account__company
       )
 
-      Ext::Role.git_hub.create!(
+      Ext::Role.git_hub.create_or_find_by!(
         name: 'OutsideCollaborator',
         resource: org,
         persona: persona

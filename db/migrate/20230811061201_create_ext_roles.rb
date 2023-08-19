@@ -16,5 +16,10 @@ class CreateExtRoles < ActiveRecord::Migration[7.0]
 
       t.timestamps
     end
+
+    add_index 'ext/roles',
+              %i[name provider resource_id persona_id],
+              unique: true,
+              name: 'idx_ext/roles[name,provider,resource_id,persona_id]'
   end
 end

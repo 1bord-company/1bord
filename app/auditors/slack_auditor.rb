@@ -5,7 +5,7 @@ class SlackAuditor
 
   def audit!
     team_info = @bot.external_data!['team']
-    @team = Ext::Resource.create!(
+    @team = Ext::Resource.create_or_find_by!(
       name: team_info['name'],
       external_id: team_info['id'],
       provider: 'Slack',
@@ -17,7 +17,7 @@ class SlackAuditor
     Account::Audit.create! auditor: @bot, auditee: @team
 
     Slack::UsersClient.index(@bot.token!.token).each do |member|
-      persona = Ext::Persona.create!(
+      persona = Ext::Persona.create_or_find_by!(
         name: member['name'],
         external_id: member['id'],
         external_data: member['data'],
@@ -26,7 +26,7 @@ class SlackAuditor
         provider: 'Slack'
       )
 
-      Ext::Role.slack.create!(
+      Ext::Role.slack.create_or_find_by!(
         name: role(member['data']), resource: @team, persona: persona
       )
     end

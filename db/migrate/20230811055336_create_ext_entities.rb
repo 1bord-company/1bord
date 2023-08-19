@@ -13,5 +13,12 @@ class CreateExtEntities < ActiveRecord::Migration[7.0]
 
       t.timestamps
     end
+
+    add_index 'ext/entities',
+              %i[external_type external_id
+                 provider
+                 account__holder_id account__holder_type],
+              unique: true,
+              name: 'inx_ext/ents[ext_typ,ext_id,prov,acc__hldr_id,acc__hldr_typ]'
   end
 end

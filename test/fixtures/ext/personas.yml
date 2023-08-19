@@ -1,21 +1,21 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
+  name: Fazil
   type: Ext::Persona
-  external_type: MyString
-  external_id: MyString
-  provider: MyString
+  external_type: User
+  external_id: 123
+  provider: GitHub
   account__holder_id: 1
   account__holder_type: Account::Person
   external_data: 
 
 two:
-  name: MyString
+  name: Basheer
   type: Ext::Persona
-  external_type: MyString
-  external_id: MyString
-  provider: MyString
+  external_type: User
+  external_id: 1234
+  provider: Slack
   account__holder_id: 1
   account__holder_type: Account::Company
   external_data: 

@@ -30,8 +30,8 @@ class Account::JiraReauditsTest < ActionDispatch::IntegrationTest
     "Ext::Resource.where(external_type: 'Resource', "\
       'account__company: @account__user.company).count' => 1,
     "Ext::Persona.where(external_type: 'User').count" => 1,
-    "Ext::Persona.where(external_type: 'Bot').count" => 13,
-    "Ext::Role.jira.where(name: 'Role').count" => 14,
+    "Ext::Persona.where(external_type: 'Bot').count" => 12,
+    "Ext::Role.jira.where(name: 'Role').count" => 13,
     'Account::Audit.count' => 1
   }.each do |check, diff|
     test "Jira:#{check}" do

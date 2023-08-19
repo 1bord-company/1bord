@@ -7,7 +7,7 @@ module Xapp
         resources =
           Jira::AccessibleResourcesClient
           .index(token_info['access_token']).map do |resource|
-            Ext::Resource.create!(
+            Ext::Resource.create_or_find_by!(
               name: resource['name'],
               external_id: resource['id'],
               account__company: Account::Current.company,
@@ -19,34 +19,36 @@ module Xapp
 
         resources.each do |resource|
           Jira::UsersClient
-            .index(token_info['access_token'], resource.external_id).each do |user|
-            persona = Ext::Persona.create!(
-              name: user['displayName'],
-              external_id: user['accountId'],
-              external_type: (user['accountType'] == 'app' ? 'Bot' : 'User'),
-              account__holder: Account::Current.company,
-              external_data: user,
-              provider: 'Jira'
-            )
+            .index(token_info['access_token'], resource.external_id)
+            .each do |user|
+              if user['displayName'] == '1bord Basic'
+                @bot = Ext::Bot.create_or_find_by!(
+                  name: user['displayName'],
+                  external_id: user['accountId'],
+                  external_type: 'Bot',
+                  provider: 'Jira',
+                  external_data: user,
+                  account__company: Account::Current.company
+                )
 
-            persona.roles.create!(
-              resource: resource,
-              name: 'Role',
-              provider: 'Jira'
-            )
+                Account::Audit.create! auditor: @bot, auditee: resource
+              else
+                persona = Ext::Persona.create_or_find_by!(
+                  name: user['displayName'],
+                  external_id: user['accountId'],
+                  external_type: (user['accountType'] == 'app' ? 'Bot' : 'User'),
+                  account__holder: Account::Current.company,
+                  external_data: user,
+                  provider: 'Jira'
+                )
 
-            next if persona.name != '1bord Basic'
-
-            @bot = Ext::Bot.create!(
-              external_id: persona.external_id,
-              external_type: 'Bot',
-              provider: 'Jira',
-              external_data: persona.external_data,
-              account__company: Account::Current.company
-            )
-
-            Account::Audit.create! auditor: @bot, auditee: resource
-          end
+                persona.roles.create_or_find_by!(
+                  resource: resource,
+                  name: 'Role',
+                  provider: 'Jira'
+                )
+              end
+            end
         end
 
         @token = Ext::Token.create!(

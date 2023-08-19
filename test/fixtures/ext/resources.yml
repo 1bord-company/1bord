@@ -1,21 +1,21 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 repository_1:
-  name: MyString
+  name: Main Org
   type: Ext::Resource
-  external_type: MyString
-  external_id: MyString
+  external_type: Organization
+  external_id: 1234
   provider: GitHub
   account__holder_id: 1
   account__holder_type: Account::Company
   external_data: 
 
 channel_1:
-  name: MyString
+  name: General
   type: Ext::Resource
-  external_type: MyString
-  external_id: MyString
+  external_type: Team
+  external_id: 1234
   provider: Slack
-  account__holder_id: 2
+  account__holder_id: 1
   account__holder_type: Account::Company
   external_data: 

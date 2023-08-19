@@ -24,7 +24,9 @@ class Account::GitHubReauditsTest < ActionDispatch::IntegrationTest
           setup_action: 'install' }
       ]
     end
+  end
 
+  def delete_ext_records
     Ext::Resource.destroy_all
     Ext::Persona.destroy_all
     Ext::Role.destroy_all
@@ -40,13 +42,25 @@ class Account::GitHubReauditsTest < ActionDispatch::IntegrationTest
     'Account::Audit.count' => 1
   }.each do |check, diff|
     test "GitHub:#{check}" do
+      assert_difference check, check == 'Account::Audit.count' ? 1 : 0 do
+        VCR.insert_cassettes [
+          'providers.git_hub.installation_client.show',
+          'providers.git_hub.members_client.index',
+          'providers.git_hub.outside_collaborators_client.index'
+        ] do
+          post url_for %i[account audit]
+        end
+      end
+
+      delete_ext_records
+
       assert_difference check, diff do
         VCR.insert_cassettes [
           'providers.git_hub.installation_client.show',
           'providers.git_hub.members_client.index',
           'providers.git_hub.outside_collaborators_client.index'
         ] do
-          post url_for [:account, :audit]
+          post url_for %i[account audit]
         end
       end
     end

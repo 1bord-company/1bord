@@ -1,8 +1,8 @@
 bot_1:
-  name: MyString
+  name: 1bord Basic
   type: Ext::Bot
-  external_type: MyString
-  external_id: MyString
+  external_type: Installation
+  external_id: 123
   provider: GitHub
   account__holder_id: 1
   account__holder_type: Account::Company

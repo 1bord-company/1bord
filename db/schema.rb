@@ -78,6 +78,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_17_232917) do
     t.jsonb "external_data", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["external_type", "external_id", "provider", "account__holder_id", "account__holder_type"], name: "inx_ext/ents[ext_typ,ext_id,prov,acc__hldr_id,acc__hldr_typ]", unique: true
   end
 
   create_table "ext/roles", force: :cascade do |t|
@@ -91,6 +92,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_17_232917) do
     t.datetime "offboarded_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name", "provider", "resource_id", "persona_id"], name: "idx_ext/roles[name,provider,resource_id,persona_id]", unique: true
     t.index ["persona_id"], name: "index_ext/roles_on_persona_id"
     t.index ["resource_id"], name: "index_ext/roles_on_resource_id"
   end
