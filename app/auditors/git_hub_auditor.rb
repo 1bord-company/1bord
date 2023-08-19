@@ -4,7 +4,7 @@ class GitHubAuditor
   def initialize(bot) = @bot = bot
 
   def audit!
-    account = @bot.external_data['account']
+    account = @bot.external_data!['account']
 
     org = Ext::Resource.create!(
       name: account['login'],

@@ -21,7 +21,6 @@ module Xapp
         )
 
         @bot.token!
-        @bot.external_data!
         @bot.audit!
       end
     end
