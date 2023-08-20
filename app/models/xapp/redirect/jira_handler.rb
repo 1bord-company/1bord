@@ -2,7 +2,7 @@ module Xapp
   class Redirect < ApplicationRecord
     class JiraHandler
       def self.handle(redirect)
-        token_info = Jira::UserAccessTokenClient.create(code: redirect.params['code'])
+        token_info = Jira::BotAccessTokenClient.create(code: redirect.params['code'])
 
         resources =
           Jira::AccessibleResourcesClient

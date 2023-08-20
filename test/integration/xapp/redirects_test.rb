@@ -98,7 +98,7 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     test "Jira:#{check}" do
       assert_difference check, diff do
         VCR.insert_cassettes [
-          'providers.jira.user_access_token_client#create',
+          'providers.jira.bot_access_token_client#create',
           'providers.jira.accessible_resources_client#index',
           'providers.jira.users_client#index'
         ] do

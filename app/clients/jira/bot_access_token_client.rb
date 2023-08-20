@@ -1,6 +1,6 @@
 require 'net/http'
 
-class Jira::UserAccessTokenClient
+class Jira::BotAccessTokenClient
   def self.create(code:) = new(code).create
 
   def initialize(code) = @code = code

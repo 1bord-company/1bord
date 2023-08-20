@@ -10,7 +10,7 @@ class Account::JiraReauditsTest < ActionDispatch::IntegrationTest
     Ext::Bot.destroy_all
 
     VCR.insert_cassettes [
-      'providers.jira.user_access_token_client#create',
+      'providers.jira.bot_access_token_client#create',
       'providers.jira.accessible_resources_client#index',
       'providers.jira.users_client#index'
     ] do
