@@ -2,7 +2,7 @@
 <p>Email: <%= @company.email %></p>
 
 <ul>
-  <% %w[git_hub slack jira].each do |provider| %>
+  <% %w[git_hub slack jira heroku].each do |provider| %>
     <li>
       <%= render "icons/#{provider}", classes: 'icon icon--medium' %>
       <%= link_to "Connect to #{provider.camelize}", route_for(provider), target: :_blank %>
