@@ -1,0 +1,54 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://id.heroku.com/oauth/token
+    body:
+      encoding: US-ASCII
+      string: grant_type=authorization_code&client_secret=<CREDENTIAL:providers.heroku.app.client_secret>&code=<CREDENTIAL:providers.heroku.bot.code>
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      Request-Id:
+      - ac057517-ab50-284f-a291-48032d55ad38
+      Set-Cookie:
+      - heroku_session=; domain=.heroku.com; path=/; max-age=0; expires=Thu, 01 Jan
+        1970 00:00:00 GMT; secure
+      - heroku_session_nonce=; domain=.heroku.com; path=/; max-age=0; expires=Thu,
+        01 Jan 1970 00:00:00 GMT; secure
+      - heroku_user_session=; domain=.heroku.com; path=/; max-age=0; expires=Thu,
+        01 Jan 1970 00:00:00 GMT; secure
+      - identity-session=gAAAAABk4fqWNe5aNOoSObOlTQmBgBEykmZU8dFI-0QnbtcsbqfDQeXxFDsc_V63ylwYAMWbM3oCmt7HzzIFi4d1BJknI5xVLFftcWtmRotASgcUQB3MZfbk6FztEeJselyYqI2Ar3Av2-hr0zKA-nhvhtsBdHNm4CX1oRF5E4lvQBl99ipHY88ZydU-KC-Sd8xDeo9reg9MN6ofa9L585kuUEvCl3l8WOF-AUvNMb6kVXV38eU88gahVOd-BRodVZg8TeDtiXm5Rqaa1mVtfS2UyUOE6bkg3n_d_v1Jv7u6DniQ29X81UYFTnCG5Avqc8BQO4arnbbbILqm7SLtofVKUlsDTaCjGGGZHt5IFS5H_KOd0js2s8oPSDMgYQigU9d0sJdpoVkZ3HvzWVft1Q_oiLNK5bstYQ%3D%3D;
+        path=/; expires=Tue, 19 Sep 2023 11:35:50 GMT; HttpOnly; SameSite=None; secure
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Accept-Encoding
+      Via:
+      - 1.1 spaces-router (devel)
+      X-Content-Type-Options:
+      - nosniff
+      Date:
+      - Sun, 20 Aug 2023 11:35:50 GMT
+      Content-Length:
+      - '190'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"access_token":"<CREDENTIAL:providers.heroku.bot.token>","expires_in":28799,"refresh_token":"<CREDENTIAL:providers.heroku.bot.refresh_token>","token_type":"Bearer","user_id":"<CREDENTIAL:providers.heroku.bot.id>","session_nonce":null}'
+  recorded_at: Sun, 20 Aug 2023 11:35:50 GMT
+recorded_with: VCR 6.2.0

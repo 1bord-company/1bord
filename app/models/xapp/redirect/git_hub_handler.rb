@@ -20,7 +20,6 @@ module Xapp
           account__company: Account::Current.company
         )
 
-        @bot.token!
         @bot.audit!
       end
     end
