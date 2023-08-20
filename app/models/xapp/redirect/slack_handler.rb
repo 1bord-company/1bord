@@ -16,7 +16,7 @@ module Xapp
           authorizer: @bot,
           provider: 'Slack',
           scope: token_info['scope'],
-          token: token_info['access_token']
+          access_token: token_info['access_token']
         )
 
         @bot.audit!

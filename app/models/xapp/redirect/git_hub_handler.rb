@@ -8,7 +8,7 @@ module Xapp
           authorizer: Account::Current.user,
           provider: 'GitHub',
           scope: token_info['scope'],
-          token: token_info['access_token']
+          access_token: token_info['access_token']
         )
 
         return if redirect.params['installation_id'].blank?

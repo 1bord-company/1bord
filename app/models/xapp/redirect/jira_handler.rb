@@ -55,7 +55,7 @@ module Xapp
           authorizer: @bot,
           provider: 'Jira',
           scope: token_info['scope'],
-          token: token_info['access_token'],
+          access_token: token_info['access_token'],
           expires_at: Time.current + token_info['expires_in'].to_i.seconds,
           refresh_token: token_info['refresh_token']
         )

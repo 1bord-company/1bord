@@ -19,7 +19,7 @@ class GitHubAuditor
 
     members =
       GitHub::MembersClient
-      .index @bot.token!.token, account['login']
+      .index @bot.token!.access_token, account['login']
 
     members.each do |member|
       persona = Ext::Persona.create_or_find_by!(
@@ -40,7 +40,7 @@ class GitHubAuditor
 
     outside_collaborators =
       GitHub::OutsideCollaboratorsClient
-      .index @bot.token!.token, account['login']
+      .index @bot.token!.access_token, account['login']
 
     outside_collaborators.each do |member|
       persona = Ext::Persona.create_or_find_by!(

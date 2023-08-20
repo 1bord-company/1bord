@@ -6,7 +6,7 @@ class JiraAuditor
   def audit!
     resources =
       Jira::AccessibleResourcesClient
-      .index(@bot.token!.token).map do |resource|
+      .index(@bot.token!.access_token).map do |resource|
         Ext::Resource.create_or_find_by!(
           name: resource['name'],
           external_id: resource['id'],
@@ -19,7 +19,7 @@ class JiraAuditor
 
     resources.each do |resource|
       Jira::UsersClient
-        .index(@bot.token!.token, resource.external_id)
+        .index(@bot.token!.access_token, resource.external_id)
         .each do |user|
           if user['displayName'] == '1bord Basic'
             @bot = Ext::Bot.create_or_find_by!(

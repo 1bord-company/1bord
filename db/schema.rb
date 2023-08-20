@@ -98,7 +98,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_17_232917) do
   end
 
   create_table "ext/tokens", force: :cascade do |t|
-    t.string "token"
+    t.string "access_token"
     t.string "type"
     t.string "provider"
     t.string "scope"

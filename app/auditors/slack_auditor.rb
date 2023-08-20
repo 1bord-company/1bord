@@ -16,7 +16,7 @@ class SlackAuditor
 
     Account::Audit.create! auditor: @bot, auditee: @team
 
-    Slack::UsersClient.index(@bot.token!.token).each do |member|
+    Slack::UsersClient.index(@bot.token!.access_token).each do |member|
       persona = Ext::Persona.create_or_find_by!(
         name: member['name'],
         external_id: member['id'],

@@ -42,7 +42,7 @@ class GitHub::BotAccessTokenClient
     if response.code.to_i == 201
       json_response = JSON.parse(response.body)
       {
-        'token' => json_response['token'],
+        'access_token' => json_response['token'],
         'scope' => json_response['permissions'],
         'expires_at' => json_response['expires_at']
       }
