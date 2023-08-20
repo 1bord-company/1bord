@@ -35,8 +35,11 @@ class Account::JiraReauditsTest < ActionDispatch::IntegrationTest
     'Account::Audit.count' => 1
   }.each do |check, diff|
     test "Jira:#{check}" do
+      Ext::Bot.jira.last.token.update expires_at: 1.second.ago
+
       assert_difference check, diff do
         VCR.insert_cassettes [
+          'providers.jira.bot_access_token_client#create',
           'providers.jira.accessible_resources_client#index',
           'providers.jira.users_client#index'
         ] do

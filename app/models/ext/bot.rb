@@ -21,13 +21,24 @@ module Ext
           authorizer: self,
           provider: provider,
           **provider.constantize::BotAccessTokenClient.create(
-            installation_id: external_id
-          )
+            **refresh_token_params
+          ).slice('access_token', 'refresh_token', 'expires_at', 'expires_in', 'scope')
         )
     end
 
     def token
       tokens.valid.first
+    end
+
+    def refresh_token_params
+      case provider
+      when 'GitHub' then { installation_id: external_id }
+      when 'Jira'   then { refresh_token: refresh_token }
+      end
+    end
+
+    def refresh_token
+      tokens.last.refresh_token
     end
 
     def external_data!
