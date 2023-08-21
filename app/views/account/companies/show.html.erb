@@ -19,7 +19,6 @@
   <ul>
   <% resource.personas.each do |persona| %>
     <li>
-      <%= image_tag persona.avatar_url, size: '24' %>
       <%= render persona %>
     </li>
   <% end %>
