@@ -1,0 +1,66 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.heroku.com/teams/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - application/vnd.heroku+json; version=3
+      User-Agent:
+      - Ruby
+      Authorization:
+      - Bearer <CREDENTIAL:providers.heroku.bot.token>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Accept-Ranges:
+      - id, name, updated_at
+      Cache-Control:
+      - private, no-cache
+      Content-Encoding:
+      - gzip
+      Content-Length:
+      - '235'
+      Content-Range:
+      - name test-team-1bord..test-team-1bord
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 21 Aug 2023 03:06:36 GMT
+      Etag:
+      - '"a82b923292fdbe8f8ee146bfaa3db7db"'
+      Last-Modified:
+      - Sat, 19 Aug 2023 15:03:41 GMT
+      Oauth-Scope:
+      - global
+      Oauth-Scope-Accepted:
+      - global read read-protected write write-protected
+      Ratelimit-Multiplier:
+      - '1'
+      Ratelimit-Remaining:
+      - '4496'
+      Request-Id:
+      - 724314b8-2902-47cb-b42c-d498203a3869,a41ed825-7fe1-3e64-2e40-948f5320dcf2,cc664620-8cf0-9a3d-2cf8-a250cd16e977
+      Traceparent:
+      - 00-d420286357e34f9472dbde4b8628d652-5dbb1e7779a56f50-01
+      Vary:
+      - Authorization,Accept-Encoding
+      Via:
+      - 1.1 spaces-router (devel), 1.1 spaces-router (devel)
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.040581224'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAM3Z4GQAA4SOzUrGMBBF3yXrBpK01abP4eoTCZNkioH8lGQqfIjv7qjo1uVw77lznt9FimIXx6PV3tsg/aZnuaxGSzs/bBIsbCouQZkDxCRCRyCMDogZo8ws1Sa1fdLrruZ90TfuXGf8t8M7MZEL0KMLLWcMlFodYqd+4SQiHnBl5g/Ig2+shP3saaCDENpVOapXzhPLc5bo7s7e3vjov0HB4rGP13S6nEpiwKyTqFCQrQgHSUIoUvvWIwt944MdWDyngHXg+HvfW/6iIJZUuUv382cEivh4+QQAAP//AwD09grZQgEAAA==
+  recorded_at: Mon, 21 Aug 2023 03:06:36 GMT
+recorded_with: VCR 6.2.0

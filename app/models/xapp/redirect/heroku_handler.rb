@@ -17,6 +17,7 @@ module Xapp
           expires_at: Time.current + token_info['expires_in'].to_i.seconds,
           refresh_token: token_info['refresh_token']
 
+        @bot.audit!
       end
     end
   end
