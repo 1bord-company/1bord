@@ -1,3 +1,5 @@
+require 'net/http'
+
 module Heroku
   class BotAccessTokenClient
     BASE_URL = 'https://id.heroku.com'.freeze
