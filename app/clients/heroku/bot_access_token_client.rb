@@ -4,18 +4,16 @@ module Heroku
   class BotAccessTokenClient
     BASE_URL = 'https://id.heroku.com'.freeze
 
-    def self.create(code:) = new(code).create
+    def self.create(code: nil, refresh_token: nil)
+      new(code, refresh_token).create
+    end
 
-    def initialize(code) = @code = code
+    def initialize(code, refresh_token)
+      @code = code
+      @refresh_token = refresh_token
+    end
 
     def create
-      data = {
-        'grant_type' => 'authorization_code',
-        'client_secret' => Rails.application.credentials.providers.heroku
-                                .app.client_secret,
-        'code' => @code
-      }
-
       url = "#{BASE_URL}/oauth/token"
 
       uri = URI.parse url
@@ -29,5 +27,19 @@ module Heroku
 
       JSON.parse response.body
     end
+
+    private
+
+    def data
+      {
+        'client_secret' => Rails.application.credentials.providers.heroku
+                                .app.client_secret,
+      }.tap do |base|
+        @code && base.merge!({ 'grant_type' => 'authorization_code',
+                              'code' => @code })
+        @refresh_token && base.merge!({ 'grant_type' => 'refresh_token',
+                                       'refresh_token' => @refresh_token })
+        end
+      end
   end
 end

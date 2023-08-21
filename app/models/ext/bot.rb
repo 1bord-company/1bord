@@ -32,8 +32,8 @@ module Ext
 
     def refresh_token_params
       case provider
-      when 'GitHub' then { installation_id: external_id }
-      when 'Jira'   then { refresh_token: refresh_token }
+      when 'GitHub'           then { installation_id: external_id }
+      when 'Jira', 'Heroku'   then { refresh_token: refresh_token }
       end
     end
 
