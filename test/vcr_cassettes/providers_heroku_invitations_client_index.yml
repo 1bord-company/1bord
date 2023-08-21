@@ -1,0 +1,56 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.heroku.com/teams/f791bb9c-b813-4521-9368-a9a80d4c02fa/invitations
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - application/vnd.heroku+json; version=3
+      User-Agent:
+      - Ruby
+      Authorization:
+      - Bearer <CREDENTIAL:providers.heroku.bot.token>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - private, no-cache
+      Content-Length:
+      - '289'
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 21 Aug 2023 08:31:07 GMT
+      Oauth-Scope:
+      - global
+      Oauth-Scope-Accepted:
+      - global
+      Ratelimit-Multiplier:
+      - '1'
+      Ratelimit-Remaining:
+      - '4494'
+      Request-Id:
+      - f84129a2-5ddc-4df2-bf17-c6fdbfbb8426,1397732a-f807-bab1-2ba7-6886a427c04f,4cc2e014-bd0b-a919-78ac-2a6114c805d9
+      Traceparent:
+      - 00-35ce10f2938da02adf6f8f0daa14e0a6-3ae04089395a4820-01
+      Vary:
+      - Authorization,Accept-Encoding
+      Via:
+      - 1.1 spaces-router (devel), 1.1 spaces-router (devel)
+      X-Content-Type-Options:
+      - nosniff
+      X-Runtime:
+      - '0.057252634'
+    body:
+      encoding: ASCII-8BIT
+      string: '[{"id":"45789bae-8618-45e7-85a9-3c76abb8fe6a","created_at":"2023-08-21T08:12:09Z","invited_by":{"id":"<CREDENTIAL:providers.heroku.bot.id>","email":"fazil.basheer@quester.xyz","name":"Fazil
+        Basheer"},"role":"member","team":{"id":"f791bb9c-b813-4521-9368-a9a80d4c02fa","name":"test-team-1bord"},"updated_at":"2023-08-21T08:12:09Z","user":{"id":"ca047670-4998-4052-8582-6e0d096092a8","email":"fazil@hey.com","name":null}}]'
+  recorded_at: Mon, 21 Aug 2023 08:31:07 GMT
+recorded_with: VCR 6.2.0

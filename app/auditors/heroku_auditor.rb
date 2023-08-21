@@ -34,6 +34,24 @@ class HerokuAuditor
             provider: 'Heroku',
             name: member_data['role']
         end
+
+      Heroku::InvitationsClient
+        .index(@bot.token!.access_token, team.external_id)
+        .each do |invitation_data|
+          persona = Ext::Persona.create_or_find_by! \
+            name: invitation_data['user']['name'],
+            external_id: invitation_data['user']['id'],
+            external_type: 'User',
+            external_data: invitation_data,
+            provider: 'Heroku',
+            account__holder: @bot.account__company
+
+          Ext::Role.create_or_find_by! \
+            persona: persona,
+            resource: team,
+            provider: 'Heroku',
+            name: invitation_data['role']
+        end
     end
   end
 end
