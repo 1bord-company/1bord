@@ -127,7 +127,7 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     "Ext::Role.where(name: 'member').count" => 1,
     # "Ext::Persona.where(external_type: 'Bot').count" => 12,
     # "Ext::Role.heroku.where(name: 'Role').count" => 13,
-    # 'Account::Audit.count' => 1
+    'Account::Audit.count' => 1
   }.each do |check, diff|
     test "Heroku:#{check}" do
       assert_difference check, diff do

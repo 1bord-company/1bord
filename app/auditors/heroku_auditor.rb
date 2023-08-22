@@ -52,6 +52,10 @@ class HerokuAuditor
             provider: 'Heroku',
             name: invitation_data['role']
         end
+
+      Account::Audit.create! \
+        auditor: @bot,
+        auditee: team
     end
   end
 end
