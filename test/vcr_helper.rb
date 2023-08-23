@@ -1,40 +1,19 @@
 require 'vcr'
 require './lib/ext/vcr'
 
-sensitive_data = [
-  %i[providers git_hub app client_id],
-  %i[providers git_hub app client_secret],
-  %i[providers git_hub bot code],
-  %i[providers git_hub bot token],
-  %i[providers git_hub bot id],
+sensitive_data =
+  %i[git_hub jira slack heroku google].flat_map do |provider|
+  [
+    [:providers, provider, :app, :id],
+    [:providers, provider, :app, :client_id],
+    [:providers, provider, :app, :client_secret],
 
-  %i[providers jira app id],
-  %i[providers jira app client_id],
-  %i[providers jira app client_secret],
-  %i[providers jira bot code],
-  %i[providers jira bot token],
-  %i[providers jira bot refresh_token],
-
-  %i[providers slack app client_id],
-  %i[providers slack app client_secret],
-  %i[providers slack bot code],
-  %i[providers slack bot token],
-  %i[providers slack bot id],
-
-  %i[providers heroku app client_id],
-  %i[providers heroku app client_secret],
-  %i[providers heroku bot code],
-  %i[providers heroku bot token],
-  %i[providers heroku bot id],
-  %i[providers heroku bot refresh_token],
-
-  %i[providers google app client_id],
-  %i[providers google app client_secret],
-  %i[providers google bot code],
-  %i[providers google bot token],
-  %i[providers google bot id],
-  %i[providers google bot refresh_token]
-]
+    [:providers, provider, :bot, :id],
+    [:providers, provider, :bot, :code],
+    [:providers, provider, :bot, :token],
+    [:providers, provider, :bot, :refresh_token],
+  ]
+end
 
 VCR.configure do |config|
   config.ignore_hosts '127.0.0.1'
