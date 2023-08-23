@@ -11,6 +11,8 @@ class Ext::Persona < Ext::Entity
 
   def email
     case provider
+    when 'Slack'  then external_data.dig 'profile', 'email'
+    when 'Jira'   then external_data.dig 'emailAddress'
     when 'Heroku' then external_data.dig 'user', 'email'
     when 'Google' then external_data.dig 'primaryEmail'
     end
