@@ -12,6 +12,7 @@ class Ext::Persona < Ext::Entity
   def email
     case provider
     when 'Heroku' then external_data.dig 'user', 'email'
+    when 'Google' then external_data.dig 'primaryEmail'
     end
   end
 
