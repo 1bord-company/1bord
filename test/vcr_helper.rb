@@ -21,13 +21,19 @@ sensitive_data = [
   %i[providers slack bot token],
   %i[providers slack bot id],
 
-
   %i[providers heroku app client_id],
   %i[providers heroku app client_secret],
   %i[providers heroku bot code],
   %i[providers heroku bot token],
   %i[providers heroku bot id],
-  %i[providers heroku bot refresh_token]
+  %i[providers heroku bot refresh_token],
+
+  %i[providers google app client_id],
+  %i[providers google app client_secret],
+  %i[providers google bot code],
+  %i[providers google bot token],
+  %i[providers google bot id],
+  %i[providers google bot refresh_token]
 ]
 
 VCR.configure do |config|
