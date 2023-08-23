@@ -1,11 +1,13 @@
 <h1>Company: <%= @company.name %></h1>
 <p>Email: <%= @company.email %></p>
 
-<ul>
+<h2>Add a new connection</h2>
+<ul class="new-connections">
   <% %w[git_hub slack jira heroku google].each do |provider| %>
-    <li>
-      <%= render "icons/#{provider}", classes: 'icon icon--medium' %>
-      <%= link_to "Connect to #{provider.camelize}", route_for(provider), target: :_blank %>
+    <li class="new-connection">
+      <%= link_to route_for(provider), title: provider.camelize, class: "outline", target: :_blank, role: :button do %>
+        <%= render "icons/#{provider}", classes: 'icon icon--medium' %>
+      <% end %>
     </li>
   <% end %>
 </ul>
