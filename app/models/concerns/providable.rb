@@ -6,5 +6,6 @@ module Providable
     scope :slack, -> { where(provider: 'Slack') }
     scope :jira, -> { where(provider: 'Jira') }
     scope :heroku, -> { where(provider: 'Heroku') }
+    scope :google, -> { where provider: 'Google' }
   end
 end

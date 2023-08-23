@@ -5,6 +5,7 @@ module Xapp
         token_info = Google::BotAccessTokenClient.create(code: redirect.params['code'])
 
         @bot = Ext::Bot.create_or_find_by! \
+          external_id: "google-#{Account::Current.company.id}",
           external_type: 'Bot',
           provider: 'Google',
           account__company: Account::Current.company

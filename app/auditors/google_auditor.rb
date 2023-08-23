@@ -11,6 +11,7 @@ class GoogleAuditor
     domains_users.each do |domain_name, users_data|
       domain = Ext::Resource.create_or_find_by! \
         name: domain_name,
+        external_id: "#{domain_name}-#{@bot.account__company.id}",
         external_type: 'Domain',
         provider: 'Google',
         account__company: @bot.account__company
