@@ -12,7 +12,9 @@
   <% end %>
 </ul>
 
-<%= button_to 'Reaudit', [:account, :audit] %>
+<%= button_to 'Reaudit', [:account, :audit],
+              data: { controller: 'buttons--busy',
+                      action: 'buttons--busy#busy' } %>
 
 <% @company.ext__resources.each do |resource| %>
   <%= render "icons/#{resource.provider.underscore}", classes: 'icon icon--medium' %>
