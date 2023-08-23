@@ -1,3 +1,5 @@
+require 'net/http'
+
 module Google
   class UsersClient
     def self.index(token) = new(token).index

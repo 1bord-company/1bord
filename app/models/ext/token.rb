@@ -1,4 +1,6 @@
 class Ext::Token < ApplicationRecord
+  include Providable
+
   belongs_to :authorizer,
              polymorphic: true
 
