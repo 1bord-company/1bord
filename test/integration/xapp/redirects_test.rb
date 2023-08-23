@@ -154,20 +154,18 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     'Ext::Bot.where(account__company: @account__user.company).count' => 1,
     "Ext::Token.where(authorizer_type: 'Ext::Entity')"\
       '.where.not(refresh_token: nil).count' => 1,
-    # "Ext::Resource.where(external_type: 'Team', "\
-      # 'account__company: @account__user.company).count' => 1,
-    # "Ext::Persona.where(external_type: 'User').count" => 3,
-    # "Ext::Role.where(name: 'admin').count" => 1,
-    # "Ext::Role.where(name: 'collaborator').count" => 1,
-    # "Ext::Role.where(name: 'member').count" => 1,
-    # "Ext::Persona.where(external_type: 'Bot').count" => 12,
-    # "Ext::Role.heroku.where(name: 'Role').count" => 13,
-    # 'Account::Audit.count' => 1
+    "Ext::Resource.where(external_type: 'Domain', "\
+      'account__company: @account__user.company).count' => 1,
+    "Ext::Persona.where(external_type: 'User').count" => 2,
+    "Ext::Role.where(name: 'admin').count" => 1,
+    "Ext::Role.where(name: 'member').count" => 1,
+    'Account::Audit.count' => 1
   }.each do |check, diff|
     test "Google:#{check}" do
       assert_difference check, diff do
         VCR.insert_cassettes [
           'providers.google.bot_access_token_client#create',
+          'providers.google.users_client#index',
         ] do
           get url_for [
             :new, :xapp, :provider, :redirect,
