@@ -84,3 +84,5 @@ gem "jwt", "~> 2.7"
 gem 'rubycritic', '~> 4.8', :group => :development, :require => false
 
 gem 'simplecov', '~> 0.22.0', :group => :test, :require => false
+
+gem "dartsass-rails", "~> 0.5.0"
