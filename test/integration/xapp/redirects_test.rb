@@ -178,4 +178,34 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
       end
     end
   end
+
+  {
+    'Xapp::Redirect.count' => 1,
+    'Ext::Bot.where(account__company: @account__user.company).count' => 1,
+    "Ext::Token.where(authorizer_type: 'Ext::Entity')"\
+      '.where.not(refresh_token: nil).count' => 1,
+    # "Ext::Resource.where(external_type: 'Domain', "\
+      # 'account__company: @account__user.company).count' => 1,
+    # "Ext::Persona.where(external_type: 'User').count" => 2,
+    # "Ext::Role.where(name: 'admin').count" => 1,
+    # "Ext::Role.where(name: 'member').count" => 1,
+    # 'Account::Audit.count' => 1
+  }.each do |check, diff|
+    test "Asana:#{check}" do
+      assert_difference check, diff do
+        VCR.insert_cassettes [
+          'providers.asana.bot_access_token_client#create',
+          # 'providers.google.users_client#index',
+        ] do
+          get url_for [
+            :new, :xapp, :provider, :redirect,
+            { provider_id: 'Asana', state: '',
+              code: Rails.application.credentials.providers.asana.bot.code }
+          ]
+
+          assert_redirected_to root_path
+        end
+      end
+    end
+  end
 end

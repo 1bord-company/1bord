@@ -2,7 +2,7 @@ require 'vcr'
 require './lib/ext/vcr'
 
 sensitive_data =
-  %i[git_hub jira slack heroku google].flat_map do |provider|
+  %i[git_hub jira slack heroku google asana].flat_map do |provider|
   [
     [:providers, provider, :app, :id],
     [:providers, provider, :app, :client_id],
