@@ -14,19 +14,26 @@
   </ul>
 </section>
 
-<%= button_to 'Reaudit', [:account, :audit],
-              data: { controller: 'buttons--busy',
-                      action: 'buttons--busy#busy' } %>
+<section class="connections">
+  <hgroup class="connections__heading">
+    <h2 class="connections__title">Existing connections</h2>
 
-<% @company.ext__resources.each do |resource| %>
-  <%= render "icons/#{resource.provider.underscore}", classes: 'connection__icon' %>
-  <%= resource.name %>
+    <%= button_to [:account, :audit],
+                  title: 'Reaudit',
+                  form_class: 'connections__reaudit',
+                  data: { controller: 'buttons--busy',
+                          action: 'buttons--busy#busy' } do %>
 
-  <ul>
-  <% resource.personas.each do |persona| %>
-    <li>
-      <%= render persona %>
-    </li>
+      <%= render 'icons/refresh', classes: 'connections__icon' %>
+    <% end %>
+  </hgroup>
+
+  <% @company.ext__resources.each do |resource| %>
+    <table>
+      <thead><%= render resource %></thead>
+      <tbody>
+        <%= render resource.personas %>
+      </tbody>
+    </table>
   <% end %>
-  </ul>
-<% end %>
+</section>

@@ -1,3 +1,6 @@
-<%= image_tag persona.avatar_url, size: '24' %>
-<%= persona.name %>
-<%= persona.email %>
+<tr class="persona">
+  <td class="persona__avatar"><%= image_tag persona.avatar_url, size: '24' %></td>
+  <td class="persona__name"><%= persona.name %></td>
+  <td class="persona__role"><%= persona.external_type %> <%= persona.roles.pluck(:name).to_sentence %></td>
+  <td class="persona__email"><%= persona.email %></td>
+</tr>

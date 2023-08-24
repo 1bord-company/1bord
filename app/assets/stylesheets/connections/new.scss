@@ -13,12 +13,14 @@
   &__button {
     --background-color: unset;
     --border-radius: 100%;
+    --color: var(--color);
 
     aspect-ratio: 1;
     display: flex;
 
     &:hover {
       --background-color: unset;
+      --color: var(--color);
     }
   }
 

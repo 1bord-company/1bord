@@ -1,0 +1,44 @@
+@use 'icons' as icons;
+
+.connections {
+  &__heading {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+  }
+
+  &__title {
+    display: inline;
+  }
+
+  &__reaudit {
+    display: inline-flex;
+
+    button {
+      --background-color: transparent;
+      --color: var(--primary);
+      aspect-ratio: 1;
+      --border-radius: 100%;
+      display: flex;
+      margin: auto;
+
+      &[aria-busy=true] {
+        .connections__icon {
+          display: none;
+        }
+
+        &::before {
+          height: 36px;
+          width: 36px;
+          margin: auto;
+        }
+      }
+    }
+  }
+
+  &__icon {
+    @include icons.icon--medium;
+
+    margin: auto;
+  }
+}
