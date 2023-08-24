@@ -20,9 +20,15 @@ module Ext
         Ext::Token.create!(
           authorizer: self,
           provider: provider,
-          **provider.constantize::BotAccessTokenClient.create(
-            **refresh_token_params
-          ).slice('access_token', 'refresh_token', 'expires_at', 'expires_in', 'scope')
+
+          **{ 'refresh_token' => tokens.last.refresh_token }
+            .merge(
+              provider.constantize::BotAccessTokenClient.create(
+                **refresh_token_params
+              )
+            )
+            .slice('access_token', 'refresh_token',
+                   'expires_at', 'expires_in', 'scope')
         )
     end
 
