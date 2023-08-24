@@ -21,7 +21,7 @@ module Ext
           authorizer: self,
           provider: provider,
 
-          **{ 'refresh_token' => tokens.last.refresh_token }
+          **{ 'refresh_token' => tokens.last&.refresh_token }
             .merge(
               provider.constantize::BotAccessTokenClient.create(
                 **refresh_token_params
