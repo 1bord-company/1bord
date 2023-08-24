@@ -1,7 +1,0 @@
-.icon {
-  height: var(--icon-size);
-  width: var(--icon-size);
-}
-.icon--small { --icon-size: 24px; }
-.icon--medium { --icon-size: 36px; }
-.icon--large { --icon-size: 48px; }

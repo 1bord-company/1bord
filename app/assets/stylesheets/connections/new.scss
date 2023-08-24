@@ -1,0 +1,30 @@
+@use 'icons' as icons;
+
+.new-connections {
+  &__list {
+    display: flex;
+    gap: 1em;
+  }
+
+  &__item {
+    list-style: none;
+  }
+
+  &__button {
+    --background-color: unset;
+    --border-radius: 100%;
+
+    aspect-ratio: 1;
+    display: flex;
+
+    &:hover {
+      --background-color: unset;
+    }
+  }
+
+  &__icon {
+    @include icons.icon--medium;
+
+    margin: auto;
+  }
+}

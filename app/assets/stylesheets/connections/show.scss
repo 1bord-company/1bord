@@ -1,0 +1,7 @@
+@use 'icons' as icons;
+
+.connection {
+  &__icon {
+    @include icons.icon--medium;
+  }
+}

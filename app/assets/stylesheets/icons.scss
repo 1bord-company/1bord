@@ -1,0 +1,10 @@
+@mixin icon {
+  height: var(--icon-size);
+  width: var(--icon-size);
+}
+
+@mixin icon--medium {
+  @include icon;
+
+  --icon-size: 36px;
+}
