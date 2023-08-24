@@ -4,7 +4,7 @@
 <section class="new-connections">
   <h2 class="new-connections__heading">Add a new connection</h2>
   <ul class="new-connections__list">
-    <% %w[git_hub slack jira heroku google].each do |provider| %>
+    <% %w[git_hub slack jira heroku google asana].each do |provider| %>
       <li class="new-connections__item">
         <%= link_to route_for(provider), title: provider.camelize, class: "new-connections__button", target: :_blank, role: :button do %>
           <%= render "icons/#{provider}", classes: 'new-connections__icon' %>
