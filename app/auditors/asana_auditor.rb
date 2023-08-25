@@ -8,13 +8,15 @@ class AsanaAuditor
     workspaces_data.reject! { _1['name'] == 'Personal Projects' }
 
     workspaces = workspaces_data.map do |workspace_data|
-      Ext::Resource.create_or_find_by! \
-        name: workspace_data['name'],
-        external_id: workspace_data['gid'],
-        provider: 'Asana',
-        external_type: 'Workspace',
-        external_data: workspace_data,
-        account__company: @bot.account__company
+      Ext::Resource
+        .extending(ActiveRecord::CreateOrFindAndUpdateBy)
+        .create_or_find_and_update_by! \
+          name: workspace_data['name'],
+          external_id: workspace_data['gid'],
+          provider: 'Asana',
+          external_type: 'Workspace',
+          external_data: workspace_data,
+          account__company: @bot.account__company
     end
 
     memberships_data = workspaces.flat_map do |workspace|
@@ -36,19 +38,23 @@ class AsanaAuditor
     users_data.each { |user, memberships| users_data[user] = memberships.map { |membership| membership.except 'user' } }
 
     users_data.each do |user_data, memberships_data|
-      persona = Ext::Persona.create_or_find_by! \
-        external_id: user_data['gid'],
-        external_type: 'User',
-        external_data: user_data,
-        provider: 'Asana',
-        account__holder: @bot.account__company,
-        name: user_data['name']
+      persona = Ext::Persona
+        .extending(ActiveRecord::CreateOrFindAndUpdateBy)
+        .create_or_find_and_update_by! \
+          external_id: user_data['gid'],
+          external_type: 'User',
+          external_data: user_data,
+          provider: 'Asana',
+          account__holder: @bot.account__company,
+          name: user_data['name']
 
       memberships_data.each do |membership_data|
-        Ext::Role.asana.create_or_find_by! \
-          name: role(membership_data),
-          persona: persona,
-          resource: workspaces.find { _1.external_id == membership_data['workspace']['gid'] }
+        Ext::Role.asana
+          .extending(ActiveRecord::CreateOrFindAndUpdateBy)
+          .create_or_find_and_update_by! \
+            name: role(membership_data),
+            persona: persona,
+            resource: workspaces.find { _1.external_id == membership_data['workspace']['gid'] }
       end
     end
 

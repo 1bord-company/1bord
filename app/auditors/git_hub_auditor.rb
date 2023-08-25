@@ -6,14 +6,15 @@ class GitHubAuditor
   def audit!
     account = @bot.external_data!['account']
 
-    org = Ext::Resource.create_or_find_by!(
-      name: account['login'],
-      external_id: account['id'],
-      provider: 'GitHub',
-      external_data: account,
-      external_type: account['type'],
-      account__company: @bot.account__company
-    )
+    org = Ext::Resource
+      .extending(ActiveRecord::CreateOrFindAndUpdateBy)
+      .create_or_find_and_update_by! \
+        name: account['login'],
+        external_id: account['id'],
+        provider: 'GitHub',
+        external_data: account,
+        external_type: account['type'],
+        account__company: @bot.account__company
 
     Account::Audit.create! auditor: @bot, auditee: org
 
@@ -22,20 +23,22 @@ class GitHubAuditor
       .index @bot.token!.access_token, account['login']
 
     members.each do |member|
-      persona = Ext::Persona.create_or_find_by!(
-        name: member['login'],
-        external_id: member['id'],
-        provider: 'GitHub',
-        external_data: member['data'],
-        external_type: member['data']['type'],
-        account__holder: @bot.account__company
-      )
+      persona = Ext::Persona
+        .extending(ActiveRecord::CreateOrFindAndUpdateBy)
+        .create_or_find_and_update_by! \
+          name: member['login'],
+          external_id: member['id'],
+          provider: 'GitHub',
+          external_data: member['data'],
+          external_type: member['data']['type'],
+          account__holder: @bot.account__company
 
-      Ext::Role.git_hub.create_or_find_by!(
-        name: 'Member',
-        resource: org,
-        persona: persona
-      )
+      Ext::Role.git_hub
+        .extending(ActiveRecord::CreateOrFindAndUpdateBy)
+        .create_or_find_and_update_by! \
+          name: 'Member',
+          resource: org,
+          persona: persona
     end
 
     outside_collaborators =
@@ -43,20 +46,22 @@ class GitHubAuditor
       .index @bot.token!.access_token, account['login']
 
     outside_collaborators.each do |member|
-      persona = Ext::Persona.create_or_find_by!(
-        name: member['login'],
-        external_id: member['id'],
-        provider: 'GitHub',
-        external_data: member['data'],
-        external_type: member['data']['type'],
-        account__holder: @bot.account__company
-      )
+      persona = Ext::Persona
+        .extending(ActiveRecord::CreateOrFindAndUpdateBy)
+        .create_or_find_and_update_by! \
+          name: member['login'],
+          external_id: member['id'],
+          provider: 'GitHub',
+          external_data: member['data'],
+          external_type: member['data']['type'],
+          account__holder: @bot.account__company
 
-      Ext::Role.git_hub.create_or_find_by!(
-        name: 'OutsideCollaborator',
-        resource: org,
-        persona: persona
-      )
+      Ext::Role.git_hub
+        .extending(ActiveRecord::CreateOrFindAndUpdateBy)
+        .create_or_find_and_update_by! \
+          name: 'OutsideCollaborator',
+          resource: org,
+          persona: persona
     end
   end
 end

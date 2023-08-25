@@ -9,27 +9,33 @@ class GoogleAuditor
     domains_users = data.group_by { _1['primaryEmail'].split('@').last }
 
     domains_users.each do |domain_name, users_data|
-      domain = Ext::Resource.create_or_find_by! \
-        name: domain_name,
-        external_id: "#{domain_name}-#{@bot.account__company.id}",
-        external_type: 'Domain',
-        provider: 'Google',
-        account__company: @bot.account__company
+      domain = Ext::Resource
+        .extending(ActiveRecord::CreateOrFindAndUpdateBy)
+        .create_or_find_and_update_by! \
+          name: domain_name,
+          external_id: "#{domain_name}-#{@bot.account__company.id}",
+          external_type: 'Domain',
+          provider: 'Google',
+          account__company: @bot.account__company
 
       users_data.each do |user_data|
-        persona = Ext::Persona.create_or_find_by! \
-          name: user_data['name']['fullName'],
-          external_id: user_data['id'],
-          external_type: 'User',
-          external_data: user_data,
-          provider: 'Google',
-          account__holder: @bot.account__company
+        persona = Ext::Persona
+          .extending(ActiveRecord::CreateOrFindAndUpdateBy)
+          .create_or_find_and_update_by! \
+            name: user_data['name']['fullName'],
+            external_id: user_data['id'],
+            external_type: 'User',
+            external_data: user_data,
+            provider: 'Google',
+            account__holder: @bot.account__company
 
-        Ext::Role.create_or_find_by! \
-          persona: persona,
-          resource: domain,
-          provider: 'Google',
-          name: user_data['isAdmin'] ? 'admin' : 'member'
+        Ext::Role
+          .extending(ActiveRecord::CreateOrFindAndUpdateBy)
+          .create_or_find_and_update_by! \
+            persona: persona,
+            resource: domain,
+            provider: 'Google',
+            name: user_data['isAdmin'] ? 'admin' : 'member'
       end
 
       Account::Audit.create! \

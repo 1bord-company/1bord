@@ -4,11 +4,13 @@ module Xapp
       def self.handle(redirect)
         token_info = Google::BotAccessTokenClient.create(code: redirect.params['code'])
 
-        @bot = Ext::Bot.create_or_find_by! \
-          external_id: "google-#{Account::Current.company.id}",
-          external_type: 'Bot',
-          provider: 'Google',
-          account__company: Account::Current.company
+        @bot = Ext::Bot
+          .extending(ActiveRecord::CreateOrFindAndUpdateBy)
+          .create_or_find_and_update_by! \
+            external_id: "google-#{Account::Current.company.id}",
+            external_type: 'Bot',
+            provider: 'Google',
+            account__company: Account::Current.company
 
         @token = Ext::Token.create! \
           authorizer: @bot,

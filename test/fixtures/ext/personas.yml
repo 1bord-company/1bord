@@ -8,7 +8,7 @@ one:
   provider: GitHub
   account__holder_id: 1
   account__holder_type: Account::Person
-  external_data: 
+  external_data: '{ a: :a, b: :b }'
 
 two:
   name: Basheer

@@ -5,30 +5,33 @@ class SlackAuditor
 
   def audit!
     team_info = @bot.external_data!['team']
-    @team = Ext::Resource.create_or_find_by!(
-      name: team_info['name'],
-      external_id: team_info['id'],
-      provider: 'Slack',
-      external_data: {},
-      external_type: 'Workspace',
-      account__company: @bot.account__company
-    )
+    @team = Ext::Resource
+      .extending(ActiveRecord::CreateOrFindAndUpdateBy)
+      .create_or_find_and_update_by! \
+        name: team_info['name'],
+        external_id: team_info['id'],
+        provider: 'Slack',
+        external_data: {},
+        external_type: 'Workspace',
+        account__company: @bot.account__company
 
     Account::Audit.create! auditor: @bot, auditee: @team
 
     Slack::UsersClient.index(@bot.token!.access_token).each do |member|
-      persona = Ext::Persona.create_or_find_by!(
-        name: member['name'],
-        external_id: member['id'],
-        external_data: member['data'],
-        external_type: member['data']['is_bot'] ? 'Bot' : 'User',
-        account__holder: @bot.account__company,
-        provider: 'Slack'
-      )
+      persona = Ext::Persona
+        .extending(ActiveRecord::CreateOrFindAndUpdateBy)
+        .create_or_find_and_update_by! \
+          name: member['name'],
+          external_id: member['id'],
+          external_data: member['data'],
+          external_type: member['data']['is_bot'] ? 'Bot' : 'User',
+          account__holder: @bot.account__company,
+          provider: 'Slack'
 
-      Ext::Role.slack.create_or_find_by!(
-        name: role(member['data']), resource: @team, persona: persona
-      )
+      Ext::Role.slack
+        .extending(ActiveRecord::CreateOrFindAndUpdateBy)
+        .create_or_find_and_update_by! \
+          name: role(member['data']), resource: @team, persona: persona
     end
   end
 
