@@ -14,6 +14,8 @@ module Xapp
           authorizer: @bot,
           provider: 'Asana',
           **token_info.slice(*%w[access_token expires_in refresh_token])
+
+        @bot.audit!
       end
     end
   end
