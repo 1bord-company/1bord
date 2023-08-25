@@ -15,6 +15,7 @@ class Ext::Persona < Ext::Entity
     when 'Jira'   then external_data.dig 'emailAddress'
     when 'Heroku' then external_data.dig 'user', 'email'
     when 'Google' then external_data.dig 'primaryEmail'
+    when 'Asana'  then external_data.dig 'email'
     end
   end
 
@@ -23,8 +24,8 @@ class Ext::Persona < Ext::Entity
     when 'GitHub' then external_data['avatar_url']
     when 'Slack' then external_data.dig('profile', 'image_24')
     when 'Jira' then external_data.dig('avatarUrls', '24x24')
-    else gravatar_url
-    end
+    when 'Asana' then external_data.dig 'photo', 'image_36x36'
+    end || gravatar_url
   end
 
   def gravatar_url
