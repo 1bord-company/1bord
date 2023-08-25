@@ -27,17 +27,22 @@ class AsanaAuditor
         .show(@bot.token!.access_token, membership_data['gid'])['data']
     end
 
-    debugger
-      # Ext::Persona.create_or_find_by!(
-        # external_id: user_data['gid'],
-        # provider: 'Asana',
-        # external_type: 'User',
-        # account__holder: @bot.account__company
-      # ).tap do |persona|
-        # persona.update!(
-          # name: persona.name || user_data['name'],
-          # external_data: persona.external_data.merge(user_data),
-        # )
-      # end
+    memberships_data = memberships_data.map do |membership_data|
+      membership_data['user'] = Asana::UsersClient
+        .show(@bot.token!.access_token, membership_data['user']['gid'])['data']
+      membership_data
+    end
+    users_data = memberships_data.group_by { _1['user'] }
+    users_data.each { |user, memberships| users_data[user] = memberships.map { |membership| membership.except 'user' } }
+
+    users_data.each do |user_data, memberships_data|
+      Ext::Persona.create_or_find_by! \
+        external_id: user_data['gid'],
+        external_type: 'User',
+        external_data: user_data,
+        provider: 'Asana',
+        account__holder: @bot.account__company,
+        name: user_data['name']
+    end
   end
 end

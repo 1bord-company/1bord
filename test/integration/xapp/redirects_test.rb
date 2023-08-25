@@ -186,8 +186,8 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
       '.where.not(refresh_token: nil).count' => 1,
     "Ext::Resource.where(external_type: 'Workspace', "\
       'account__company: @account__user.company).count' => 2,
-    # "Ext::Persona.where(external_type: 'User').count" => 6,
-    # "Ext::Persona.where(\"external_data ->> 'email' IS NOT NULL\").count" => 6,
+    "Ext::Persona.where(external_type: 'User').count" => 6,
+    "Ext::Persona.where(\"external_data ->> 'email' IS NOT NULL\").count" => 6,
     # "Ext::Role.where(name: 'admin').count" => 1,
     # "Ext::Role.where(name: 'member').count" => 1,
     # 'Account::Audit.count' => 1
@@ -199,6 +199,7 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
           'providers.asana.workspaces_client#index',
           'providers.asana.workspace_memberships_client#index',
           'providers.asana.workspace_memberships_client#show',
+          'providers.asana.users_client#show',
         ] do
           get url_for [
             :new, :xapp, :provider, :redirect,
