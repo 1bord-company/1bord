@@ -17,26 +17,27 @@ class AsanaAuditor
         account__company: @bot.account__company
     end
 
-    workspaces.each do |workspace|
-      users_data = Asana::UsersClient
+    memberships_data = workspaces.flat_map do |workspace|
+      Asana::WorkspaceMembershipsClient
         .index(@bot.token!.access_token, workspace.external_id)['data']
-
-      users_data.each do |user_data|
-        # user_data.merge! Asana::UsersClient.show(@bot.token!.access_token, user_data['gid'])['data']
-
-        Ext::Persona.create_or_find_by!(
-          external_id: user_data['gid'],
-          provider: 'Asana',
-          external_type: 'User',
-          account__holder: @bot.account__company
-        ).tap do |persona|
-          persona.update!(
-            name: persona.name || user_data['name'],
-            external_data: persona.external_data.merge(user_data),
-          )
-        end
-      end
     end
 
+    memberships_data = memberships_data.map do |membership_data|
+      Asana::WorkspaceMembershipsClient
+        .show(@bot.token!.access_token, membership_data['gid'])['data']
+    end
+
+    debugger
+      # Ext::Persona.create_or_find_by!(
+        # external_id: user_data['gid'],
+        # provider: 'Asana',
+        # external_type: 'User',
+        # account__holder: @bot.account__company
+      # ).tap do |persona|
+        # persona.update!(
+          # name: persona.name || user_data['name'],
+          # external_data: persona.external_data.merge(user_data),
+        # )
+      # end
   end
 end

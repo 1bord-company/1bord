@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://app.asana.com/api/1.0/workspaces/251784408661470/users
+    uri: https://app.asana.com/api/1.0/workspaces/251784408661470/workspace_memberships
     body:
       encoding: US-ASCII
       string: ''
@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 25 Aug 2023 05:57:56 GMT
+      - Fri, 25 Aug 2023 08:19:39 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -49,20 +49,20 @@ http_interactions:
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Datacenter-Time-End:
-      - '1692943076.518'
+      - '1692951579.926'
       X-Loadbalancer:
-      - prod-lb012.ec2
+      - prod-lb013.ec2
     body:
       encoding: ASCII-8BIT
-      string: '{"data":[{"gid":"355994650182782","name":"Bulky","resource_type":"user"},{"gid":"251784392569238","name":"Fazil
-        Basheer Syed","resource_type":"user"},{"gid":"361642490047382","name":"Rohith
-        Sreeramdas","resource_type":"user"},{"gid":"355992264054832","name":"Somesh
-        Choudhary","resource_type":"user"},{"gid":"355992264054822","name":"sudhirk","resource_type":"user"},{"gid":"356113880550137","name":"Syed
-        Zayed Basheer","resource_type":"user"}]}'
-  recorded_at: Fri, 25 Aug 2023 05:57:56 GMT
+      string: '{"data":[{"gid":"251784408733268","user":{"gid":"251784392569238","name":"Fazil
+        Basheer Syed","resource_type":"user"},"resource_type":"workspace_membership","workspace":{"gid":"251784408661470","name":"quester.xyz","resource_type":"workspace"}},{"gid":"355992264054824","user":{"gid":"355992264054822","name":"sudhirk","resource_type":"user"},"resource_type":"workspace_membership","workspace":{"gid":"251784408661470","name":"quester.xyz","resource_type":"workspace"}},{"gid":"355992264054834","user":{"gid":"355992264054832","name":"Somesh
+        Choudhary","resource_type":"user"},"resource_type":"workspace_membership","workspace":{"gid":"251784408661470","name":"quester.xyz","resource_type":"workspace"}},{"gid":"355994650182784","user":{"gid":"355994650182782","name":"Bulky","resource_type":"user"},"resource_type":"workspace_membership","workspace":{"gid":"251784408661470","name":"quester.xyz","resource_type":"workspace"}},{"gid":"356113880550139","user":{"gid":"356113880550137","name":"Syed
+        Zayed Basheer","resource_type":"user"},"resource_type":"workspace_membership","workspace":{"gid":"251784408661470","name":"quester.xyz","resource_type":"workspace"}},{"gid":"361642490047384","user":{"gid":"361642490047382","name":"Rohith
+        Sreeramdas","resource_type":"user"},"resource_type":"workspace_membership","workspace":{"gid":"251784408661470","name":"quester.xyz","resource_type":"workspace"}}]}'
+  recorded_at: Fri, 25 Aug 2023 08:19:40 GMT
 - request:
     method: get
-    uri: https://app.asana.com/api/1.0/workspaces/1205350407117062/users
+    uri: https://app.asana.com/api/1.0/workspaces/1205350407117062/workspace_memberships
     body:
       encoding: US-ASCII
       string: ''
@@ -81,7 +81,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 25 Aug 2023 05:57:57 GMT
+      - Fri, 25 Aug 2023 08:19:41 GMT
       Content-Type:
       - application/json; charset=UTF-8
       Transfer-Encoding:
@@ -109,11 +109,12 @@ http_interactions:
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Datacenter-Time-End:
-      - '1692943077.584'
+      - '1692951581.305'
       X-Loadbalancer:
-      - prod-lb012.ec2
+      - prod-lb011.ec2
     body:
       encoding: ASCII-8BIT
-      string: '{"data":[{"gid":"251784392569238","name":"fazil.basheer@quester.xyz","resource_type":"user"}]}'
-  recorded_at: Fri, 25 Aug 2023 05:57:57 GMT
+      string: '{"data":[{"gid":"1205350407117063","user":{"gid":"251784392569238","name":"fazil.basheer@quester.xyz","resource_type":"user"},"resource_type":"workspace_membership","workspace":{"gid":"1205350407117062","name":"Testing
+        for 1Bord","resource_type":"workspace"}}]}'
+  recorded_at: Fri, 25 Aug 2023 08:19:44 GMT
 recorded_with: VCR 6.2.0
