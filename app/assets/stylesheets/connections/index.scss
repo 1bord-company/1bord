@@ -21,6 +21,8 @@
       --border-radius: 100%;
       display: flex;
       margin: auto;
+      width: 60px;
+      padding: 0px;
 
       &[aria-busy=true] {
         .connections__icon {

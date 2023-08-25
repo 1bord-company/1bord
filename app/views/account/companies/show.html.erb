@@ -1,8 +1,15 @@
 <h1>Company: <%= @company.name %></h1>
 <p>Email: <%= @company.email %></p>
 
+<h2>Connections</h2>
+
 <section class="new-connections">
-  <h2 class="new-connections__heading">Add a new connection</h2>
+  <header>
+    <h3 class="new-connections__heading">Add a new connection</h3>
+    <p>
+      Connect the services you use to view all the people with access right here, in one place.
+    </p>
+  </header>
   <ul class="new-connections__list">
     <% %w[git_hub slack jira heroku google asana].each do |provider| %>
       <li class="new-connections__item">
@@ -16,7 +23,7 @@
 
 <section class="connections">
   <hgroup class="connections__heading">
-    <h2 class="connections__title">Existing connections</h2>
+    <h3 class="connections__title">Existing connections</h3>
 
     <%= button_to [:account, :audit],
                   title: 'Reaudit',
