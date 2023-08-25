@@ -7,5 +7,6 @@ module Providable
     scope :jira, -> { where(provider: 'Jira') }
     scope :heroku, -> { where(provider: 'Heroku') }
     scope :google, -> { where provider: 'Google' }
+    scope :asana, -> { where provider: 'Asana' }
   end
 end

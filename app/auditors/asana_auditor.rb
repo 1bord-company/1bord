@@ -36,13 +36,33 @@ class AsanaAuditor
     users_data.each { |user, memberships| users_data[user] = memberships.map { |membership| membership.except 'user' } }
 
     users_data.each do |user_data, memberships_data|
-      Ext::Persona.create_or_find_by! \
+      persona = Ext::Persona.create_or_find_by! \
         external_id: user_data['gid'],
         external_type: 'User',
         external_data: user_data,
         provider: 'Asana',
         account__holder: @bot.account__company,
         name: user_data['name']
+
+      memberships_data.each do |membership_data|
+        Ext::Role.asana.create_or_find_by! \
+          name: role(membership_data),
+          persona: persona,
+          resource: workspaces.find { _1.external_id == membership_data['workspace']['gid'] }
+      end
     end
+
+    workspaces.each do |workspace|
+      Account::Audit.create! \
+        auditor: @bot,
+        auditee: workspace
+    end
+  end
+
+  def role(membership_data)
+    return 'Admin' if membership_data['is_admin']
+    return 'Guest' if membership_data['is_guest']
+
+    'Member'
   end
 end

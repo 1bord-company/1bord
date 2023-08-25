@@ -188,9 +188,10 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
       'account__company: @account__user.company).count' => 2,
     "Ext::Persona.where(external_type: 'User').count" => 6,
     "Ext::Persona.where(\"external_data ->> 'email' IS NOT NULL\").count" => 6,
-    # "Ext::Role.where(name: 'admin').count" => 1,
-    # "Ext::Role.where(name: 'member').count" => 1,
-    # 'Account::Audit.count' => 1
+    "Ext::Role.where(name: 'Admin').count" => 0,
+    "Ext::Role.where(name: 'Guest').count" => 5,
+    "Ext::Role.where(name: 'Member').count" => 2,
+    'Account::Audit.count' => 2
   }.each do |check, diff|
     test "Asana:#{check}" do
       assert_difference check, diff do
