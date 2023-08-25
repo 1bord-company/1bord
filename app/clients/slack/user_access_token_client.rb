@@ -28,13 +28,6 @@ class Slack::UserAccessTokenClient
     response = http.request(request)
 
     json = JSON.parse response.body
-
-    {
-      'external_id' => json['bot_user_id'],
-      'access_token' => json['access_token'],
-      'scope' => json['scope'],
-      'team' => json['team']
-    }
   end
 end
 

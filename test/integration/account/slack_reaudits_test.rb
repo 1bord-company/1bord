@@ -31,8 +31,8 @@ class Account::SlackReauditsTest < ActionDispatch::IntegrationTest
     "Ext::Persona.slack.where(external_type: 'User', "\
       'account__holder: @account__user.company).count' => 3,
     "Ext::Persona.slack.where(external_type: 'Bot', "\
-      'account__holder: @account__user.company).count' => 1,
-    "Ext::Role.slack.where(name: 'Member').count" => 2,
+      'account__holder: @account__user.company).count' => 0,
+    "Ext::Role.slack.where(name: 'Member').count" => 1,
     "Ext::Role.slack.where(name: 'PrimaryOwner').count" => 1,
     "Ext::Role.slack.where(name: 'InvitedUser').count" => 1,
     'Account::Audit.count' => 1

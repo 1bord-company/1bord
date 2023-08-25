@@ -18,6 +18,8 @@ class SlackAuditor
     Account::Audit.create! auditor: @bot, auditee: @team
 
     Slack::UsersClient.index(@bot.token!.access_token).each do |member|
+      next if member['name'] == 'unbord'
+
       persona = Ext::Persona
         .extending(ActiveRecord::CreateOrFindAndUpdateBy)
         .create_or_find_and_update_by! \
