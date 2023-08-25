@@ -1,0 +1,119 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://app.asana.com/api/1.0/workspaces/251784408661470/users
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Authorization:
+      - Bearer <CREDENTIAL:providers.asana.bot.token>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 25 Aug 2023 05:57:56 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - nginx
+      X-Frame-Options:
+      - DENY
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Content-Security-Policy:
+      - report-uri https://app.asana.com/-/csp_report?report_only=false;default-src
+        'none';frame-src 'none';frame-ancestors 'none'
+      X-Asana-Api-Version:
+      - '1.1'
+      Asana-Change:
+      - name=new_goal_memberships;info=https://forum.asana.com/t/launched-team-sharing-for-goals/378601;affected=true
+      - name=new_user_task_lists;info=https://forum.asana.com/t/update-on-our-planned-api-changes-to-user-task-lists-a-k-a-my-tasks/103828
+      X-Robots-Tag:
+      - none
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Datacenter-Time-End:
+      - '1692943076.518'
+      X-Loadbalancer:
+      - prod-lb012.ec2
+    body:
+      encoding: ASCII-8BIT
+      string: '{"data":[{"gid":"355994650182782","name":"Bulky","resource_type":"user"},{"gid":"251784392569238","name":"Fazil
+        Basheer Syed","resource_type":"user"},{"gid":"361642490047382","name":"Rohith
+        Sreeramdas","resource_type":"user"},{"gid":"355992264054832","name":"Somesh
+        Choudhary","resource_type":"user"},{"gid":"355992264054822","name":"sudhirk","resource_type":"user"},{"gid":"356113880550137","name":"Syed
+        Zayed Basheer","resource_type":"user"}]}'
+  recorded_at: Fri, 25 Aug 2023 05:57:56 GMT
+- request:
+    method: get
+    uri: https://app.asana.com/api/1.0/workspaces/1205350407117062/users
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Authorization:
+      - Bearer <CREDENTIAL:providers.asana.bot.token>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 25 Aug 2023 05:57:57 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - nginx
+      X-Frame-Options:
+      - DENY
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Content-Security-Policy:
+      - report-uri https://app.asana.com/-/csp_report?report_only=false;default-src
+        'none';frame-src 'none';frame-ancestors 'none'
+      X-Asana-Api-Version:
+      - '1.1'
+      Asana-Change:
+      - name=new_goal_memberships;info=https://forum.asana.com/t/launched-team-sharing-for-goals/378601;affected=true
+      - name=new_user_task_lists;info=https://forum.asana.com/t/update-on-our-planned-api-changes-to-user-task-lists-a-k-a-my-tasks/103828
+      X-Robots-Tag:
+      - none
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Datacenter-Time-End:
+      - '1692943077.584'
+      X-Loadbalancer:
+      - prod-lb012.ec2
+    body:
+      encoding: ASCII-8BIT
+      string: '{"data":[{"gid":"251784392569238","name":"fazil.basheer@quester.xyz","resource_type":"user"}]}'
+  recorded_at: Fri, 25 Aug 2023 05:57:57 GMT
+recorded_with: VCR 6.2.0
