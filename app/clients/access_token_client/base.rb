@@ -12,13 +12,11 @@ module AccessTokenClient
     end
 
     def create
-      url = "#{self.class::BASE_URL}/#{self.class::TOKEN_PATH}"
-
-      uri = URI.parse url
+      uri = URI.parse "#{base_url}/#{token_path}"
       http = Net::HTTP.new uri.host, uri.port
       http.use_ssl = true
 
-      request = Net::HTTP::Post.new uri.path
+      request = Net::HTTP::Post.new uri.path, headers
       request.set_form_data data
 
       response = http.request request
@@ -29,7 +27,6 @@ module AccessTokenClient
     private
 
     def data
-      creds = Rails.application.credentials.providers[provider.underscore].app
       {
         'client_secret' => creds.client_secret,
         'client_id' => creds.client_id,
@@ -42,8 +39,10 @@ module AccessTokenClient
       end
     end
 
-    def provider
-      self.class.module_parent_name
-    end
+    def provider   = self.class.module_parent_name
+    def base_url   = self.class::BASE_URL
+    def token_path = self.class::TOKEN_PATH
+    def headers    = {}
+    def creds = Rails.application.credentials.providers[provider.underscore].app
   end
 end
