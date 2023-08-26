@@ -10,9 +10,9 @@ module ResourceClient
 
       request = Net::HTTP::Get.new uri.request_uri, headers
 
-      response = http.request request
+      @response = http.request request
 
-      JSON.parse response.body
+      JSON.parse response_body
     end
 
     def initialize(token) = @token = token
@@ -22,5 +22,7 @@ module ResourceClient
     def headers = {
       'Authorization' => "Bearer #{@token}"
     }
+
+    def response_body = @response.body
   end
 end
