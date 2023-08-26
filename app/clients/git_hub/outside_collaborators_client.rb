@@ -1,38 +1,16 @@
-require 'net/http'
+module GitHub
+  class OutsideCollaboratorsClient < ResourceClient::Base
+    BASE_URL = 'https://api.github.com'.freeze
 
-class GitHub::OutsideCollaboratorsClient
-  def self.index(token, org) = new(token, org).index
-  def initialize(token, org)
-    @token = token
-    @org = org
-  end
+    def self.index(token, org) = new(token).index(org)
 
-  def index
-    # Set the API endpoint URL
-    url = URI.parse("https://api.github.com/orgs/#{@org}/outside_collaborators")
+    def index(org) = get("orgs/#{org}/outside_collaborators")
 
-    # Create the HTTP request
-    request = Net::HTTP::Get.new(url)
-    request['Accept'] = 'application/vnd.github+json'
-    request['Authorization'] = "Bearer #{@token}"
-    request['X-GitHub-Api-Version'] = '2022-11-28'
+    private
 
-    # Make the API request
-    response = Net::HTTP.start(url.host, url.port, use_ssl: true) do |http|
-      http.request(request)
-    end
-
-    # Parse the response as JSON
-    if response.code.to_i == 200
-      JSON.parse(response.body).map do |member|
-        {
-          'login' => member['login'],
-          'id' => member['id'],
-          'data' => member
-        }
-      end
-    else
-      puts "Request failed with status code: #{response.code}"
-    end
+    def headers = super.merge(
+      'Accept' => 'application/vnd.github+json',
+      'X-GitHub-Api-Version' => '2022-11-28'
+    )
   end
 end
