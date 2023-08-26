@@ -1,21 +1,15 @@
 require 'net/http'
 
 class GitHub::MembersClient
-  def self.index(token, org) = new(token, org).index
-  def initialize(token, org)
-    @token = token
-    @org = org
-  end
+  def initialize(token) = @token = token
 
-  def index
+  def self.index(token, org) = new(token).index(org)
+  def index(org)
     # Set the API endpoint URL
-    url = URI.parse("https://api.github.com/orgs/#{@org}/members")
+    url = URI.parse("https://api.github.com/orgs/#{org}/members")
 
     # Create the HTTP request
-    request = Net::HTTP::Get.new(url)
-    request['Accept'] = 'application/vnd.github+json'
-    request['Authorization'] = "Bearer #{@token}"
-    request['X-GitHub-Api-Version'] = '2022-11-28'
+    request = Net::HTTP::Get.new url, headers
 
     # Make the API request
     response = Net::HTTP.start(url.host, url.port, use_ssl: true) do |http|
@@ -23,16 +17,14 @@ class GitHub::MembersClient
     end
 
     # Parse the response as JSON
-    if response.code.to_i == 200
-      JSON.parse(response.body).map do |member|
-        {
-          'login' => member['login'],
-          'id' => member['id'],
-          'data' => member
-        }
-      end
-    else
-      puts "Request failed with status code: #{response.code}"
-    end
+    JSON.parse response.body
   end
+
+  private
+
+  def headers = {
+    'Accept' => 'application/vnd.github+json',
+    'Authorization' => "Bearer #{@token}",
+    'X-GitHub-Api-Version' => '2022-11-28'
+  }
 end

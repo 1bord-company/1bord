@@ -29,8 +29,8 @@ class GitHubAuditor
           name: member['login'],
           external_id: member['id'],
           provider: 'GitHub',
-          external_data: member['data'],
-          external_type: member['data']['type'],
+          external_data: member,
+          external_type: member['type'],
           account__holder: @bot.account__company
 
       Ext::Role.git_hub
