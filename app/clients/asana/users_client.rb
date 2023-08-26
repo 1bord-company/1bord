@@ -4,8 +4,6 @@ module Asana
 
     def self.show(token, user_id) = new(token).show(user_id)
 
-    def initialize(token) = @token = token
-
     def show(user_id) = get("users/#{user_id}")
   end
 end

@@ -1,3 +1,5 @@
+require 'net/http'
+
 module ResourceClient
   class Base
     def get(url)
@@ -13,5 +15,7 @@ module ResourceClient
 
       JSON.parse response.body
     end
+
+    def initialize(token) = @token = token
   end
 end
