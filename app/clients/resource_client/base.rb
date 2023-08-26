@@ -8,8 +8,7 @@ module ResourceClient
       http = Net::HTTP.new uri.host, uri.port
       http.use_ssl = true
 
-      request = Net::HTTP::Get.new uri.request_uri
-      request['Authorization'] = "Bearer #{@token}"
+      request = Net::HTTP::Get.new uri.request_uri, headers
 
       response = http.request request
 
@@ -17,5 +16,11 @@ module ResourceClient
     end
 
     def initialize(token) = @token = token
+
+    private
+
+    def headers = {
+      'Authorization' => "Bearer #{@token}"
+    }
   end
 end
