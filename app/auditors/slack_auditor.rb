@@ -17,7 +17,9 @@ class SlackAuditor
 
     Account::Audit.create! auditor: @bot, auditee: @team
 
-    Slack::UsersClient.index(@bot.token!.access_token).each do |member|
+    Slack::UsersClient
+      .index(@bot.token!.access_token)['members']
+      .each do |member|
       next if member['name'] == 'unbord'
 
       persona = Ext::Persona
@@ -25,15 +27,15 @@ class SlackAuditor
         .create_or_find_and_update_by! \
           name: member['name'],
           external_id: member['id'],
-          external_data: member['data'],
-          external_type: member['data']['is_bot'] ? 'Bot' : 'User',
+          external_data: member,
+          external_type: member['is_bot'] ? 'Bot' : 'User',
           account__holder: @bot.account__company,
           provider: 'Slack'
 
       Ext::Role.slack
         .extending(ActiveRecord::CreateOrFindAndUpdateBy)
         .create_or_find_and_update_by! \
-          name: role(member['data']), resource: @team, persona: persona
+          name: role(member), resource: @team, persona: persona
     end
   end
 
