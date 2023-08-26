@@ -1,5 +1,3 @@
-require 'net/http'
-
 module Asana
   class WorkspaceMembershipsClient < ResourceClient::Base
     BASE_URL = 'https://app.asana.com/api/1.0'.freeze
