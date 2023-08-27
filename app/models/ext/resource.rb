@@ -11,4 +11,11 @@ class Ext::Resource < Ext::Entity
 
   has_and_belongs_to_many :personas,
                           join_table: 'ext/roles'
+
+  def manage_url
+    case provider
+    when 'Google' then 'https://admin.google.com/u/1/ac/users'
+    when 'GitHub' then "https://github.com/orgs/#{name}/people"
+    end
+  end
 end
