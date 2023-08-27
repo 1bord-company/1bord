@@ -39,7 +39,7 @@
     <table>
       <thead><%= render resource %></thead>
       <tbody>
-        <%= render resource.personas %>
+        <%= render resource.personas, resource: resource %>
       </tbody>
     </table>
   <% end %>
