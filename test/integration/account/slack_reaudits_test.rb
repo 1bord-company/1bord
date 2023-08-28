@@ -11,6 +11,7 @@ class Account::SlackReauditsTest < ActionDispatch::IntegrationTest
 
     VCR.insert_cassettes [
       'providers.slack.user_access_client#create',
+      'providers.slack.teams_client#show',
       'providers.slack.users_client#index'
     ] do
       get url_for [
@@ -40,6 +41,7 @@ class Account::SlackReauditsTest < ActionDispatch::IntegrationTest
     test "Slack:#{check}" do
       assert_difference check, diff do
         VCR.insert_cassettes [
+          'providers.slack.teams_client#show',
           'providers.slack.users_client#index'
         ] do
           post url_for [:account, :audit]

@@ -53,7 +53,8 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
       '.where(account__company: @account__user.company).count' => 1,
     "Ext::Token.where(authorizer_type: 'Ext::Entity').count" => 1,
     "Ext::Resource.slack.where(external_type: 'Workspace', "\
-      'account__company: @account__user.company).count' => 1,
+      'account__company: @account__user.company)'\
+      '.where.not(external_data: {}).count' => 1,
     "Ext::Persona.slack.where(external_type: 'User', "\
       'account__holder: @account__user.company).count' => 3,
     "Ext::Persona.slack.where(external_type: 'Bot', "\
@@ -67,6 +68,7 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
       assert_difference check, diff do
         VCR.insert_cassettes [
           'providers.slack.user_access_client#create',
+          'providers.slack.teams_client#show',
           'providers.slack.users_client#index'
         ] do
           get url_for [

@@ -5,15 +5,17 @@ class SlackAuditor
 
   def audit!
     team_info = @bot.external_data!['team']
+
     @team = Ext::Resource
       .extending(ActiveRecord::CreateOrFindAndUpdateBy)
       .create_or_find_and_update_by! \
         name: team_info['name'],
         external_id: team_info['id'],
         provider: 'Slack',
-        external_data: {},
+        external_data: Slack::TeamsClient.show(@bot.token!.access_token, team_info['id'])['team'],
         external_type: 'Workspace',
         account__company: @bot.account__company
+
 
     Account::Audit.create! auditor: @bot, auditee: @team
 
