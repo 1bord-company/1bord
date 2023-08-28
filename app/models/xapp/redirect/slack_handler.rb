@@ -4,13 +4,14 @@ module Xapp
       def self.handle(redirect)
         token_info = Slack::UserAccessTokenClient.create(code: redirect.params['code'])
 
-        @bot = Ext::Bot.find_or_create_by!(
-          external_id: token_info['bot_user_id'],
-          external_type: 'Bot',
-          provider: 'Slack',
-          external_data: token_info,
-          account__company: Account::Current.company
-        )
+        @bot = Ext::Bot
+          .extending(ActiveRecord::CreateOrFindAndUpdateBy)
+          .create_or_find_and_update_by! \
+            external_id: token_info['bot_user_id'],
+            external_type: 'Bot',
+            provider: 'Slack',
+            external_data: token_info,
+            account__company: Account::Current.company
 
         @token = Ext::Token.create!(
           authorizer: @bot,

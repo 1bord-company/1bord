@@ -22,4 +22,26 @@ class ActiveRecord::CreateOrFindAndUpdateByTest < ActiveSupport::TestCase
       .extending(ActiveRecord::CreateOrFindAndUpdateBy)
       .create_or_find_and_update_by! attributes
   end
+
+  test 'polymorphic' do
+    ext_resource = ext_resources(:repository_1)
+                  .tap { _1.update account__company: Account::Company.first }
+
+    attributes = {
+      name: 'new name',
+      account__company: ext_resource.account__company,
+      external_id: ext_resource.external_id,
+      external_type: ext_resource.external_type,
+      external_data: { c: :c },
+      provider: ext_resource.provider
+    }
+
+    assert_raise ActiveRecord::RecordNotFound do
+      Ext::Resource.create_or_find_by! attributes
+    end
+
+    Ext::Resource
+      .extending(ActiveRecord::CreateOrFindAndUpdateBy)
+      .create_or_find_and_update_by! attributes
+  end
 end
