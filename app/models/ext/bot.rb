@@ -33,7 +33,7 @@ module Ext
     end
 
     def token
-      tokens.valid.first
+      tokens.valid.last
     end
 
     def refresh_token_params
