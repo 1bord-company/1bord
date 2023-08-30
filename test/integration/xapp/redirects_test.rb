@@ -3,6 +3,8 @@ require 'test_helper'
 class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
+  yml = YAML.load_file __FILE__.gsub(/\.rb$/, '.yml')
+
   def setup
     @account__user = account_users(:one)
     sign_in @account__user
@@ -33,13 +35,7 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     test "GitHub:#{check}" do
       [diff, check == 'Account::Audit.count' ? diff : 0].each do |diff|
         assert_difference check, diff do
-          VCR.insert_provider_cassettes 'git_hub', [
-            'user_access_client#create',
-            'installation_access_token_client#create',
-            'installation_client.show',
-            'members_client.index',
-            'outside_collaborators_client.index'
-          ] do
+          VCR.insert_provider_cassettes 'git_hub', yml['git_hub']['cassettes'] do
             get_redirect 'GitHub' do |creds|
               { code: creds.user.code, installation_id: creds.bot.id }
             end
@@ -72,11 +68,7 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     test "Slack:#{check}" do
       [diff, check == 'Account::Audit.count' ? diff : 0].each do |diff|
         assert_difference check, diff do
-          VCR.insert_provider_cassettes 'slack', [
-            'user_access_client#create',
-            'teams_client#show',
-            'users_client#index'
-          ] do
+          VCR.insert_provider_cassettes 'slack', yml['slack']['cassettes'] do
             get_redirect 'Slack'
 
             assert_redirected_to root_path
@@ -103,11 +95,7 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     test "Jira:#{check}" do
       [diff, check == 'Account::Audit.count' ? diff : 0].each do |diff|
         assert_difference check, diff do
-          VCR.insert_provider_cassettes 'jira', [
-            'bot_access_token_client#create',
-            'accessible_resources_client#index',
-            'users_client#index'
-          ] do
+          VCR.insert_provider_cassettes 'jira', yml['jira']['cassettes'] do
             get_redirect 'Jira'
 
             assert_redirected_to root_path
@@ -133,12 +121,7 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     test "Heroku:#{check}" do
       [diff, check == 'Account::Audit.count' ? diff : 0].each do |diff|
         assert_difference check, diff do
-          VCR.insert_provider_cassettes 'heroku', [
-            'bot_access_token_client#create',
-            'teams_client#index',
-            'members_client#index',
-            'invitations_client#index'
-          ] do
+          VCR.insert_provider_cassettes 'heroku', yml['heroku']['cassettes'] do
             get_redirect 'Heroku'
 
             assert_redirected_to root_path
@@ -163,10 +146,7 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     test "Google:#{check}" do
       [diff, check == 'Account::Audit.count' ? diff : 0].each do |diff|
         assert_difference check, diff do
-          VCR.insert_provider_cassettes 'google', [
-            'bot_access_token_client#create',
-            'users_client#index',
-          ] do
+          VCR.insert_provider_cassettes 'google', yml['google']['cassettes'] do
             get_redirect 'Google'
 
             assert_redirected_to root_path
@@ -193,13 +173,7 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     test "Asana:#{check}" do
       [diff, check == 'Account::Audit.count' ? diff : 0].each do |diff|
         assert_difference check, diff do
-          VCR.insert_provider_cassettes 'asana', [
-            'bot_access_token_client#create',
-            'workspaces_client#index',
-            'workspace_memberships_client#index',
-            'workspace_memberships_client#show',
-            'users_client#show',
-          ] do
+          VCR.insert_provider_cassettes 'asana', yml['asana']['cassettes'] do
             get_redirect 'Asana'
 
             assert_redirected_to root_path

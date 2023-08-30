@@ -1,0 +1,34 @@
+git_hub:
+  cassettes:
+    - 'user_access_client#create'
+    - 'installation_access_token_client#create'
+    - 'installation_client.show'
+    - 'members_client.index'
+    - 'outside_collaborators_client.index'
+slack:
+  cassettes:
+    - 'user_access_client#create'
+    - 'teams_client#show'
+    - 'users_client#index'
+jira:
+  cassettes:
+    - 'bot_access_token_client#create'
+    - 'accessible_resources_client#index'
+    - 'users_client#index'
+heroku:
+  cassettes:
+    - 'bot_access_token_client#create'
+    - 'teams_client#index'
+    - 'members_client#index'
+    - 'invitations_client#index'
+google:
+  cassettes:
+    - 'bot_access_token_client#create'
+    - 'users_client#index'
+asana:
+  cassettes:
+    - 'bot_access_token_client#create'
+    - 'workspaces_client#index'
+    - 'workspace_memberships_client#index'
+    - 'workspace_memberships_client#show'
+    - 'users_client#show'
