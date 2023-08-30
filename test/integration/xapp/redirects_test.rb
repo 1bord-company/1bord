@@ -3,19 +3,21 @@ require 'test_helper'
 class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
-  DATA = YAML.load_file __FILE__.gsub(/\.rb$/, '.yml')
 
   def setup
     @account__user = account_users(:one)
     sign_in @account__user
   end
 
-  def self.test_provider(provider, check, diff)
+  def self.test_provider(provider, check, diff, &block)
+    data = YAML.load_file __FILE__.gsub(/\.rb$/, '.yml')
+
     test "#{provider}:#{check}" do
       [diff, check == 'Account::Audit.count' ? diff : 0].each do |diff|
         assert_difference check, diff do
-          VCR.insert_provider_cassettes provider.underscore, DATA[provider.underscore]['cassettes'] do
-            get_redirect provider
+          VCR.insert_provider_cassettes provider.underscore,
+            data[provider.underscore]['cassettes'] do
+            get_redirect provider, &block
 
             assert_redirected_to root_path
           end
@@ -46,18 +48,8 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     "Ext::Role.git_hub.where(name: 'OutsideCollaborator').count" => 3,
     'Account::Audit.count' => 1
   }.each do |check, diff|
-    test "GitHub:#{check}" do
-      [diff, check == 'Account::Audit.count' ? diff : 0].each do |diff|
-        assert_difference check, diff do
-          VCR.insert_provider_cassettes 'git_hub', DATA['git_hub']['cassettes'] do
-            get_redirect 'GitHub' do |creds|
-              { code: creds.user.code, installation_id: creds.bot.id }
-            end
-
-            assert_redirected_to root_path
-          end
-        end
-      end
+    test_provider 'GitHub', check, diff do |creds|
+      { code: creds.user.code, installation_id: creds.bot.id }
     end
   end
 
