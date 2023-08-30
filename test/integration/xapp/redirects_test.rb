@@ -3,11 +3,25 @@ require 'test_helper'
 class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
-  yml = YAML.load_file __FILE__.gsub(/\.rb$/, '.yml')
+  DATA = YAML.load_file __FILE__.gsub(/\.rb$/, '.yml')
 
   def setup
     @account__user = account_users(:one)
     sign_in @account__user
+  end
+
+  def self.test_provider(provider, check, diff)
+    test "#{provider}:#{check}" do
+      [diff, check == 'Account::Audit.count' ? diff : 0].each do |diff|
+        assert_difference check, diff do
+          VCR.insert_provider_cassettes provider.underscore, DATA[provider.underscore]['cassettes'] do
+            get_redirect provider
+
+            assert_redirected_to root_path
+          end
+        end
+      end
+    end
   end
 
   def get_redirect(provider)
@@ -35,7 +49,7 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     test "GitHub:#{check}" do
       [diff, check == 'Account::Audit.count' ? diff : 0].each do |diff|
         assert_difference check, diff do
-          VCR.insert_provider_cassettes 'git_hub', yml['git_hub']['cassettes'] do
+          VCR.insert_provider_cassettes 'git_hub', DATA['git_hub']['cassettes'] do
             get_redirect 'GitHub' do |creds|
               { code: creds.user.code, installation_id: creds.bot.id }
             end
@@ -65,17 +79,7 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     "Ext::Role.slack.where(name: 'InvitedUser').count" => 1,
     'Account::Audit.count' => 1
   }.each do |check, diff|
-    test "Slack:#{check}" do
-      [diff, check == 'Account::Audit.count' ? diff : 0].each do |diff|
-        assert_difference check, diff do
-          VCR.insert_provider_cassettes 'slack', yml['slack']['cassettes'] do
-            get_redirect 'Slack'
-
-            assert_redirected_to root_path
-          end
-        end
-      end
-    end
+    test_provider "Slack", check, diff
   end
 
   {
@@ -92,17 +96,7 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     "Ext::Role.jira.where(name: 'Role').count" => 13,
     'Account::Audit.count' => 1
   }.each do |check, diff|
-    test "Jira:#{check}" do
-      [diff, check == 'Account::Audit.count' ? diff : 0].each do |diff|
-        assert_difference check, diff do
-          VCR.insert_provider_cassettes 'jira', yml['jira']['cassettes'] do
-            get_redirect 'Jira'
-
-            assert_redirected_to root_path
-          end
-        end
-      end
-    end
+    test_provider "Jira", check, diff
   end
 
   {
@@ -118,17 +112,7 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     "Ext::Role.where(name: 'member').count" => 1,
     'Account::Audit.count' => 1
   }.each do |check, diff|
-    test "Heroku:#{check}" do
-      [diff, check == 'Account::Audit.count' ? diff : 0].each do |diff|
-        assert_difference check, diff do
-          VCR.insert_provider_cassettes 'heroku', yml['heroku']['cassettes'] do
-            get_redirect 'Heroku'
-
-            assert_redirected_to root_path
-          end
-        end
-      end
-    end
+    test_provider "Heroku", check, diff
   end
 
   {
@@ -143,17 +127,7 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     "Ext::Role.where(name: 'member').count" => 1,
     'Account::Audit.count' => 1
   }.each do |check, diff|
-    test "Google:#{check}" do
-      [diff, check == 'Account::Audit.count' ? diff : 0].each do |diff|
-        assert_difference check, diff do
-          VCR.insert_provider_cassettes 'google', yml['google']['cassettes'] do
-            get_redirect 'Google'
-
-            assert_redirected_to root_path
-          end
-        end
-      end
-    end
+    test_provider "Google", check, diff
   end
 
   {
@@ -170,16 +144,6 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     "Ext::Role.where(name: 'Member').count" => 2,
     'Account::Audit.count' => 2
   }.each do |check, diff|
-    test "Asana:#{check}" do
-      [diff, check == 'Account::Audit.count' ? diff : 0].each do |diff|
-        assert_difference check, diff do
-          VCR.insert_provider_cassettes 'asana', yml['asana']['cassettes'] do
-            get_redirect 'Asana'
-
-            assert_redirected_to root_path
-          end
-        end
-      end
-    end
+    test_provider "Asana", check, diff
   end
 end
