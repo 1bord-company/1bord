@@ -1,0 +1,7 @@
+asana:
+  cassettes:
+    - 'bot_access_token_client#create'
+    - 'workspaces_client#index'
+    - 'workspace_memberships_client#index'
+    - 'workspace_memberships_client#show'
+    - 'users_client#show'

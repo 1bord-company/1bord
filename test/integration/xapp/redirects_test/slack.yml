@@ -1,0 +1,5 @@
+slack:
+  cassettes:
+    - 'user_access_client#create'
+    - 'teams_client#show'
+    - 'users_client#index'

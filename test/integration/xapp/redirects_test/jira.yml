@@ -1,0 +1,5 @@
+jira:
+  cassettes:
+    - 'bot_access_token_client#create'
+    - 'accessible_resources_client#index'
+    - 'users_client#index'

@@ -3,14 +3,13 @@ require 'test_helper'
 class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
-
   def setup
     @account__user = account_users(:one)
     sign_in @account__user
   end
 
   def self.test_provider(provider, check, diff, &block)
-    data = YAML.load_file __FILE__.gsub(/\.rb$/, '.yml')
+    data = YAML.load_file __FILE__.gsub(/\.rb$/, "/#{provider.underscore}.yml")
 
     test "#{provider}:#{check}" do
       [diff, check == 'Account::Audit.count' ? diff : 0].each do |diff|

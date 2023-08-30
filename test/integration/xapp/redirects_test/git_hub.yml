@@ -1,0 +1,7 @@
+git_hub:
+  cassettes:
+    - 'user_access_client#create'
+    - 'installation_access_token_client#create'
+    - 'installation_client.show'
+    - 'members_client.index'
+    - 'outside_collaborators_client.index'
