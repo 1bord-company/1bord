@@ -8,6 +8,14 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     sign_in @account__user
   end
 
+  def get_redirect(provider)
+    creds = Rails.application.credentials.providers[provider.underscore]
+    params = { provider_id: provider, code: creds.bot.code }
+    params.merge! yield(creds) if block_given?
+
+    get url_for [:new, :xapp, :provider, :redirect, params]
+  end
+
   {
     'Xapp::Redirect.count' => 1,
     'Ext::Bot.count' => 1,
@@ -32,13 +40,9 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
             'members_client.index',
             'outside_collaborators_client.index'
           ] do
-            git_hub_creds = Rails.application.credentials.providers.git_hub
-            get url_for [
-              :new, :xapp, :provider, :redirect,
-              { provider_id: 'GitHub', code: git_hub_creds.user.code,
-                installation_id: git_hub_creds.bot.id,
-                setup_action: 'install' }
-            ]
+            get_redirect 'GitHub' do |creds|
+              { code: creds.user.code, installation_id: creds.bot.id }
+            end
 
             assert_redirected_to root_path
           end
@@ -73,11 +77,7 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
             'teams_client#show',
             'users_client#index'
           ] do
-            get url_for [
-              :new, :xapp, :provider, :redirect,
-              { provider_id: 'Slack', state: '',
-                code: Rails.application.credentials.providers.slack.bot.code }
-            ]
+            get_redirect 'Slack'
 
             assert_redirected_to root_path
           end
@@ -108,11 +108,7 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
             'accessible_resources_client#index',
             'users_client#index'
           ] do
-            get url_for [
-              :new, :xapp, :provider, :redirect,
-              { provider_id: 'Jira', state: '',
-                code: Rails.application.credentials.providers.jira.bot.code }
-            ]
+            get_redirect 'Jira'
 
             assert_redirected_to root_path
           end
@@ -143,11 +139,7 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
             'members_client#index',
             'invitations_client#index'
           ] do
-            get url_for [
-              :new, :xapp, :provider, :redirect,
-              { provider_id: 'Heroku', state: '',
-                code: Rails.application.credentials.providers.heroku.bot.code }
-            ]
+            get_redirect 'Heroku'
 
             assert_redirected_to root_path
           end
@@ -175,11 +167,7 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
             'bot_access_token_client#create',
             'users_client#index',
           ] do
-            get url_for [
-              :new, :xapp, :provider, :redirect,
-              { provider_id: 'Google', state: '',
-                code: Rails.application.credentials.providers.google.bot.code }
-            ]
+            get_redirect 'Google'
 
             assert_redirected_to root_path
           end
@@ -212,11 +200,7 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
             'workspace_memberships_client#show',
             'users_client#show',
           ] do
-            get url_for [
-              :new, :xapp, :provider, :redirect,
-              { provider_id: 'Asana', state: '',
-                code: Rails.application.credentials.providers.asana.bot.code }
-            ]
+            get_redirect 'Asana'
 
             assert_redirected_to root_path
           end
