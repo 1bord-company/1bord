@@ -5,3 +5,10 @@ git_hub:
     - 'installation_client.show'
     - 'members_client.index'
     - 'outside_collaborators_client.index'
+  records:
+    redirects:
+      model: Xapp::Redirect
+      count: 1
+    bots:
+      model: Ext::Bot
+      count: 1

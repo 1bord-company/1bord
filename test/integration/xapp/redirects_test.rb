@@ -33,9 +33,12 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     get url_for [:new, :xapp, :provider, :redirect, params]
   end
 
-  {
-    'Xapp::Redirect.count' => 1,
-    'Ext::Bot.count' => 1,
+  data = YAML.load_file __FILE__.gsub(/\.rb$/, "/git_hub.yml")
+  data['git_hub']['records'].map do |k,v|
+    query = v['model']
+    query << '.count'
+    [query, v['count']]
+  end.to_h.merge({
     'Ext::Bot.where.not(external_data: nil)'\
       '.where(account__company: @account__user.company).count' => 1,
     "Ext::Token.where(authorizer_type: 'Ext::Bot').count" => 1,
@@ -46,7 +49,7 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     "Ext::Role.git_hub.where(name: 'Member').count" => 1,
     "Ext::Role.git_hub.where(name: 'OutsideCollaborator').count" => 3,
     'Account::Audit.count' => 1
-  }.each do |check, diff|
+  }).each do |check, diff|
     test_provider 'GitHub', check, diff do |creds|
       { code: creds.user.code, installation_id: creds.bot.id }
     end
