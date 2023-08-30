@@ -25,12 +25,12 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     test "GitHub:#{check}" do
       [diff, check == 'Account::Audit.count' ? diff : 0].each do |diff|
         assert_difference check, diff do
-          VCR.insert_cassettes [
-            'providers.git_hub.user_access_client#create',
-            'providers.git_hub.installation_access_token_client#create',
-            'providers.git_hub.installation_client.show',
-            'providers.git_hub.members_client.index',
-            'providers.git_hub.outside_collaborators_client.index'
+          VCR.insert_provider_cassettes 'git_hub', [
+            'user_access_client#create',
+            'installation_access_token_client#create',
+            'installation_client.show',
+            'members_client.index',
+            'outside_collaborators_client.index'
           ] do
             git_hub_creds = Rails.application.credentials.providers.git_hub
             get url_for [
@@ -68,10 +68,10 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     test "Slack:#{check}" do
       [diff, check == 'Account::Audit.count' ? diff : 0].each do |diff|
         assert_difference check, diff do
-          VCR.insert_cassettes [
-            'providers.slack.user_access_client#create',
-            'providers.slack.teams_client#show',
-            'providers.slack.users_client#index'
+          VCR.insert_provider_cassettes 'slack', [
+            'user_access_client#create',
+            'teams_client#show',
+            'users_client#index'
           ] do
             get url_for [
               :new, :xapp, :provider, :redirect,
@@ -103,10 +103,10 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     test "Jira:#{check}" do
       [diff, check == 'Account::Audit.count' ? diff : 0].each do |diff|
         assert_difference check, diff do
-          VCR.insert_cassettes [
-            'providers.jira.bot_access_token_client#create',
-            'providers.jira.accessible_resources_client#index',
-            'providers.jira.users_client#index'
+          VCR.insert_provider_cassettes 'jira', [
+            'bot_access_token_client#create',
+            'accessible_resources_client#index',
+            'users_client#index'
           ] do
             get url_for [
               :new, :xapp, :provider, :redirect,
@@ -137,11 +137,11 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     test "Heroku:#{check}" do
       [diff, check == 'Account::Audit.count' ? diff : 0].each do |diff|
         assert_difference check, diff do
-          VCR.insert_cassettes [
-            'providers.heroku.bot_access_token_client#create',
-            'providers.heroku.teams_client#index',
-            'providers.heroku.members_client#index',
-            'providers.heroku.invitations_client#index'
+          VCR.insert_provider_cassettes 'heroku', [
+            'bot_access_token_client#create',
+            'teams_client#index',
+            'members_client#index',
+            'invitations_client#index'
           ] do
             get url_for [
               :new, :xapp, :provider, :redirect,
@@ -171,9 +171,9 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     test "Google:#{check}" do
       [diff, check == 'Account::Audit.count' ? diff : 0].each do |diff|
         assert_difference check, diff do
-          VCR.insert_cassettes [
-            'providers.google.bot_access_token_client#create',
-            'providers.google.users_client#index',
+          VCR.insert_provider_cassettes 'google', [
+            'bot_access_token_client#create',
+            'users_client#index',
           ] do
             get url_for [
               :new, :xapp, :provider, :redirect,
@@ -205,12 +205,12 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     test "Asana:#{check}" do
       [diff, check == 'Account::Audit.count' ? diff : 0].each do |diff|
         assert_difference check, diff do
-          VCR.insert_cassettes [
-            'providers.asana.bot_access_token_client#create',
-            'providers.asana.workspaces_client#index',
-            'providers.asana.workspace_memberships_client#index',
-            'providers.asana.workspace_memberships_client#show',
-            'providers.asana.users_client#show',
+          VCR.insert_provider_cassettes 'asana', [
+            'bot_access_token_client#create',
+            'workspaces_client#index',
+            'workspace_memberships_client#index',
+            'workspace_memberships_client#show',
+            'users_client#show',
           ] do
             get url_for [
               :new, :xapp, :provider, :redirect,
