@@ -12,10 +12,14 @@ module Xapp
             provider: 'Google',
             account__company: Account::Current.company
 
-        @token = Ext::Token.create! \
-          authorizer: @bot,
-          provider: 'Google',
-          **token_info.slice(*%w[access_token expires_in refresh_token])
+        @token = Ext::Token
+          .extending(ActiveRecord::CreateOrFindAndUpdateBy)
+          .create_or_find_and_update_by! \
+            authorizer: @bot,
+            provider: 'Google',
+            **token_info
+              .tap { _1['expires_at'] = Time.current + _1['expires_in'].to_i.seconds }
+              .slice(*%w[access_token expires_at refresh_token])
 
         @bot.audit!
       end

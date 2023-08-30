@@ -12,5 +12,11 @@ class CreateExtTokens < ActiveRecord::Migration[7.0]
 
       t.timestamps
     end
+
+    add_index 'ext/tokens',
+              [:provider, :authorizer_type, :authorizer_id],
+              unique: true,
+              where: "authorizer_type = 'Ext::Bot'",
+              name: 'idx_ext/tkns[provider,authorizer]'
   end
 end

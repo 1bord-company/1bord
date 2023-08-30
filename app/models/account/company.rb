@@ -15,7 +15,8 @@ class Account::Company < ApplicationRecord
   has_many :xapp__redirects,
            foreign_key: :account__company_id
 
-  has_many :ext__tokens,
-           through: :ext__bots,
-           source: :tokens
+
+  def ext__tokens
+    ext__bots.flat_map &:token
+  end
 end

@@ -108,6 +108,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_17_232917) do
     t.string "refresh_token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["provider", "authorizer_type", "authorizer_id"], name: "idx_ext/tkns[provider,authorizer]", unique: true, where: "((authorizer_type)::text = 'Ext::Bot'::text)"
   end
 
   create_table "xapp/redirects", force: :cascade do |t|

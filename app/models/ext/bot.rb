@@ -5,35 +5,41 @@ module Ext
                foreign_key: :account__holder_id,
                foreign_type: :account__holder_type
 
-    has_many :tokens,
-             as: :authorizer
+    delegate :refresh_token, to: :token, allow_nil: true
 
     has_many :account__audits,
              as: :auditor
 
-    def audit!
-      "#{provider}Auditor".constantize.audit! self
+    def audit! = "#{provider}Auditor".constantize.audit! self
+
+    def token
+      @token ||= Ext::Token
+        .valid
+        .find_by(provider: provider,
+               authorizer_id: id,
+               authorizer_type: self.class.name)
     end
 
     def token!
-      token.presence ||
-        Ext::Token.create!(
+      @token ||= token.presence ||
+        Ext::Token
+        .extending(ActiveRecord::CreateOrFindAndUpdateBy)
+        .create_or_find_and_update_by!(
           authorizer: self,
           provider: provider,
 
-          **{ 'refresh_token' => tokens.last&.refresh_token }
+          **{ 'refresh_token' => refresh_token }
             .merge(
               provider.constantize::BotAccessTokenClient.create(
                 **refresh_token_params
               )
+              .tap do |token_info|
+                token_info['expires_at'] ||= Time.current + token_info['expires_in'].to_i.seconds
+              end
             )
             .slice('access_token', 'refresh_token',
-                   'expires_at', 'expires_in', 'scope')
+                   'expires_at', 'scope')
         )
-    end
-
-    def token
-      tokens.valid.last
     end
 
     def refresh_token_params
@@ -41,10 +47,6 @@ module Ext
       when 'GitHub' then { installation_id: external_id }
       else               { refresh_token: refresh_token }
       end
-    end
-
-    def refresh_token
-      tokens.last.refresh_token
     end
 
     def external_data!
