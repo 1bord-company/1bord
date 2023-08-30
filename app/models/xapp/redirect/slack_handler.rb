@@ -13,12 +13,13 @@ module Xapp
             external_data: token_info,
             account__company: Account::Current.company
 
-        @token = Ext::Token.create!(
-          authorizer: @bot,
-          provider: 'Slack',
-          scope: token_info['scope'],
-          access_token: token_info['access_token']
-        )
+        @token = Ext::Token
+          .extending(ActiveRecord::CreateOrFindAndUpdateBy)
+          .create_or_find_and_update_by! \
+            authorizer: @bot,
+            provider: 'Slack',
+            scope: token_info['scope'],
+            access_token: token_info['access_token']
 
         @bot.audit!
       end

@@ -55,14 +55,15 @@ module Xapp
             end
         end
 
-        @token = Ext::Token.create!(
-          authorizer: @bot,
-          provider: 'Jira',
-          scope: token_info['scope'],
-          access_token: token_info['access_token'],
-          expires_at: Time.current + token_info['expires_in'].to_i.seconds,
-          refresh_token: token_info['refresh_token']
-        )
+        @token = Ext::Token
+          .extending(ActiveRecord::CreateOrFindAndUpdateBy)
+          .create_or_find_and_update_by! \
+            authorizer: @bot,
+            provider: 'Jira',
+            scope: token_info['scope'],
+            access_token: token_info['access_token'],
+            expires_at: Time.current + token_info['expires_in'].to_i.seconds,
+            refresh_token: token_info['refresh_token']
       end
     end
   end
