@@ -56,20 +56,7 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     test_provider "Slack", check, diff
   end
 
-  {
-    'Xapp::Redirect.count' => 1,
-    'Ext::Bot.count' => 1,
-    'Ext::Bot.where.not(external_data: nil)'\
-      '.where(account__company: @account__user.company).count' => 1,
-    "Ext::Token.where(authorizer_type: 'Ext::Bot')"\
-      '.where.not(refresh_token: nil).count' => 1,
-    "Ext::Resource.where(external_type: 'Resource', "\
-      'account__company: @account__user.company).count' => 1,
-    "Ext::Persona.where(external_type: 'User').count" => 1,
-    "Ext::Persona.where(external_type: 'Bot').count" => 12,
-    "Ext::Role.jira.where(name: 'Role').count" => 13,
-    'Account::Audit.count' => 1
-  }.each do |check, diff|
+  record_checks('Jira').each do |check, diff|
     test_provider "Jira", check, diff
   end
 
