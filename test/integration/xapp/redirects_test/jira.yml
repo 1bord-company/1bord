@@ -4,39 +4,22 @@ jira:
     - 'accessible_resources_client#index'
     - 'users_client#index'
   records:
-    tokens:
-      model: Ext::Token
-      scopes:
-        - jira
-      where.not:
-        - refresh_token: nil
-      count: 1
     resources:
-      model: Ext::Resource
-      scopes:
-        - jira
-      where:
-        - external_type: "'Resource'"
-        - account__company: '@account__user.company'
-      count: 1
-    users:
-      model: Ext::Persona
-      scopes:
-        - jira
-      where:
-        - external_type: "'User'"
-      count: 1
-    bots:
-      model: Ext::Persona
-      scopes:
-        - jira
-      where:
-        - external_type: "'Bot'"
-      count: 12
+      -
+        where:
+          external_type: "'Resource'"
+        count: 1
+    personas:
+      -
+        where:
+          external_type: "'User'"
+        count: 1
+      -
+        where:
+          external_type: "'Bot'"
+        count: 12
     roles:
-      model: Ext::Role
-      scopes:
-        - jira
-      where:
-        - name: "'Role'"
-      count: 13
+      -
+        where:
+          name: "'Role'"
+        count: 13

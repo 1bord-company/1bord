@@ -4,41 +4,28 @@ slack:
     - 'teams_client#show'
     - 'users_client#index'
   records:
-    workspaces:
-      model: Ext::Resource
-      scopes:
-        - slack
-      where:
-        - external_type: "'Workspace'"
-        - account__company: '@account__user.company'
-      where.not:
-        - external_data: {}
-      count: 1
+    resources:
+      -
+        where:
+          external_type: "'Workspace'"
+        where.not:
+          external_data: {}
+        count: 1
     personas:
-      model: Ext::Persona
-      scopes:
-        - slack
-      where:
-        - external_type: "'User'"
-        - account__holder: '@account__user.company'
-      count: 3
-    members:
-      model: Ext::Role
-      scopes:
-        - slack
-      where:
-        - name: "'Member'"
-      count: 1
-    primary_owners:
-      model: Ext::Role
-      scopes:
-        - slack
-      where:
-        - name: "'PrimaryOwner'"
-      count: 1
-    invited_users:
-      model: Ext::Role
-      scopes:
-        - slack
-      where:
-        - name: "'InvitedUser'"
+      -
+        where:
+          external_type: "'User'"
+        count: 3
+    roles:
+      -
+        where:
+          name: "'Member'"
+        count: 1
+      -
+        where:
+          name: "'PrimaryOwner'"
+        count: 1
+      -
+        where:
+          name: "'InvitedUser'"
+        count: 1

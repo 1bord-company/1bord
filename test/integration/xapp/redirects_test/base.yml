@@ -1,24 +1,40 @@
 base:
-  records:
+  templates:
     redirects:
       model: Xapp::Redirect
-      count: 1
     bots:
       model: Ext::Bot
-      count: 1
-    bots_with_data:
-      model: Ext::Bot
-      where:
-        - account__company: '@account__user.company'
-      where.not:
-        - external_data: nil
-      count: 1
     tokens:
       model: Ext::Token
-      where:
-        - authorizer_type: "'Ext::Bot'"
-      count: 1
     audits:
       model: Account::Audit
-      count: 1
+    resources:
+      model: Ext::Resource
+      where:
+        account__company: '@account__user.company'
+    personas:
+      model: Ext::Persona
+      where:
+        account__holder: '@account__user.company'
+    roles:
+      model: Ext::Role
 
+  records:
+    redirects:
+      -
+        count: 1
+    bots:
+      -
+        where:
+          account__company: '@account__user.company'
+        where.not:
+          external_data: nil
+        count: 1
+    tokens:
+      -
+        where:
+          authorizer_type: "'Ext::Bot'"
+        count: 1
+    audits:
+      -
+        count: 1

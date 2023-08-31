@@ -6,33 +6,22 @@ git_hub:
     - 'members_client.index'
     - 'outside_collaborators_client.index'
   records:
-    organizations:
-      model: Ext::Resource
-      scopes:
-        - git_hub
-      where:
-        - external_type: "'Organization'"
-        - account__company: '@account__user.company'
-      count: 1
+    resources:
+      -
+        where:
+          external_type: "'Organization'"
+        count: 1
     personas:
-      model: Ext::Persona
-      scopes:
-        - git_hub
-      where:
-        - external_type: "'User'"
-        - account__holder: '@account__user.company'
-      count: 4
-    member_roles:
-      model: Ext::Role
-      scopes:
-        - git_hub
-      where:
-        - name: "'Member'"
-      count: 1
-    outside_collaborators_roles:
-      model: Ext::Role
-      scopes:
-        - git_hub
-      where:
-        - name: "'OutsideCollaborator'"
-      count: 3
+      -
+        where:
+          external_type: "'User'"
+        count: 4
+    roles:
+      -
+        where:
+          name: "'Member'"
+        count: 1
+      -
+        where:
+          name: "'OutsideCollaborator'"
+        count: 3

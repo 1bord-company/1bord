@@ -11,7 +11,7 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
   def self.test_provider(provider, check, diff, &block)
     data = YAML.load_file __FILE__.gsub(/\.rb$/, "/#{provider.underscore}.yml")
 
-    test "#{provider}:#{check}" do
+    test "#{provider}:#{check}==#{diff}" do
       [diff, check == 'Account::Audit.count' ? diff : 0].each do |diff|
         assert_difference check, diff do
           VCR.insert_provider_cassettes provider.underscore,
@@ -35,14 +35,20 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
 
   def self.record_checks(provider)
     provider_records = YAML.load_file(__FILE__.gsub /\.rb$/, "/#{provider.underscore}.yml")[provider.underscore]['records']
-    base_records = YAML.load_file(__FILE__.gsub /\.rb$/, "/base.yml")['base']['records']
-    base_records.merge(provider_records).map do |k,v|
-      query = v['model']
-      query << ".#{v['scopes'].join('.')}" if v['scopes']
-      query << ".where(#{v['where'].map{ |attribute| attribute.map { |name, value| [name, value].join ': ' }}.join(', ') })" if v['where']
-      query << ".where.not(#{v['where.not'].map{ |attribute| attribute.map { |name, value| [name, value].join ': ' }}.join(', ') })" if v['where.not']
-      query << '.count'
-      [query, v['count']]
+    base = YAML.load_file(__FILE__.gsub /\.rb$/, "/base.yml")['base']
+    base_records = base['records']
+    base_templates = base['templates']
+
+    base_records.merge(provider_records).flat_map do |k,vs|
+      vs.map! { base_templates[k].merge _1 }
+
+      vs.map do |v|
+        query = "#{v['model']}"
+        query << ".where(#{v['where'].map{ |name, value| [name, value].join ': ' }.join(', ')})" if v['where']
+        query << ".where.not(#{v['where.not'].map{ |name, value| [name, value].join ': ' }.join(', ')})" if v['where.not']
+        query << '.count'
+        [query, v['count']]
+      end
     end.to_h
   end
 
