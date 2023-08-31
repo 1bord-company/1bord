@@ -33,41 +33,26 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     get url_for [:new, :xapp, :provider, :redirect, params]
   end
 
-  provider_records = YAML.load_file(__FILE__.gsub /\.rb$/, "/git_hub.yml")['git_hub']['records']
-  base_records = YAML.load_file(__FILE__.gsub /\.rb$/, "/base.yml")['base']['records']
-  base_records.merge(provider_records).map do |k,v|
-    query = v['model']
-    query << ".#{v['scopes'].join('.')}" if v['scopes']
-    query << ".where(#{v['where'].map{ |attribute| attribute.map { |name, value| [name, value].join ': ' }}.join(', ') })" if v['where']
-    query << ".where.not(#{v['where.not'].map{ |attribute| attribute.map { |name, value| [name, value].join ': ' }}.join(', ') })" if v['where.not']
-    query << '.count'
-    [query, v['count']]
-  end.to_h.merge({
-    'Account::Audit.count' => 1
-  }).each do |check, diff|
+  def self.record_checks(provider)
+    provider_records = YAML.load_file(__FILE__.gsub /\.rb$/, "/#{provider.underscore}.yml")[provider.underscore]['records']
+    base_records = YAML.load_file(__FILE__.gsub /\.rb$/, "/base.yml")['base']['records']
+    base_records.merge(provider_records).map do |k,v|
+      query = v['model']
+      query << ".#{v['scopes'].join('.')}" if v['scopes']
+      query << ".where(#{v['where'].map{ |attribute| attribute.map { |name, value| [name, value].join ': ' }}.join(', ') })" if v['where']
+      query << ".where.not(#{v['where.not'].map{ |attribute| attribute.map { |name, value| [name, value].join ': ' }}.join(', ') })" if v['where.not']
+      query << '.count'
+      [query, v['count']]
+    end.to_h
+  end
+
+  record_checks('GitHub').each do |check, diff|
     test_provider 'GitHub', check, diff do |creds|
       { code: creds.user.code, installation_id: creds.bot.id }
     end
   end
 
-  {
-    'Xapp::Redirect.count' => 1,
-    'Ext::Bot.count' => 1,
-    'Ext::Bot.where.not(external_data: nil)'\
-      '.where(account__company: @account__user.company).count' => 1,
-    "Ext::Token.where(authorizer_type: 'Ext::Bot').count" => 1,
-    "Ext::Resource.slack.where(external_type: 'Workspace', "\
-      'account__company: @account__user.company)'\
-      '.where.not(external_data: {}).count' => 1,
-    "Ext::Persona.slack.where(external_type: 'User', "\
-      'account__holder: @account__user.company).count' => 3,
-    "Ext::Persona.slack.where(external_type: 'Bot', "\
-      'account__holder: @account__user.company).count' => 0,
-    "Ext::Role.slack.where(name: 'Member').count" => 1,
-    "Ext::Role.slack.where(name: 'PrimaryOwner').count" => 1,
-    "Ext::Role.slack.where(name: 'InvitedUser').count" => 1,
-    'Account::Audit.count' => 1
-  }.each do |check, diff|
+  record_checks('Slack').each do |check, diff|
     test_provider "Slack", check, diff
   end
 
