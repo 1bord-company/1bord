@@ -5,3 +5,30 @@ asana:
     - 'workspace_memberships_client#index'
     - 'workspace_memberships_client#show'
     - 'users_client#show'
+  records:
+    resources:
+      -
+        where:
+          external_type: "'Workspace'"
+        count: 2
+    personas:
+      -
+        where:
+          external_type: "'User'"
+        count: 6
+    roles:
+      -
+        where:
+          name: "'Admin'"
+        count: 0
+      -
+        where:
+          name: "'Guest'"
+        count: 5
+      -
+        where:
+          name: "'Member'"
+        count: 2
+    audits:
+      -
+        count: 2

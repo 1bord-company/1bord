@@ -58,26 +58,9 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     end
   end
 
-  %w[Slack Jira Heroku Google].each do |provider|
+  %w[Slack Jira Heroku Google Asana].each do |provider|
     record_checks(provider).each do |check, diff|
       test_provider provider, check, diff
     end
-  end
-
-  {
-    'Xapp::Redirect.count' => 1,
-    'Ext::Bot.where(account__company: @account__user.company).count' => 1,
-    "Ext::Token.where(authorizer_type: 'Ext::Bot')"\
-      '.where.not(refresh_token: nil).count' => 1,
-    "Ext::Resource.where(external_type: 'Workspace', "\
-      'account__company: @account__user.company).count' => 2,
-    "Ext::Persona.where(external_type: 'User').count" => 6,
-    "Ext::Persona.where(\"external_data ->> 'email' IS NOT NULL\").count" => 6,
-    "Ext::Role.where(name: 'Admin').count" => 0,
-    "Ext::Role.where(name: 'Guest').count" => 5,
-    "Ext::Role.where(name: 'Member').count" => 2,
-    'Account::Audit.count' => 2
-  }.each do |check, diff|
-    test_provider "Asana", check, diff
   end
 end
