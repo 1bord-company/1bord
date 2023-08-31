@@ -6,9 +6,33 @@ git_hub:
     - 'members_client.index'
     - 'outside_collaborators_client.index'
   records:
-    redirects:
-      model: Xapp::Redirect
+    organizations:
+      model: Ext::Resource
+      scopes:
+        - git_hub
+      where:
+        - external_type: "'Organization'"
+        - account__company: '@account__user.company'
       count: 1
-    bots:
-      model: Ext::Bot
+    personas:
+      model: Ext::Persona
+      scopes:
+        - git_hub
+      where:
+        - external_type: "'User'"
+        - account__holder: '@account__user.company'
+      count: 4
+    member_roles:
+      model: Ext::Role
+      scopes:
+        - git_hub
+      where:
+        - name: "'Member'"
       count: 1
+    outside_collaborators_roles:
+      model: Ext::Role
+      scopes:
+        - git_hub
+      where:
+        - name: "'OutsideCollaborator'"
+      count: 3

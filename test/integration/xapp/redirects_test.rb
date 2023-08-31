@@ -33,21 +33,16 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     get url_for [:new, :xapp, :provider, :redirect, params]
   end
 
-  data = YAML.load_file __FILE__.gsub(/\.rb$/, "/git_hub.yml")
-  data['git_hub']['records'].map do |k,v|
+  provider_records = YAML.load_file(__FILE__.gsub /\.rb$/, "/git_hub.yml")['git_hub']['records']
+  base_records = YAML.load_file(__FILE__.gsub /\.rb$/, "/base.yml")['base']['records']
+  base_records.merge(provider_records).map do |k,v|
     query = v['model']
+    query << ".#{v['scopes'].join('.')}" if v['scopes']
+    query << ".where(#{v['where'].map{ |attribute| attribute.map { |name, value| [name, value].join ': ' }}.join(', ') })" if v['where']
+    query << ".where.not(#{v['where.not'].map{ |attribute| attribute.map { |name, value| [name, value].join ': ' }}.join(', ') })" if v['where.not']
     query << '.count'
     [query, v['count']]
   end.to_h.merge({
-    'Ext::Bot.where.not(external_data: nil)'\
-      '.where(account__company: @account__user.company).count' => 1,
-    "Ext::Token.where(authorizer_type: 'Ext::Bot').count" => 1,
-    "Ext::Resource.git_hub.where(external_type: 'Organization', "\
-      'account__company: @account__user.company).count' => 1,
-    "Ext::Persona.git_hub.where(external_type: 'User', "\
-      'account__holder: @account__user.company).count' => 4,
-    "Ext::Role.git_hub.where(name: 'Member').count" => 1,
-    "Ext::Role.git_hub.where(name: 'OutsideCollaborator').count" => 3,
     'Account::Audit.count' => 1
   }).each do |check, diff|
     test_provider 'GitHub', check, diff do |creds|
