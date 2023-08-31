@@ -4,3 +4,27 @@ heroku:
     - 'teams_client#index'
     - 'members_client#index'
     - 'invitations_client#index'
+  records:
+    resources:
+      -
+        where:
+          external_type: "'Team'"
+        count: 1
+    personas:
+      -
+        where:
+          external_type: "'User'"
+        count: 3
+    roles:
+      -
+        where:
+          name: "'admin'"
+        count: 1
+      -
+        where:
+          name: "'collaborator'"
+        count: 1
+      -
+        where:
+          name: "'member'"
+        count: 1
