@@ -40,12 +40,12 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     base_templates = base['templates']
 
     base_records.merge(provider_records).flat_map do |k,vs|
-      vs.map! { base_templates[k].merge _1 }
+      base_template = base_templates[k]
 
       vs.map do |v|
-        query = "#{v['model']}"
-        query << ".where(#{v['where'].map{ |name, value| [name, value].join ': ' }.join(', ')})" if v['where']
-        query << ".where.not(#{v['where.not'].map{ |name, value| [name, value].join ': ' }.join(', ')})" if v['where.not']
+        query = "#{base_template['model']}"
+        query << ".where(#{(base_template['where'] || {}).merge(v['where']).map{ |name, value| [name, value].join ': ' }.join(', ')})" if v['where']
+        query << ".where.not(#{(base_template['where.not'] || {}).merge(v['where.not']).map{ |name, value| [name, value].join ': ' }.join(', ')})" if v['where.not']
         query << '.count'
         [query, v['count']]
       end
