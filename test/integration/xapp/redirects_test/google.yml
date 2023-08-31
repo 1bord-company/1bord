@@ -2,3 +2,23 @@ google:
   cassettes:
     - 'bot_access_token_client#create'
     - 'users_client#index'
+  records:
+    resources:
+      -
+        where:
+          external_type: "'Domain'"
+        count: 1
+    personas:
+      -
+        where:
+          external_type: "'User'"
+        count: 2
+    roles:
+      -
+        where:
+          name: "'admin'"
+        count: 1
+      -
+        where:
+          name: "'member'"
+        count: 1

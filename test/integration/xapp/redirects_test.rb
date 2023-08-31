@@ -58,25 +58,10 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     end
   end
 
-  %w[Slack Jira Heroku].each do |provider|
+  %w[Slack Jira Heroku Google].each do |provider|
     record_checks(provider).each do |check, diff|
       test_provider provider, check, diff
     end
-  end
-
-  {
-    'Xapp::Redirect.count' => 1,
-    'Ext::Bot.where(account__company: @account__user.company).count' => 1,
-    "Ext::Token.where(authorizer_type: 'Ext::Bot')"\
-      '.where.not(refresh_token: nil).count' => 1,
-    "Ext::Resource.where(external_type: 'Domain', "\
-      'account__company: @account__user.company).count' => 1,
-    "Ext::Persona.where(external_type: 'User').count" => 2,
-    "Ext::Role.where(name: 'admin').count" => 1,
-    "Ext::Role.where(name: 'member').count" => 1,
-    'Account::Audit.count' => 1
-  }.each do |check, diff|
-    test_provider "Google", check, diff
   end
 
   {
