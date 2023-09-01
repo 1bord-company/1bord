@@ -1,6 +1,5 @@
 slack:
   cassettes:
-    - 'bot_access_token_client#create'
     - 'teams_client#show'
     - 'users_client#index'
   records:

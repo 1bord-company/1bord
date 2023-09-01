@@ -1,6 +1,5 @@
 google:
   cassettes:
-    - 'bot_access_token_client#create'
     - 'users_client#index'
   records:
     resources:

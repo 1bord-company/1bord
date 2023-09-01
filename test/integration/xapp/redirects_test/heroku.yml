@@ -1,6 +1,5 @@
 heroku:
   cassettes:
-    - 'bot_access_token_client#create'
     - 'teams_client#index'
     - 'members_client#index'
     - 'invitations_client#index'

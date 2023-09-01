@@ -1,4 +1,6 @@
 base:
+  cassettes:
+    - 'bot_access_token_client#create'
   templates:
     redirects:
       model: Xapp::Redirect

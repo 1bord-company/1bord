@@ -9,13 +9,14 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
   end
 
   def self.test_provider(provider, check, diff, &block)
-    data = YAML.load_file __FILE__.gsub(/\.rb$/, "/#{provider.underscore}.yml")
+    base_cassettes = YAML.load_file(__FILE__.gsub /\.rb$/, '/base.yml')['base']['cassettes']
+    provider_cassettes = YAML.load_file(__FILE__.gsub /\.rb$/, "/#{provider.underscore}.yml")[provider.underscore]['cassettes']
 
     test "#{provider}:#{check}==#{diff}" do
       [diff, check == 'Account::Audit.count' ? diff : 0].each do |diff|
         assert_difference check, diff do
           VCR.insert_provider_cassettes provider.underscore,
-            data[provider.underscore]['cassettes'] do
+            (base_cassettes + provider_cassettes) do
             get_redirect provider, &block
 
             assert_redirected_to root_path

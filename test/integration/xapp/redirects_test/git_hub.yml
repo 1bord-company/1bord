@@ -1,6 +1,5 @@
 git_hub:
   cassettes:
-    - 'bot_access_token_client#create'
     - 'installation_access_token_client#create'
     - 'installation_client.show'
     - 'members_client.index'
