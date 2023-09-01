@@ -13,7 +13,7 @@ class Xapp::RedirectsTest < ApplicationSystemTestCase
 
   test 'to home page' do
     VCR.insert_cassettes [
-      'providers.git_hub.user_access_client#create',
+      'providers.git_hub.bot_access_token_client#create',
       'providers.git_hub.installation_access_token_client#create',
       'providers.git_hub.installation_client.show',
       'providers.git_hub.members_client.index',

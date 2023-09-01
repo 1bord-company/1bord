@@ -2,7 +2,7 @@ module Xapp
   class Redirect < ApplicationRecord
     class SlackHandler
       def self.handle(redirect)
-        token_info = Slack::UserAccessTokenClient.create(code: redirect.params['code'])
+        token_info = Slack::BotAccessTokenClient.create(code: redirect.params['code'])
 
         @bot = Ext::Bot
           .extending(ActiveRecord::CreateOrFindAndUpdateBy)

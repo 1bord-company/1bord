@@ -10,7 +10,7 @@ class Account::SlackReauditsTest < ActionDispatch::IntegrationTest
     Ext::Bot.destroy_all
 
     VCR.insert_cassettes [
-      'providers.slack.user_access_client#create',
+      'providers.slack.bot_access_token_client#create',
       'providers.slack.teams_client#show',
       'providers.slack.users_client#index'
     ] do
