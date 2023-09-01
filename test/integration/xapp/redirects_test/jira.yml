@@ -11,8 +11,6 @@ jira:
         count: 1
     personas:
       -
-        where:
-          external_type: "'User'"
         count: 1
       -
         where:

@@ -13,8 +13,6 @@ asana:
         count: 2
     personas:
       -
-        where:
-          external_type: "'User'"
         count: 6
     roles:
       -

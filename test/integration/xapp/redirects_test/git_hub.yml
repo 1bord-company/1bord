@@ -13,8 +13,6 @@ git_hub:
         count: 1
     personas:
       -
-        where:
-          external_type: "'User'"
         count: 4
     roles:
       -

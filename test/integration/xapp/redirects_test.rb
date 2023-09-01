@@ -44,8 +44,8 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
 
       vs.map do |v|
         query = "#{base_template['model']}"
-        query << ".where(#{(base_template['where'] || {}).merge(v['where']).map{ |name, value| [name, value].join ': ' }.join(', ')})" if v['where']
-        query << ".where.not(#{(base_template['where.not'] || {}).merge(v['where.not']).map{ |name, value| [name, value].join ': ' }.join(', ')})" if v['where.not']
+        query << ".where(#{(base_template['where'] || {}).merge(v['where'] || {}).map{ |name, value| [name, value].join ': ' }.join(', ')})" if v['where'] || base_template['where']
+        query << ".where.not(#{(base_template['where.not'] || {}).merge(v['where.not'] || {}).map{ |name, value| [name, value].join ': ' }.join(', ')})" if v['where.not'] || base_template['where.not']
         query << '.count'
         [query, v['count']]
       end

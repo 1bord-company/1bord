@@ -16,6 +16,7 @@ base:
       model: Ext::Persona
       where:
         account__holder: '@account__user.company'
+        external_type: "'User'"
     roles:
       model: Ext::Role
 
