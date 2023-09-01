@@ -13,7 +13,7 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     provider_cassettes = YAML.load_file(__FILE__.gsub /\.rb$/, "/#{provider.underscore}.yml")[provider.underscore]['cassettes']
 
     test "#{provider}:#{check}==#{diff}" do
-      [diff, check == 'Account::Audit.count' ? diff : 0].each do |diff|
+      [diff, 0].each do |diff|
         assert_difference check, diff do
           VCR.insert_provider_cassettes provider.underscore,
             (base_cassettes + provider_cassettes) do

@@ -37,10 +37,6 @@ class GoogleAuditor
             provider: 'Google',
             name: user_data['isAdmin'] ? 'admin' : 'member'
       end
-
-      Account::Audit.create! \
-        auditee: domain,
-        auditor: @bot
     end
   end
 end

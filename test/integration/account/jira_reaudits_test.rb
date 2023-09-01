@@ -31,8 +31,7 @@ class Account::JiraReauditsTest < ActionDispatch::IntegrationTest
       'account__company: @account__user.company).count' => 1,
     "Ext::Persona.where(external_type: 'User').count" => 1,
     "Ext::Persona.where(external_type: 'Bot').count" => 12,
-    "Ext::Role.jira.where(name: 'Role').count" => 13,
-    'Account::Audit.count' => 1
+    "Ext::Role.jira.where(name: 'Role').count" => 13
   }.each do |check, diff|
     test "Jira:#{check}" do
       Ext::Bot.jira.last.token.update expires_at: 1.second.ago

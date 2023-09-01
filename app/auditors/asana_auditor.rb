@@ -57,12 +57,6 @@ class AsanaAuditor
             resource: workspaces.find { _1.external_id == membership_data['workspace']['gid'] }
       end
     end
-
-    workspaces.each do |workspace|
-      Account::Audit.create! \
-        auditor: @bot,
-        auditee: workspace
-    end
   end
 
   def role(membership_data)

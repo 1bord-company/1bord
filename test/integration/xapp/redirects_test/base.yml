@@ -8,8 +8,6 @@ base:
       model: Ext::Bot
     tokens:
       model: Ext::Token
-    audits:
-      model: Account::Audit
     resources:
       model: Ext::Resource
       where:
@@ -37,7 +35,4 @@ base:
       -
         where:
           authorizer_type: "'Ext::Bot'"
-        count: 1
-    audits:
-      -
         count: 1

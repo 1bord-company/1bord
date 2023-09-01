@@ -16,9 +16,6 @@ class SlackAuditor
         external_type: 'Workspace',
         account__company: @bot.account__company
 
-
-    Account::Audit.create! auditor: @bot, auditee: @team
-
     Slack::UsersClient
       .index(@bot.token!.access_token)['members']
       .each do |member|

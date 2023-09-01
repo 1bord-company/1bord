@@ -16,8 +16,6 @@ class GitHubAuditor
         external_type: account['type'],
         account__company: @bot.account__company
 
-    Account::Audit.create! auditor: @bot, auditee: org
-
     members =
       GitHub::MembersClient
       .index @bot.token!.access_token, account['login']

@@ -35,8 +35,7 @@ class Account::SlackReauditsTest < ActionDispatch::IntegrationTest
       'account__holder: @account__user.company).count' => 0,
     "Ext::Role.slack.where(name: 'Member').count" => 1,
     "Ext::Role.slack.where(name: 'PrimaryOwner').count" => 1,
-    "Ext::Role.slack.where(name: 'InvitedUser').count" => 1,
-    'Account::Audit.count' => 1
+    "Ext::Role.slack.where(name: 'InvitedUser').count" => 1
   }.each do |check, diff|
     test "Slack:#{check}" do
       assert_difference check, diff do

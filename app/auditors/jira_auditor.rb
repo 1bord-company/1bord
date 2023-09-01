@@ -32,8 +32,6 @@ class JiraAuditor
                 provider: 'Jira',
                 external_data: user,
                 account__company: Account::Current.company
-
-            Account::Audit.create! auditor: @bot, auditee: resource
           else
             persona = Ext::Persona
               .extending(ActiveRecord::CreateOrFindAndUpdateBy)

@@ -33,8 +33,7 @@ class Account::HerokuReauditsTest < ActionDispatch::IntegrationTest
     "Ext::Persona.where(external_type: 'User').count" => 3,
     "Ext::Role.heroku.where(name: 'admin').count" => 1,
     "Ext::Role.heroku.where(name: 'collaborator').count" => 1,
-    "Ext::Role.heroku.where(name: 'member').count" => 1,
-    'Account::Audit.count' => 1
+    "Ext::Role.heroku.where(name: 'member').count" => 1
   }.each do |check, diff|
     test "Heroku:#{check}" do
       Ext::Bot.heroku.last.token.update expires_at: 1.second.ago

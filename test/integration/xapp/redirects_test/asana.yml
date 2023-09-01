@@ -26,6 +26,3 @@ asana:
         where:
           name: "'Member'"
         count: 2
-    audits:
-      -
-        count: 2

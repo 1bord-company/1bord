@@ -38,11 +38,10 @@ class Account::GitHubReauditsTest < ActionDispatch::IntegrationTest
     "Ext::Persona.git_hub.where(external_type: 'User', "\
       'account__holder: @account__user.company).count' => 4,
     "Ext::Role.git_hub.where(name: 'Member').count" => 1,
-    "Ext::Role.git_hub.where(name: 'OutsideCollaborator').count" => 3,
-    'Account::Audit.count' => 1
+    "Ext::Role.git_hub.where(name: 'OutsideCollaborator').count" => 3
   }.each do |check, diff|
     test "GitHub:#{check}" do
-      assert_difference check, check == 'Account::Audit.count' ? 1 : 0 do
+      assert_difference check, 0 do
         VCR.insert_cassettes [
           'providers.git_hub.installation_client.show',
           'providers.git_hub.members_client.index',
