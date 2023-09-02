@@ -27,7 +27,7 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
 
   def reaudit(provider)
     VCR.insert_provider_cassettes provider.underscore,
-      self.class.provider_data(provider)['cassettes'] do
+      (self.class.base_data['cassettes'] + self.class.provider_data(provider)['cassettes']) do
         post url_for %i[account audit]
       end
   end
@@ -54,6 +54,8 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     entity_checks(provider).each do |check, diff|
       test "RealReaudit:#{provider}:#{check}==0##{SecureRandom.hex(6)}" do
         install provider, &block
+
+        Ext::Token.update_all expires_at: 1.second.ago
         reset_ext
 
         assert_difference(check, diff) { reaudit provider }

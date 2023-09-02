@@ -35,12 +35,11 @@ module Ext
               )
               .tap do |token_info|
                 token_info['expires_at'] ||= Time.current + token_info['expires_in'].to_i.seconds
+                token_info['scope'] = token_info['scope'].to_s
               end
             )
-            .slice(
-              'access_token', 'refresh_token',
-              'expires_at', 'scope'
-            ).compact
+              .slice('access_token', 'refresh_token', 'expires_at', 'scope')
+              .compact
         )
     end
 
