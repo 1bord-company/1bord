@@ -1,0 +1,9 @@
+jira:
+  base_url: auth.atlassian.com
+  token_path: oauth/token
+  resources_base_url: api.atlassian.com
+  resources:
+    accessible_resources:
+      path: oauth/token/accessible-resources
+      actions:
+        - index

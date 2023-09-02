@@ -1,7 +1,7 @@
 require './lib/clients/access_token_client/base'
 Dir[__FILE__.gsub(/.rb$/, '') + '/**/resource_client/*.rb'].each { require _1 }
 
-%w[asana git_hub google heroku].each do |provider|
+%w[asana git_hub google heroku jira].each do |provider|
   provider_module =
     if Object.const_defined? provider.camelize
       Object.const_get provider.camelize
