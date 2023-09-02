@@ -37,8 +37,10 @@ module Ext
                 token_info['expires_at'] ||= Time.current + token_info['expires_in'].to_i.seconds
               end
             )
-            .slice('access_token', 'refresh_token',
-                   'expires_at', 'scope')
+            .slice(
+              'access_token', 'refresh_token',
+              'expires_at', 'scope'
+            ).compact
         )
     end
 
