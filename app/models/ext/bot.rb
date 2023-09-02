@@ -5,8 +5,6 @@ module Ext
                foreign_key: :account__holder_id,
                foreign_type: :account__holder_type
 
-    delegate :refresh_token, to: :token, allow_nil: true
-
     has_many :account__audits,
              as: :auditor
 
@@ -30,9 +28,7 @@ module Ext
 
           **{ 'refresh_token' => refresh_token }
             .merge(
-              provider.constantize::BotAccessTokenClient.create(
-                **refresh_token_params
-              )
+              provider.constantize::BotAccessTokenClient.create(**refresh_token_params)
               .tap do |token_info|
                 token_info['expires_at'] ||= Time.current + token_info['expires_in'].to_i.seconds
                 token_info['scope'] = token_info['scope'].to_s
@@ -58,5 +54,12 @@ module Ext
     end
 
     def external_data_client = provider.constantize::InstallationClient
+
+    def refresh_token
+      Ext::Token
+        .find_by(provider: provider, authorizer_id: id,
+                 authorizer_type: self.class.name)
+        .refresh_token
+    end
   end
 end
