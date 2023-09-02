@@ -1,7 +1,5 @@
 module Heroku
-  class ResourceClient < ResourceClient::Base
-    BASE_URL = 'https://api.heroku.com'.freeze
-
+  class ResourceClient < ::ResourceClient::Base
     private
 
     def headers = super.merge(
