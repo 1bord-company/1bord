@@ -8,3 +8,9 @@
 
   --icon-size: 36px;
 }
+
+@mixin icon--small {
+  @include icon;
+
+  --icon-size: 24px;
+}

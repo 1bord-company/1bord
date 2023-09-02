@@ -17,12 +17,14 @@
     button {
       --background-color: transparent;
       --color: var(--primary);
-      aspect-ratio: 1;
-      --border-radius: 100%;
+      --border-radius: 999px;
       display: flex;
-      margin: auto;
-      width: 60px;
-      padding: 0px;
+      height: 3em;
+      width: 7em;
+      padding: 0.7em;
+      align-items: center;
+      display: flex;
+      gap: 0.35em;
 
       &[aria-busy=true] {
         .connections__icon {
@@ -30,17 +32,15 @@
         }
 
         &::before {
-          height: 36px;
-          width: 36px;
-          margin: auto;
+          height: 24px;
+          width: 24px;
+          margin: 0;
         }
       }
     }
   }
 
   &__icon {
-    @include icons.icon--medium;
-
-    margin: auto;
+    @include icons.icon--small;
   }
 }
