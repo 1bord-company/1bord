@@ -1,0 +1,17 @@
+asana:
+  base_url: app.asana.com
+  token_path: -/oauth_token
+  resources:
+    workspaces:
+      actions:
+        - index
+      resources:
+        workspace_memberships:
+          actions:
+            - index
+    workspace_memberships:
+      actions:
+        - show
+    users:
+      actions:
+        - show

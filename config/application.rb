@@ -3,6 +3,7 @@ require_relative "boot"
 require "rails/all"
 
 require './lib/ext/active_record/create_or_find_and_update_by'
+require './lib/clients.rb'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
