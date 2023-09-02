@@ -1,7 +1,7 @@
 require './lib/clients/access_token_client/base'
 Dir[__FILE__.gsub(/.rb$/, '') + '/**/resource_client/*.rb'].each { require _1 }
 
-%w[asana].each do |provider|
+%w[asana git_hub].each do |provider|
   provider_module =
     if Object.const_defined? provider.camelize
       Object.const_get provider.camelize
@@ -11,15 +11,17 @@ Dir[__FILE__.gsub(/.rb$/, '') + '/**/resource_client/*.rb'].each { require _1 }
 
   data = YAML.load_file(__FILE__.gsub /\.rb$/, "/#{provider}.yml")[provider]
 
-  if provider_module.const_defined? "#{provider.camelize}::BotAccessTokenClient"
-    provider_module.const_get "#{provider.camelize}::BotAccessTokenClient"
-  else
-    provider_module.const_set \
-      'BotAccessTokenClient',
-      (Class.new AccessTokenClient::Base do
-        const_set :BASE_URL, 'https://' + data['base_url']
-        const_set :TOKEN_PATH, data['token_path']
-      end)
+  if data.key?('base_url') && data.key?('token_path')
+    if provider_module.const_defined? "#{provider.camelize}::BotAccessTokenClient"
+      provider_module.const_get "#{provider.camelize}::BotAccessTokenClient"
+    else
+      provider_module.const_set \
+        'BotAccessTokenClient',
+        (Class.new AccessTokenClient::Base do
+          const_set :BASE_URL, 'https://' + data['base_url']
+          const_set :TOKEN_PATH, data['token_path']
+        end)
+    end
   end
 
   provider_resource_client =
@@ -33,7 +35,7 @@ Dir[__FILE__.gsub(/.rb$/, '') + '/**/resource_client/*.rb'].each { require _1 }
       end)
     end
 
-  data['resources'].each do |name, options|
+  data['resources']&.each do |name, options|
     if provider_module.const_defined? "#{provider.camelize}::#{name.camelize}Client"
       provider_module.const_get "#{provider.camelize}::#{name.camelize}Client"
     else

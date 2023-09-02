@@ -1,7 +1,5 @@
 module GitHub
-  class ResourceClient < ResourceClient::Base
-    BASE_URL = 'https://api.github.com'.freeze
-
+  class ResourceClient < ::ResourceClient::Base
     private
 
     def headers = super.merge(
