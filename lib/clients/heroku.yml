@@ -1,2 +1,6 @@
 heroku:
   resources_base_url: api.heroku.com
+  resources:
+    teams:
+      actions:
+        - index
