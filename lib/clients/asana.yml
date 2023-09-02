@@ -6,6 +6,9 @@ asana:
     workspaces:
       actions:
         - index
+    workspace_memberships:
+      actions:
+        - show
     users:
       actions:
         - show
