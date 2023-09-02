@@ -1,4 +1,6 @@
 google:
+  base_url: oauth2.googleapis.com
+  token_path: token
   resources_base_url: admin.googleapis.com
   resources:
     users:
