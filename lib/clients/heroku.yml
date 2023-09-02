@@ -1,4 +1,6 @@
 heroku:
+  base_url: id.heroku.com
+  token_path: oauth/token
   resources_base_url: api.heroku.com
   resources:
     teams:
