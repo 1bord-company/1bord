@@ -1,5 +1,5 @@
 require './lib/clients/access_token_client/base'
-require './lib/clients/resource_client/base'
+Dir[__FILE__.gsub(/.rb$/, '') + '/**/resource_client/*.rb'].each { require _1 }
 
 %w[asana].each do |provider|
   provider_module =
@@ -55,4 +55,5 @@ require './lib/clients/resource_client/base'
     end
 end
 
-require './lib/clients/asana/workspace_memberships_client'
+Dir[__FILE__.gsub(/.rb$/, '') + '/**/resource_client.rb'].each { require _1 }
+Dir[__FILE__.gsub(/.rb$/, '') + '/**/*.rb'].each { require _1 }
