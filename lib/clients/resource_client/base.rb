@@ -19,6 +19,8 @@ module ResourceClient
 
     private
 
+    def resource_name = self.class.name.demodulize.underscore.downcase.gsub(/_client/, '')
+
     def headers = {
       'Authorization' => "Bearer #{@token}"
     }

@@ -3,6 +3,9 @@ asana:
   token_path: -/oauth_token
   resources_base_url: app.asana.com/api/1.0
   resources:
+    workspaces:
+      actions:
+        - index
     users:
       actions:
         - show

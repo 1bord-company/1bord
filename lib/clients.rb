@@ -24,11 +24,14 @@ require './lib/clients/resource_client/base.rb'
       "#{name.camelize}Client",
       (Class.new provider_resource_client do
         if options['actions'].include? 'show'
-          key = "#{name.singularize}_id"
           def self.show(token, resource_id) = new(token).show(resource_id)
           def show(resource_id) = get("#{resource_name}/#{resource_id}")
 
-          def resource_name = self.class.name.demodulize.underscore.downcase.gsub(/_client/, '')
+        end
+
+        if options['actions'].include? 'index'
+          def self.index(token) = new(token).index
+          def index = get(resource_name)
         end
       end)
   end
