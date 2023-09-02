@@ -1,0 +1,9 @@
+slack:
+  base_url: slack.com
+  token_path: api/oauth.v2.access
+  resources_base_url: slack.com/api
+  resources:
+    users:
+      path: users.list
+      actions:
+        - index
