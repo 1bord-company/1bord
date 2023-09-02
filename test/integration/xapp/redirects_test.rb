@@ -19,21 +19,15 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
   end
 
   def install(provider, &block)
-    base_cassettes = YAML.load_file(__FILE__.gsub /\.rb$/, '/base.yml')['base']['cassettes']
-    provider_cassettes = YAML.load_file(__FILE__.gsub /\.rb$/, "/#{provider.underscore}.yml")[provider.underscore]['cassettes']
-
     VCR.insert_provider_cassettes provider.underscore,
-      (base_cassettes + provider_cassettes) do
+      (self.class.base_data['cassettes'] + self.class.provider_data(provider)['cassettes']) do
         get_redirect provider, &block
       end
   end
 
   def reaudit(provider)
-    base_cassettes = YAML.load_file(__FILE__.gsub /\.rb$/, '/base.yml')['base']['cassettes']
-    provider_cassettes = YAML.load_file(__FILE__.gsub /\.rb$/, "/#{provider.underscore}.yml")[provider.underscore]['cassettes']
-
     VCR.insert_provider_cassettes provider.underscore,
-      provider_cassettes do
+      self.class.provider_data(provider)['cassettes'] do
         post url_for %i[account audit]
       end
   end
@@ -50,7 +44,7 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
         assert_difference(check, diff) { install provider, &block }
       end
 
-      test "TestReaudit:#{provider}:#{check}==#{0}##{SecureRandom.hex(6)}" do
+      test "TestReaudit:#{provider}:#{check}==0##{SecureRandom.hex(6)}" do
         install provider, &block
 
         assert_difference(check, 0) { reaudit provider }
@@ -58,7 +52,7 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     end
 
     entity_checks(provider).each do |check, diff|
-      test "RealReaudit:#{provider}:#{check}==#{0}##{SecureRandom.hex(6)}" do
+      test "RealReaudit:#{provider}:#{check}==0##{SecureRandom.hex(6)}" do
         install provider, &block
         reset_ext
 
@@ -67,41 +61,29 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
     end
   end
 
+  def self.base_data = YAML.load_file(__FILE__.gsub /\.rb$/, "/base.yml")['base']
+  def self.provider_data(name) = YAML.load_file(__FILE__.gsub /\.rb$/, "/#{name.underscore}.yml")[name.underscore]
+
   def self.record_checks(provider)
-    provider_records = YAML.load_file(__FILE__.gsub /\.rb$/, "/#{provider.underscore}.yml")[provider.underscore]['records']
-    base = YAML.load_file(__FILE__.gsub /\.rb$/, "/base.yml")['base']
-    base_records = base['records']
-    base_templates = base['templates']
-
-    base_records.merge(provider_records).flat_map do |k,vs|
-      base_template = base_templates[k]
-
-      vs.map do |v|
-        query = "#{base_template['model']}"
-        query << ".where(#{(base_template['where'] || {}).merge(v['where'] || {}).map{ |name, value| [name, value].join ': ' }.join(', ')})" if v['where'] || base_template['where']
-        query << ".where.not(#{(base_template['where.not'] || {}).merge(v['where.not'] || {}).map{ |name, value| [name, value].join ': ' }.join(', ')})" if v['where.not'] || base_template['where.not']
-        query << '.count'
-        [query, v['count']]
-      end
-    end.to_h
+    queries base_data['records'].merge(provider_data(provider)['records'])
   end
 
   def self.entity_checks(provider)
-    provider_records = YAML.load_file(__FILE__.gsub /\.rb$/, "/#{provider.underscore}.yml")[provider.underscore]['records']
-    base = YAML.load_file(__FILE__.gsub /\.rb$/, "/base.yml")['base']
-    base_templates = base['templates']
+    queries provider_data(provider)['records']
+  end
 
-    provider_records.flat_map do |k,vs|
-      base_template = base_templates[k]
-
-      vs.map do |v|
-        query = "#{base_template['model']}"
-        query << ".where(#{(base_template['where'] || {}).merge(v['where'] || {}).map{ |name, value| [name, value].join ': ' }.join(', ')})" if v['where'] || base_template['where']
-        query << ".where.not(#{(base_template['where.not'] || {}).merge(v['where.not'] || {}).map{ |name, value| [name, value].join ': ' }.join(', ')})" if v['where.not'] || base_template['where.not']
-        query << '.count'
-        [query, v['count']]
-      end
+  def self.queries(records)
+    records.flat_map do |model, scenarios|
+      scenarios.map { |scenario| query base_data['templates'][model], scenario }
     end.to_h
+  end
+
+  def self.query(base_template, v)
+    query = "#{base_template['model']}"
+    query << ".where(#{(base_template['where'] || {}).merge(v['where'] || {}).map{ |name, value| [name, value].join ': ' }.join(', ')})" if v['where'] || base_template['where']
+    query << ".where.not(#{(base_template['where.not'] || {}).merge(v['where.not'] || {}).map{ |name, value| [name, value].join ': ' }.join(', ')})" if v['where.not'] || base_template['where.not']
+    query << '.count'
+    [query, v['count']]
   end
 
   test_provider 'GitHub' do |creds|
