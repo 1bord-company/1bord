@@ -1,0 +1,7 @@
+google:
+  resources_base_url: admin.googleapis.com
+  resources:
+    users:
+      path: admin/directory/v1/users?customer=my_customer
+      actions:
+        - index

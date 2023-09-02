@@ -1,7 +1,7 @@
 require './lib/clients/access_token_client/base'
 Dir[__FILE__.gsub(/.rb$/, '') + '/**/resource_client/*.rb'].each { require _1 }
 
-%w[asana git_hub].each do |provider|
+%w[asana git_hub google].each do |provider|
   provider_module =
     if Object.const_defined? provider.camelize
       Object.const_get provider.camelize
@@ -49,8 +49,11 @@ Dir[__FILE__.gsub(/.rb$/, '') + '/**/resource_client/*.rb'].each { require _1 }
           end
 
           if options['actions'].include? 'index'
+            path = options['path']
             def self.index(token) = new(token).index
-            def index = get(resource_name)
+            define_method :index do
+              get(options['path'] || resource_name)
+            end
           end
         end)
       end
