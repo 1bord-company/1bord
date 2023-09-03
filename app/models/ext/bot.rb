@@ -59,7 +59,7 @@ module Ext
       Ext::Token
         .find_by(provider: provider, authorizer_id: id,
                  authorizer_type: self.class.name)
-        .refresh_token
+        &.refresh_token
     end
   end
 end
