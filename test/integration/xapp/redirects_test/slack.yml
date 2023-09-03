@@ -11,13 +11,8 @@ slack:
           external_data: {}
         count: 1
     personas:
-      -
-        count: 3
+      - count: 2
     roles:
-      -
-        where:
-          name: "'Member'"
-        count: 1
       -
         where:
           name: "'PrimaryOwner'"

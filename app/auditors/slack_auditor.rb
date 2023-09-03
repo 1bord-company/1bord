@@ -18,8 +18,8 @@ class SlackAuditor
 
     Slack::UsersClient
       .index(@bot.token!.access_token)['members']
+      .reject{ _1['is_bot'] || _1['id'] == 'USLACKBOT' }
       .each do |member|
-      next if member['name'] == 'unbord'
 
       persona = Ext::Persona
         .extending(ActiveRecord::CreateOrFindAndUpdateBy)
