@@ -9,23 +9,15 @@
 
   &__title {
     display: inline;
+    margin: 0;
   }
 
   &__reaudit {
     display: inline-flex;
+    margin: 0;
 
     button {
-      --background-color: transparent;
-      --color: var(--primary);
-      --border-radius: 999px;
-      display: flex;
-      height: 3em;
-      width: 7em;
-      padding: 0.7em;
-      align-items: center;
-      display: flex;
-      gap: 0.35em;
-
+      margin: 0;
       &[aria-busy=true] {
         .connections__icon {
           display: none;

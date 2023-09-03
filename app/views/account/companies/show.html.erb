@@ -1,48 +1,59 @@
-<h1>Company: <%= @company.name %></h1>
-<p>Email: <%= @company.email %></p>
-
-<h2>Connections</h2>
-
-<section class="new-connections">
-  <header>
-    <h3 class="new-connections__heading">Add a new connection</h3>
-    <p>
-      Connect the services you use to view all the people with access right here, in one place.
-    </p>
-  </header>
-  <ul class="new-connections__list">
-    <% %w[git_hub slack jira heroku google asana].each do |provider| %>
-      <li class="new-connections__item">
-        <%= link_to route_for(provider), title: provider.camelize, class: "new-connections__button", target: :_blank, role: :button do %>
-          <%= render "icons/#{provider}", classes: 'new-connections__icon' %>
-          <%= provider.camelize %>
-        <% end %>
-      </li>
-    <% end %>
+<nav>
+  <ul>
+    <li><strong>1bord</strong></li>
   </ul>
-</section>
+  <ul>
+    <li><%= @company.email %></li>
+    <li><%= button_to do %>
+      <%= render 'icons/logout' %>
+      Logout
+    <% end %></li>
+  </ul>
+</nav>
+<main>
+  <h2>Connections</h2>
 
-<section class="connections">
-  <hgroup class="connections__heading">
-    <h3 class="connections__title">Existing connections</h3>
+  <section class="new-connections">
+    <header>
+      <h3 class="new-connections__heading">Add a new connection</h3>
+      <p>
+        Connect the services you use to view all the people with access right here, in one place.
+      </p>
+    </header>
+    <ul class="new-connections__list">
+      <% %w[git_hub slack jira heroku google asana].each do |provider| %>
+        <li class="new-connections__item">
+          <%= link_to route_for(provider), title: provider.camelize, class: "new-connections__button", target: :_blank, role: :button do %>
+            <%= render "icons/#{provider}", classes: 'new-connections__icon' %>
+            <%= provider.camelize %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </section>
 
-    <%= button_to [:account, :audit],
-                  title: 'Reaudit',
-                  form_class: 'connections__reaudit',
-                  data: { controller: 'buttons--busy',
-                          action: 'buttons--busy#busy' } do %>
+  <section class="connections">
+    <header class="connections__heading">
+      <h3 class="connections__title">Existing connections</h3>
 
-      <%= render 'icons/refresh', classes: 'connections__icon' %>
-      Reaudit
+      <%= button_to [:account, :audit],
+                    title: 'Reaudit',
+                    form_class: 'connections__reaudit',
+                    data: { controller: 'buttons--busy',
+                            action: 'buttons--busy#busy' } do %>
+
+        <%= render 'icons/refresh', classes: 'connections__icon' %>
+        Reaudit
+      <% end %>
+    </header>
+
+    <% @company.ext__resources.each do |resource| %>
+      <table>
+        <thead><%= render resource %></thead>
+        <tbody>
+          <%= render resource.personas, resource: resource %>
+        </tbody>
+      </table>
     <% end %>
-  </hgroup>
-
-  <% @company.ext__resources.each do |resource| %>
-    <table>
-      <thead><%= render resource %></thead>
-      <tbody>
-        <%= render resource.personas, resource: resource %>
-      </tbody>
-    </table>
-  <% end %>
-</section>
+  </section>
+</main>

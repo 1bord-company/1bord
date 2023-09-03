@@ -4,28 +4,12 @@
   &__list {
     display: flex;
     gap: 1em;
+    flex-wrap: wrap;
+    padding: 0;
   }
 
   &__item {
     list-style: none;
-  }
-
-  &__button {
-    --background-color: unset;
-    --border-radius: 999px;
-    --color: var(--color);
-    padding: 0.7em;
-    height: 3em;
-    gap: 0.35em;
-    align-items: center;
-    width: 7em;
-
-    display: flex;
-
-    &:hover {
-      --background-color: unset;
-      --color: var(--color);
-    }
   }
 
   &__icon {

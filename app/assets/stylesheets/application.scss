@@ -1,7 +1,46 @@
 // Sassy
-
 @use 'connections/new';
 @use 'connections/show';
 @use 'connections/index';
 
 @use 'personas';
+
+:root {
+  --button-background-color: #404040;
+  --button-hover-background-color: #4a4a4a;
+  --button-text-color: #cecece;
+}
+
+
+body {
+  padding: 2em;
+}
+
+button, a[role="button"] {
+  --background-color: var(--button-background-color);
+  --border-radius: 999px;
+  --color: var(--button-text-color);
+  padding: 0.7em;
+  height: 3em;
+  gap: 0.35em;
+  align-items: center;
+  width: 7em;
+  border: none;
+
+  display: flex;
+
+  &:hover {
+    scale: 1.05;
+    --background-color: var(--button-hover-background-color);
+    --color: var(--button-text-color);
+  }
+
+  svg {
+    height: 24px;
+    width: 24px;
+  }
+}
+
+form.button_to {
+  margin: unset;
+}
