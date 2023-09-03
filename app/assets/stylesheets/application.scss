@@ -5,10 +5,32 @@
 
 @use 'personas';
 
+// Default, Light System
+[data-theme="light"],
+:root:not([data-theme="dark"]) {
+  --button-background-color: #cecece;
+  --button-hover-background-color: #dfdfdf;
+  --button-text-color: #404040;
+}
+
+// Dark System
+@media only screen and (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --button-background-color: #404040;
+    --button-hover-background-color: #4a4a4a;
+    --button-text-color: #cecece;
+  }
+}
+
+// Dark Element
+[data-theme="dark"] {
+  --primary: #d81b60;
+  --primary-hover: #e91e63;
+  --primary-focus: rgba(216, 27, 96, 0.25);
+  --primary-inverse: #FFF;
+}
+
 :root {
-  --button-background-color: #404040;
-  --button-hover-background-color: #4a4a4a;
-  --button-text-color: #cecece;
 }
 
 
