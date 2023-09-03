@@ -23,7 +23,7 @@ class Xapp::RedirectsTest < ApplicationSystemTestCase
 
       visit url_for [
         :new, :xapp, :provider, :redirect,
-        { provider_id: 'GitHub', code: git_hub_creds.user.code,
+        { provider_id: 'GitHub',
           installation_id: git_hub_creds.bot.id,
           setup_action: 'install' }
       ]
