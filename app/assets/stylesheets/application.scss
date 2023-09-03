@@ -33,11 +33,6 @@
 :root {
 }
 
-
-body {
-  padding: 2em;
-}
-
 button, a[role="button"] {
   --background-color: var(--button-background-color);
   --border-radius: 999px;
@@ -65,4 +60,9 @@ button, a[role="button"] {
 
 form.button_to {
   margin: unset;
+}
+
+nav {
+  padding: 1em;
+  --background-color: gray;
 }
