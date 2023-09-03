@@ -22,7 +22,7 @@ class JiraAuditor
       Jira::UsersClient
         .index(@bot.token!.access_token, resource.external_id)
         .each do |user|
-          if user['displayName'] == '1bord Basic'
+          if user['displayName'].match? /1bord/
             @bot = Ext::Bot
               .extending(ActiveRecord::CreateOrFindAndUpdateBy)
               .create_or_find_and_update_by! \
@@ -32,13 +32,13 @@ class JiraAuditor
                 provider: 'Jira',
                 external_data: user,
                 account__company: Account::Current.company
-          else
+          elsif user['accountType'] != 'app'
             persona = Ext::Persona
               .extending(ActiveRecord::CreateOrFindAndUpdateBy)
               .create_or_find_and_update_by! \
                 name: user['displayName'],
                 external_id: user['accountId'],
-                external_type: (user['accountType'] == 'app' ? 'Bot' : 'User'),
+                external_type: 'User',
                 account__holder: Account::Current.company,
                 external_data: user,
                 provider: 'Jira'
