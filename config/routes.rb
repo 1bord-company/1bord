@@ -11,10 +11,10 @@ Rails.application.routes.draw do
 
   root 'account/companies#show'
 
-  namespace :xapp do
+  namespace :xapp, shallow: true do
     resources :providers, only: [] do
       scope module: :providers do
-        resources :redirects, only: :new
+        resources :redirects, only: %i[new show]
       end
     end
   end

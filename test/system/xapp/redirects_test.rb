@@ -28,6 +28,7 @@ class Xapp::RedirectsTest < ApplicationSystemTestCase
           setup_action: 'install' }
       ]
 
+      visit root_path
       @account__user.company.ext__resources.each do |resource|
         assert_text resource.name
         resource.personas.each do |persona|

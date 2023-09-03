@@ -21,7 +21,13 @@
     <ul class="new-connections__list">
       <% %w[git_hub slack jira heroku google asana].each do |provider| %>
         <li class="new-connections__item">
-          <%= link_to route_for(provider), title: provider.camelize, class: "new-connections__button", target: :_blank, role: :button do %>
+          <%= link_to \
+            route_for(provider),
+            title: provider.camelize, class: "new-connections__button",
+            target: :_blank, role: :button,
+            onclick: "window.open(this.href, '#{provider.camelize}',\
+                       'popup=yes,width=900,height=900');
+                      event.preventDefault();" do %>
             <%= render "icons/#{provider}", classes: 'new-connections__icon' %>
             <%= provider.camelize %>
           <% end %>

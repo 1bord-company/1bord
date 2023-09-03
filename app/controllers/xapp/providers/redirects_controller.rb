@@ -13,7 +13,7 @@ module Xapp::Providers
       "Xapp::Redirect::#{params[:provider_id]}Handler"
         .constantize.handle @redirect
 
-      redirect_to root_path
+      redirect_to action: :show, id: @redirect.id
     end
   end
 end
