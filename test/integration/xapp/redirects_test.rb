@@ -89,7 +89,7 @@ class Xapp::RedirectsTest < ActionDispatch::IntegrationTest
   end
 
   test_provider 'GitHub' do |creds|
-    { code: creds.user.code, installation_id: creds.bot.id }
+    { installation_id: creds.bot.id }
   end
 
   %w[Slack Jira Heroku Google Asana].each do |provider|

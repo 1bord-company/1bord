@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   end
 
   {
-    git_hub: 'https://github.com/apps/1bord-basic/',
+    git_hub: "https://github.com/apps/#{Rails.application.credentials.providers.git_hub.app.slug}/installations/select_target",
     slack: 'https://slack.com/apps/A05FDCGGTGS-1bord-basic',
     jira: "https://auth.atlassian.com/authorize?audience=api.atlassian.com&client_id=we3TCrAJslUROZHxTu1v2xF4HOlxgnwG&scope=read%3Ajira-user%20offline_access&redirect_uri=#{Rails.application.credentials.host_url}/xapp/providers/Jira/redirects/new&state=${YOUR_USER_BOUND_VALUE}&response_type=code&prompt=consent",
     heroku: 'https://id.heroku.com/oauth/authorize?client_id=156a329a-f734-4e74-9513-831bc3395f87&response_type=code&scope=global&state={anti-forgery-token}',
