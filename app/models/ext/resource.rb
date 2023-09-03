@@ -17,6 +17,7 @@ class Ext::Resource < Ext::Entity
     when 'Google' then 'https://admin.google.com/u/1/ac/users'
     when 'GitHub' then "https://github.com/orgs/#{name}/people"
     when 'Slack' then "https://#{external_data['domain']}.slack.com/admin"
+    when 'Heroku' then "https://dashboard.heroku.com/teams/#{name}/access"
     end
   end
 end
