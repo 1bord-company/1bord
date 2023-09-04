@@ -1,5 +1,5 @@
 <tr class="persona">
   <td class="persona__avatar"><%= image_tag persona.avatar_url, size: '24' %></td>
-  <td class="persona__name"><%= persona.name || persona.email %><br><small><%= persona.roles.where(resource: resource).pluck(:name).to_sentence %></small></td>
+  <td class="persona__name"><%= persona.name %></td>
   <td class="persona__email"><%= persona.email %></td>
 </tr>

@@ -1,5 +1,5 @@
 <tr>
-  <th><%= render "icons/#{resource.provider.underscore}", classes: 'connection__icon' %></td>
-  <th><%= resource.name %><br><small><%= resource.provider %> <%= resource.external_type %></small></td>
-  <th><%= link_to 'Manage', resource.manage_url, target: :_blank %></td>
+  <th class="persona__avatar"><%= render "icons/#{resource.provider.underscore}", classes: 'connection__icon' %></th>
+  <th class="persona__name"><%= resource.name %></th>
+  <td class="persona__email"><%= link_to 'Manage', resource.manage_url, target: :_blank %></td>
 </tr>

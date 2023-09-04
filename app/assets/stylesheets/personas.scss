@@ -1,21 +1,19 @@
 .persona {
-  &__avatar {
-    width: 40px;
+  padding: 0 8px;
 
-    img {
-      max-width: unset;
+  &__avatar {
+    width: 32px;
+    padding: 0px;
+
+    img, svg {
+      width: 32px;
+      margin: auto;
     }
   }
 
-  &__name {
-    max-width: 200px;
-    width: 200px;
-    word-wrap: normal
-  }
-
-  &__email {
-    max-width: 200px;
-    width: 200px;
-    word-wrap: normal
+  &__email, &__name {
+    word-wrap: normal;
+    overflow: hidden;
+    text-overflow: clip;
   }
 }

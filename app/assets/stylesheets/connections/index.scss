@@ -36,6 +36,9 @@
     @include icons.icon--small;
   }
 
+  table {
+    table-layout: fixed;
+  }
   tr:not(:last-child) td {
     border: none;
   }
