@@ -1,6 +1,5 @@
 <tr>
-  <td><%= render "icons/#{resource.provider.underscore}", classes: 'connection__icon' %></td>
-  <td><%= resource.name %><br><small><%= resource.provider %> <%= resource.external_type %></small></td>
-  <td><%= link_to 'Manage', resource.manage_url, target: :_blank %></td>
-  <td></td>
+  <th><%= render "icons/#{resource.provider.underscore}", classes: 'connection__icon' %></td>
+  <th><%= resource.name %><br><small><%= resource.provider %> <%= resource.external_type %></small></td>
+  <th><%= link_to 'Manage', resource.manage_url, target: :_blank %></td>
 </tr>

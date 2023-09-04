@@ -35,4 +35,8 @@
   &__icon {
     @include icons.icon--small;
   }
+
+  tr:not(:last-child) td {
+    border: none;
+  }
 }

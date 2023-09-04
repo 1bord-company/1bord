@@ -1,10 +1,9 @@
+<header>
+  <h1 class="new-connections__heading">Connect</h1>
+  <p>your tools and teams.</p>
+</header>
 <section class="new-connections">
-  <header>
-    <h1 class="new-connections__heading">Connect</h1>
-    <p>
-      your tools and teams.
-    </p>
-  </header>
+  <h2 class="new-connections__heading">Add a new connection</h2>
   <ul class="new-connections__list">
     <% %w[git_hub slack jira heroku google asana].each do |provider| %>
       <li class="new-connections__item">
@@ -15,9 +14,9 @@
           onclick: "window.open(this.href, '#{provider.camelize}',\
                    'popup=yes,width=900,height=900');
                     event.preventDefault();" do %>
-          <%= render "icons/#{provider}", classes: 'new-connections__icon' %>
-          <%= provider.camelize %>
-        <% end %>
+                    <%= render "icons/#{provider}", classes: 'new-connections__icon' %>
+                    <%= provider.camelize %>
+                  <% end %>
       </li>
     <% end %>
   </ul>
@@ -27,17 +26,16 @@
 <% if ext__resources.any? %>
   <section class="connections">
     <header class="connections__heading">
-      <h1 class="connections__title">Existing connections</h1>
-
+      <h2 class="connections__title"><%= "#{ext__resources.count} connection".pluralize(ext__resources.count) %></h2>
       <%= button_to [:account, :audit],
         title: 'Reaudit',
         form_class: 'connections__reaudit',
         data: { controller: 'buttons--busy',
                 action: 'buttons--busy#busy' } do %>
 
-                <%= render 'icons/refresh', classes: 'connections__icon' %>
-                Reaudit
-              <% end %>
+              <%= render 'icons/refresh', classes: 'connections__icon' %>
+              Reaudit
+      <% end %>
     </header>
 
     <% @company.ext__resources.each do |resource| %>
