@@ -40,13 +40,11 @@
 
 button, a[role="button"] {
   --background-color: var(--button-background-color);
-  --border-radius: 999px;
   --color: var(--button-text-color);
   padding: 0.7em;
   height: 3em;
-  gap: 0.35em;
+  gap: 0.2em;
   align-items: center;
-  width: 7em;
   border: none;
 
   display: flex;
@@ -67,12 +65,7 @@ form.button_to {
   margin: unset;
 }
 
-nav {
-  padding: 1em;
-  --background-color: gray;
-}
-
 body main {
-  padding: 2em;
+  padding: 1em;
   display: grid;
 }
