@@ -4,6 +4,7 @@
 </header>
 <section class="new-connections">
   <h2 class="new-connections__heading">Add a new connection</h2>
+  <td></td>
   <ul class="new-connections__list">
     <% %w[git_hub slack jira heroku google asana].each do |provider| %>
       <li class="new-connections__item">
@@ -39,12 +40,14 @@
     </header>
 
     <% @company.ext__resources.each do |resource| %>
-      <table>
-        <thead><%= render resource %></thead>
-        <tbody>
-          <%= render resource.personas, resource: resource %>
-        </tbody>
-      </table>
+      <figure>
+        <table>
+          <thead><%= render resource %></thead>
+          <tbody>
+            <%= render resource.personas, resource: resource %>
+          </tbody>
+        </table>
+      </figure>
     <% end %>
   </section>
 <% end %>
