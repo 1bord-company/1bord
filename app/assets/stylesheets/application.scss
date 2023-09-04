@@ -3,6 +3,9 @@
 @use 'connections/show';
 @use 'connections/index';
 
+@use 'account/sessions';
+@use 'account/registrations';
+
 @use 'personas';
 
 // Default, Light System
@@ -65,4 +68,8 @@ form.button_to {
 nav {
   padding: 1em;
   --background-color: gray;
+}
+
+main {
+  display: grid;
 }
