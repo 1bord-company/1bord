@@ -91,5 +91,20 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.action_mailer.default_url_options = { host: '1bord.com' }
+  config.action_mailer.default_url_options = { host: 'app.1bord.com' }
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: "smtp.zoho.com",
+    port: 465,
+    domain: '1bord.com',
+    user_name: 'hey@1bord.com',
+    password: Rails.application.credentials.mailers.zoho.password,
+    authentication: :login,
+    ssl:            true,
+    tls:            true,
+    enable_starttls_auto: true
+  }
+
 end
