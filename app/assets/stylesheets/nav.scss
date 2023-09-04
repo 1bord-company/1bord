@@ -1,0 +1,23 @@
+nav {
+  padding: 1em;
+  --background-color: gray;
+
+  align-items: center;
+
+  details[role="list"] {
+    margin: 0;
+
+    summary:not([role]) {
+      border: 0;
+    }
+
+    button {
+      background-color: unset;
+      padding: unset;
+      height: unset;
+      scale: unset;
+      border: unset;
+      border-radius: unset;
+    }
+  }
+}

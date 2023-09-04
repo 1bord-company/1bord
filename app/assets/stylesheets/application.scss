@@ -1,4 +1,6 @@
 // Sassy
+@use 'nav';
+
 @use 'connections/new';
 @use 'connections/show';
 @use 'connections/index';
@@ -70,6 +72,7 @@ nav {
   --background-color: gray;
 }
 
-main {
+body main {
+  padding: 2em;
   display: grid;
 }

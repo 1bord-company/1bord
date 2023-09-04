@@ -8,14 +8,18 @@
   </ul>
 
 
-  <ul>
-    <% if Account::Current.user %>
-      <li><%= Account::Current.user.email %></li>
-      <li><%= button_to [:destroy, :account, :user, :session],
+  <% if Account::Current.user %>
+    <details role="list">
+      <summary aria-haspopup="listbox"><%= Account::Current.user.email %></summary>
+      <ul role="listbox">
+        <li>
+          <%= button_to [:destroy, :account, :user, :session],
                         method: :delete do %>
-        <%= render 'icons/logout' %>
-        Log out
-      <% end %></li>
-    <% end %>
-  </ul>
+            <%= render 'icons/logout' %>
+            Log out
+          <% end %>
+        </li>
+      </ul>
+    </details>
+  <% end %>
 </nav>
