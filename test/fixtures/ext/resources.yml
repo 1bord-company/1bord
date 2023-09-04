@@ -18,4 +18,6 @@ channel_1:
   provider: Slack
   account__holder_id: 1
   account__holder_type: Account::Company
-  external_data: 
+  external_data: {
+    domain: asdf
+  }
