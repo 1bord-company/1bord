@@ -1,22 +1,26 @@
 require "application_system_test_case"
 
-class NavsTest < ApplicationSystemTestCase
+class SessionsTest < ApplicationSystemTestCase
   include Devise::Test::IntegrationHelpers
 
   test 'all scenarios' do
+    @account__user = account_users(:one)
+
     visit root_path
-    within 'nav' do
-      assert_no_text 'Logout'
+
+    within 'form#new_account_user' do
+      fill_in 'Email', with: @account__user.email
+      fill_in 'Password', with: 'password'
+      click_button 'Log in'
     end
 
-    @account__user = account_users(:one)
-    sign_in @account__user
-
-    visit root_path
     within 'nav' do
       assert_text @account__user.email
       assert_text @account__user.company.name
-      assert_text 'Logout'
+
+      click_button 'Log out'
     end
+
+    assert_text 'Log in'
   end
 end

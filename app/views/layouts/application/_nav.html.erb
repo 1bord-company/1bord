@@ -11,9 +11,10 @@
   <ul>
     <% if Account::Current.user %>
       <li><%= Account::Current.user.email %></li>
-      <li><%= button_to do %>
+      <li><%= button_to [:destroy, :account, :user, :session],
+                        method: :delete do %>
         <%= render 'icons/logout' %>
-        Logout
+        Log out
       <% end %></li>
     <% end %>
   </ul>
