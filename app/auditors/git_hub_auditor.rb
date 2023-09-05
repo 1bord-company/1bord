@@ -6,6 +6,8 @@ class GitHubAuditor
   def audit!
     account = @bot.external_data!['account']
 
+    return unless account['type'] == 'Organization'
+
     org = Ext::Resource
       .extending(ActiveRecord::CreateOrFindAndUpdateBy)
       .create_or_find_and_update_by! \
