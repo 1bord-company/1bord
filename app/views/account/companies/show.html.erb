@@ -1,46 +1,24 @@
-<header>
-  <h1 class="new-connections__heading">Connect</h1>
-  &nbsp;
-  <p>your tools and teams.</p>
-</header>
+<header class="new-connections__header">
+  <h1 class="new-connections__heading">Connections</h1>
 
-<details class="new-connections">
-  <summary>
-    <h4>Add a new connection</h4>
-  </summary>
-  <ul class="new-connections__list">
-    <% %w[git_hub slack jira heroku google asana].each do |provider| %>
-      <li class="new-connections__item">
-        <%= link_to \
-          route_for(provider),
-          title: provider.camelize, class: "new-connections__button",
-          target: :_blank, role: :button,
-          onclick: "window.open(this.href, '#{provider.camelize}',\
-                   'popup=yes,width=900,height=900');
-                    event.preventDefault();" do %>
-                    <%= render "icons/#{provider}", classes: 'new-connections__icon' %>
-                    <%= provider.camelize %>
-                  <% end %>
-      </li>
-    <% end %>
+  <ul class="new-connections__actions">
+    <li><%= link_to [:new, :account, :connection], title: 'Add a connection', role: :button do %>
+      <%= render 'icons/plus', classes: '' %>
+    <% end %></li>
+    <li><%= button_to [:account, :audit],
+      title: 'Reaudit all connections',
+      form_class: 'connections__reaudit',
+      data: { controller: 'buttons--busy',
+              action: 'buttons--busy#busy' } do %>
+
+      <%= render 'icons/refresh', classes: 'connections__icon' %>
+    <% end %></li>
   </ul>
-</details>
+</header>
 
 <% ext__resources = @company.ext__resources %>
 <% if ext__resources.any? %>
   <section class="connections">
-    <header class="connections__heading">
-      <h4 class="connections__title"><%= "#{ext__resources.count} connection".pluralize(ext__resources.count) %></h4>
-      <%= button_to [:account, :audit],
-        title: 'Reaudit',
-        form_class: 'connections__reaudit',
-        data: { controller: 'buttons--busy',
-                action: 'buttons--busy#busy' } do %>
-
-              <%= render 'icons/refresh', classes: 'connections__icon' %>
-      <% end %>
-    </header>
-
     <% @company.ext__resources.each do |resource| %>
       <figure>
         <table>

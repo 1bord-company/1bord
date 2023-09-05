@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   namespace :account do
     resource :audit, only: :create
+    resources :connections, only: :new
   end
 
   root 'account/companies#show'

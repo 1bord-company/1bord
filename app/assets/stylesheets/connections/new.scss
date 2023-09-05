@@ -1,9 +1,24 @@
 @use 'icons' as icons;
 
 .new-connections {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1em;
+  }
+
   &__heading {
     margin: 0;
     display: inline-block;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 1em;
+
+    li {
+      list-style: none;
+    }
   }
 
   &__list {
