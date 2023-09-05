@@ -15,5 +15,10 @@
     word-wrap: normal;
     overflow: hidden;
     text-overflow: clip;
+    padding-right: 0;
+  }
+
+  &__manage-link {
+    float: right;
   }
 }

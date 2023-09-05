@@ -3,6 +3,7 @@
 .new-connections {
   &__heading {
     margin: 0;
+    display: inline-block;
   }
 
   &__list {
@@ -19,5 +20,10 @@
 
   &__icon {
     @include icons.icon--small;
+  }
+
+  summary h4 {
+    margin: 0;
+    display: inline-block;
   }
 }

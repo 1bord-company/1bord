@@ -1,10 +1,13 @@
 <header>
   <h1 class="new-connections__heading">Connect</h1>
+  &nbsp;
   <p>your tools and teams.</p>
 </header>
-<section class="new-connections">
-  <h2 class="new-connections__heading">Add a new connection</h2>
-  <td></td>
+
+<details class="new-connections">
+  <summary>
+    <h4>Add a new connection</h4>
+  </summary>
   <ul class="new-connections__list">
     <% %w[git_hub slack jira heroku google asana].each do |provider| %>
       <li class="new-connections__item">
@@ -21,13 +24,13 @@
       </li>
     <% end %>
   </ul>
-</section>
+</details>
 
 <% ext__resources = @company.ext__resources %>
 <% if ext__resources.any? %>
   <section class="connections">
     <header class="connections__heading">
-      <h2 class="connections__title"><%= "#{ext__resources.count} connection".pluralize(ext__resources.count) %></h2>
+      <h4 class="connections__title"><%= "#{ext__resources.count} connection".pluralize(ext__resources.count) %></h4>
       <%= button_to [:account, :audit],
         title: 'Reaudit',
         form_class: 'connections__reaudit',
@@ -35,7 +38,6 @@
                 action: 'buttons--busy#busy' } do %>
 
               <%= render 'icons/refresh', classes: 'connections__icon' %>
-              Reaudit
       <% end %>
     </header>
 
