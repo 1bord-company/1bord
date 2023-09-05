@@ -2,7 +2,7 @@
   <th class="persona__avatar"><%= render "icons/#{resource.provider.underscore}", classes: 'connection__icon' %></th>
   <th class="persona__name"><%= resource.name %></th>
   <td class="persona__email">
-    <%= link_to resource.manage_url, class: 'persona__manage-link',
+    <%= link_to resource.manage_url, class: 'icon persona__manage-link',
       target: :_blank, title: "Manage #{resource.name} in #{resource.provider}" do %>
       <%= render 'icons/gear', classes: 'persona__manage-icon' %>
     <% end %>
