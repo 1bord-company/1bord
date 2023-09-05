@@ -73,3 +73,11 @@ body main {
   padding: 1em;
   display: grid;
 }
+
+table thead th {
+  --border-width: 1px;
+}
+
+table tr :where(th, td) {
+  padding-bottom: 20px;
+}

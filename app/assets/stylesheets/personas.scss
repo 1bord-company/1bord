@@ -1,6 +1,4 @@
 .persona {
-  padding: 0 8px;
-
   &__avatar {
     width: 32px;
     padding: 0px;
@@ -9,12 +7,17 @@
       width: 32px;
       margin: auto;
     }
+
+    img {
+      border-radius: 999px;
+    }
   }
 
   &__email, &__name {
     word-wrap: normal;
     overflow: hidden;
     text-overflow: clip;
+    padding: 0.65rem;
     padding-right: 0;
   }
 
