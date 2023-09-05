@@ -3,7 +3,7 @@
   <th class="persona__name"><%= resource.name %></th>
   <td class="persona__email">
     <%= link_to resource.manage_url, class: 'persona__manage-link',
-      target: :_blank, role: :button, title: "Manage #{resource.name} in #{resource.provider}" do %>
+      target: :_blank, title: "Manage #{resource.name} in #{resource.provider}" do %>
       <%= render 'icons/gear', classes: 'persona__manage-icon' %>
     <% end %>
   </td>
