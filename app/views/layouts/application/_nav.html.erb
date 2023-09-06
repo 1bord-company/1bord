@@ -1,17 +1,16 @@
 <nav>
   <ul>
     <li><strong>1bord</strong></li>
-    <% if Account::Current.company %>
-      |<li><%= Account::Current.company.name ||
-        Account::Current.company.email.split('@').last %></li>
+    <% if Account::Current.company&.name %>
+      |<li><%= Account::Current.company.name %></li>
     <% end %>
   </ul>
 
 
   <% if Account::Current.user %>
-    <details role="list">
-      <summary aria-haspopup="listbox"><%= Account::Current.user.email %></summary>
-      <ul role="listbox">
+    <details role="list" dir="rtl">
+      <summary aria-haspopup="listbox"><%= Account::Current.user.name %></summary>
+      <ul role="listbox" dir="ltr">
         <li>
           <%= button_to [:destroy, :account, :user, :session],
                         method: :delete do %>

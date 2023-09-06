@@ -2,9 +2,6 @@
   <h1 class="new-connections__heading">Connections</h1>
 
   <ul class="new-connections__actions">
-    <li><%= link_to [:new, :account, :connection], title: 'Add a connection', role: :button do %>
-      <%= render 'icons/plus', classes: '' %>
-    <% end %></li>
     <li><%= button_to [:account, :audit],
       title: 'Reaudit all connections',
       form_class: 'connections__reaudit',
@@ -12,6 +9,9 @@
               action: 'buttons--busy#busy' } do %>
 
       <%= render 'icons/refresh', classes: 'connections__icon' %>
+    <% end %></li>
+    <li><%= link_to [:new, :account, :connection], title: 'Add a connection', role: :button do %>
+      <%= render 'icons/plus', classes: '' %>
     <% end %></li>
   </ul>
 </header>

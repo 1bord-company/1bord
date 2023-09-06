@@ -8,6 +8,7 @@ module Account
            :confirmable, :lockable, :timeoutable, :trackable
 
     belongs_to :person, inverse_of: :user
+    delegate :name, to: :person
     before_validation :create_profile, on: :create
 
     delegate :company, to: :person

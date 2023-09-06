@@ -15,9 +15,10 @@ class SessionsTest < ApplicationSystemTestCase
     end
 
     within 'nav' do
-      assert_text @account__user.email
+      assert_text @account__user.name
       assert_text @account__user.company.name
 
+      find('details > summary').click
       click_button 'Log out'
     end
 

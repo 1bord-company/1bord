@@ -8,6 +8,9 @@ module Account
     has_many :ext__personas,
              as: :account__holder
 
+    def name
+      super || email.split('@').first.capitalize
+    end
 
     private
 
