@@ -1,0 +1,14 @@
+.resource {
+  &__name {
+    word-wrap: normal;
+    overflow: hidden;
+    text-overflow: clip;
+    padding: 0.65rem;
+    padding-right: 0;
+    line-height: normal;
+
+    small {
+      font-size: 0.7rem;
+    }
+  }
+}
